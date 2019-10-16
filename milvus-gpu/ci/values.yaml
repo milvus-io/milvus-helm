@@ -1,0 +1,15 @@
+persistence:
+  enabled: true
+  resourcePolicy: ""
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 1Gi
+

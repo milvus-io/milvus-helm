@@ -1,0 +1,56 @@
+{{- $dbdata := .Values.persistence.persistentVolumeClaim.dbdata -}}
+{{- if and .Values.persistence.enabled (not $dbdata.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "milvus.dbdata" . }}
+  {{- if eq .Values.persistence.resourcePolicy "keep" }}
+  annotations:
+    helm.sh/resource-policy: keep
+  {{- end }}
+  labels:
+{{ include "milvus.labels" . | indent 4 }}
+spec:
+  accessModes:
+  - {{ $dbdata.accessModes | quote }}
+  {{- if $dbdata.storageClass }}
+    {{- if eq "-" $dbdata.storageClass }}
+  storageClassName: ""
+    {{- else }}
+  storageClassName: {{ $dbdata.storageClass }}
+    {{- end }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $dbdata.size }}
+{{- end }}
+
+---
+
+{{- $logfile := .Values.persistence.persistentVolumeClaim.logfile -}}
+{{- if and .Values.persistence.enabled (not $logfile.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "milvus.logfile" . }}
+  {{- if eq .Values.persistence.resourcePolicy "keep" }}
+  annotations:
+    helm.sh/resource-policy: keep
+  {{- end }}
+  labels:
+{{ include "milvus.labels" . | indent 4 }}
+spec:
+  accessModes:
+  - {{ $logfile.accessModes | quote }}
+  {{- if $logfile.storageClass }}
+    {{- if eq "-" $logfile.storageClass }}
+  storageClassName: ""
+    {{- else }}
+  storageClassName: {{ $logfile.storageClass }}
+    {{- end }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $logfile.size }}
+{{- end }}
+

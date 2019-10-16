@@ -1,0 +1,185 @@
+# Default values for milvus.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Common
+initContainerImage: "alpine:3.8"
+
+expose:
+  # Set the way how to expose the service. Set the type as "loadBalancer",
+  # "clusterIP", "nodePort" or "loadBalancer" and fill the information
+  # in the corresponding section
+  type: loadBalancer
+  clusterIP:
+    # The name of ClusterIP service
+    name: engine-port
+    ports:
+      httpPort: 19530
+  nodePort:
+    name: engine-port
+    ports:
+      http:
+        port: 19530
+        nodePort: 30001
+  loadBalancer:
+    name: engine-port
+    ports:
+      httpPort: 19530
+
+extraVolumes: |
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts: |
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
+persistence:
+  enabled: true
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 50Gi
+      subPath: dbdata
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+      subPath: logs
+
+engine:
+  name: engine
+  image:
+    repository: registry.zilliz.com/milvus/engine
+    tag: branch-0.5.0-release
+  replicas: 1
+  pullPolicy: Always
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+      nvidia.com/gpu: 1
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+  ports:
+    name: http
+    containerPort: 19530
+    protocol: TCP
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  ## Additional deployment annotations
+  podAnnotations: {}
+
+  mainConf: |
+    server_config:
+      address: 0.0.0.0            
+      port: 19530                 
+      mode: single                
+      time_zone: UTC+8            
+    db_config:
+      primary_path: /opt/milvus             
+      secondary_path:                        
+      backend_url: sqlite://:@:/
+      ## backend_url: mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
+      insert_buffer_size: 4               
+      build_index_gpu: 0              
+      preload_table: 
+
+    metric_config:
+      enable_monitor: on                      
+      collector: prometheus                
+      prometheus_config:                    
+        port: 8080                      
+
+    cache_config:
+      cpu_cache_capacity: 8          
+      cpu_cache_threshold: 0.85      
+      cache_insert_data: false   
+
+    engine_config:
+      use_blas_threshold: 20
+
+    resource_config:
+      resource_pool:
+        - gpu0
+
+  logConf: |
+    * GLOBAL:
+        FORMAT                  =   "%datetime | %level | %logger | %msg"
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-global.log"
+        ENABLED                 =   true
+        TO_FILE                 =   true
+        TO_STANDARD_OUTPUT      =   false
+        SUBSECOND_PRECISION     =   3
+        PERFORMANCE_TRACKING    =   false
+        MAX_LOG_FILE_SIZE       =   209715200 ## Throw log files away after 2MB
+    * DEBUG:
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-debug.log"
+        ENABLED                 =   true
+    * WARNING:
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-warning.log"
+    * TRACE:
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-trace.log"
+    * VERBOSE:
+        FORMAT                  =   "%datetime{%d/%M/%y} | %level-%vlevel | %msg"
+        TO_FILE                 =   false
+        TO_STANDARD_OUTPUT      =   false
+    ## Error logs
+    * ERROR:
+        ENABLED                 =   true
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-error.log"
+    * FATAL:
+        ENABLED                 =   true
+        FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-fatal.log"
+
+## Configuration values for the mysql dependency
+## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
+##
+mysql:
+  enabled: false
+  name: mysql
+  imageTag: "5.7.14"
+  imagePullPolicy: IfNotPresent
+  mysqlDatabase: milvus
+  mysqlUser: milvus
+  mysqlPassword: milvus
+  mysqlRootPassword: milvusroot
+  configurationFiles:
+    mysql.cnf: |-
+      [mysqld]
+      pid-file        = /var/run/mysqld/mysqld.pid
+      socket          = /var/run/mysqld/mysqld.sock
+      datadir         = /data
+      log-error       = /var/log/mysql/error.log # mount out to host
+      skip-name-resolve
+      # By default we only accept connections from localhost
+      bind-address   = 0.0.0.0
+      # Disabling symbolic-links is recommended to prevent assorted security risks
+      symbolic-links=0
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      init_connect='SET NAMES utf8mb4'
+      skip-character-set-client-handshake = true
+      max_connections = 1000
+      wait_timeout = 31536000
+
+  initializationFiles:
+    grant.sql: |-
+      GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
+      FLUSH PRIVILEGES;
+
+  persistence:
+    enabled: true
+    existingClaim: ""
+    annotations: {}
+  ##  "helm.sh/resource-policy": keep
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 50Gi
