@@ -108,6 +108,7 @@ engine:
 
     resource_config:
       resource_pool:
+        - cpu
         - gpu0
 
   logConf: |
