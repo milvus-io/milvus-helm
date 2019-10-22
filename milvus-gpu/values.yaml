@@ -89,11 +89,10 @@ engine:
       backend_url: sqlite://:@:/
       ## backend_url: mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
       insert_buffer_size: 4               
-      build_index_gpu: 0              
       preload_table: 
 
     metric_config:
-      enable_monitor: on                      
+      enable_monitor: true                      
       collector: prometheus                
       prometheus_config:                    
         port: 8080                      
@@ -107,9 +106,9 @@ engine:
       use_blas_threshold: 20
 
     resource_config:
-      resource_pool:
-        - cpu
+      search_resources:
         - gpu0
+      index_build_device: gpu0
 
   logConf: |
     * GLOBAL:
