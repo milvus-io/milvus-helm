@@ -67,6 +67,9 @@ spec:
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 8 }}
         {{- end }}
+      {{- with .Values.extraContainers }}
+{{ tpl . $ | indent 6 }}
+      {{- end }}
       {{- with .Values.engine.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
