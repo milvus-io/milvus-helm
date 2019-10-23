@@ -74,14 +74,14 @@ engine:
   livenessProbe:
     enabled: true
     tcpSocket:
-      port: {{ .Values.engine.ports.containerPort }}
+      port: 19530
     initialDelaySeconds: 15
     periodSeconds: 15
     timeoutSeconds: 10
   readinessProbe:
     enabled: true
     tcpSocket:
-      port: {{ .Values.engine.ports.containerPort }}
+      port: 19530
     initialDelaySeconds: 15
     periodSeconds: 15
     timeoutSeconds: 10
