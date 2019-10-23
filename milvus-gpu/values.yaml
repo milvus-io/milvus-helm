@@ -71,6 +71,22 @@ engine:
     name: http
     containerPort: 19530
     protocol: TCP
+  livenessProbe:
+    enabled: true
+    tcpSocket:
+      port: {{ .Values.engine.ports.containerPort }}
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 10
+  readinessProbe:
+    enabled: true
+    tcpSocket:
+      port: {{ .Values.engine.ports.containerPort }}
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 10
+    successThreshold: 3
+
   nodeSelector: {}
   tolerations: []
   affinity: {}
