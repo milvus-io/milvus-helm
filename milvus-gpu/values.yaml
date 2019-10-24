@@ -52,6 +52,9 @@ extraContainers: |
 extraVolumes: |
   # - name: extras
   #   emptyDir: {}
+  # - name: filebeat-config
+  #   configMap:
+  #     name: milvus-filebeat-config
 
 extraVolumeMounts: |
   # - name: extras
