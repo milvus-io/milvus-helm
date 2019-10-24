@@ -41,6 +41,14 @@ spec:
           - name: {{ .Values.engine.ports.name }}
             containerPort: {{ .Values.engine.ports.containerPort }}
             protocol: {{ .Values.engine.ports.protocol }}
+        {{- if .Values.engine.livenessProbe.enabled }}
+        livenessProbe:
+{{ toYaml .Values.engine.livenessProbe | indent 12 }}
+        {{- end }}
+        {{- if .Values.engine.readinessProbe.enabled }}
+        readinessProbe:
+{{ toYaml .Values.engine.readinessProbe | indent 12 }}
+        {{- end }}
         resources:
           {{- toYaml .Values.engine.resources | nindent 12 }}
         volumeMounts:
@@ -59,6 +67,9 @@ spec:
         {{- if .Values.extraVolumeMounts }}
 {{ tpl .Values.extraVolumeMounts . | indent 8 }}
         {{- end }}
+      {{- with .Values.extraContainers }}
+{{ tpl . $ | indent 6 }}
+      {{- end }}
       {{- with .Values.engine.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
