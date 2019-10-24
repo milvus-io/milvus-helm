@@ -8,3 +8,8 @@ data:
 
   log.conf: |
 {{ tpl .Values.engine.logConf . | indent 4 }}
+
+{{- range $key, $value := .Values.engine.extraConfigFiles }}
+  {{ $key }}: |-
+{{ $value | indent 4 }}
+{{- end }}

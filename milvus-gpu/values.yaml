@@ -52,9 +52,6 @@ extraContainers: |
 extraVolumes: |
   # - name: extras
   #   emptyDir: {}
-  # - name: filebeat-config
-  #   configMap:
-  #     name: milvus-filebeat-config
 
 extraVolumeMounts: |
   # - name: extras
@@ -180,6 +177,21 @@ engine:
     * FATAL:
         ENABLED                 =   true
         FILENAME                =   "/opt/milvus/logs/milvus-%datetime{%H:%m}-fatal.log"
+
+  extraConfigFiles: {}
+    # filebeat.yml: |-
+    #   filebeat.inputs:
+    #   - type: log
+    #     paths:
+    #       - /opt/milvus/logs/*.log
+    #     tags: ["milvus"]
+    #     fields_under_root: true
+    #     fields:
+    #       app: milvus
+    #       type: log
+
+    #   output.logstash:
+    #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
