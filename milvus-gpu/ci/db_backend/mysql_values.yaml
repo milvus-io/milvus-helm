@@ -1,5 +1,5 @@
 persistence:
-  enabled: true
+  enabled: false
   resourcePolicy: ""
   persistentVolumeClaim:
     dbdata:
@@ -16,7 +16,7 @@ persistence:
 mysql:
   enabled: true
   persistence:
-    enabled: true
+    enabled: false
     storageClass: default
     accessMode: ReadWriteOnce
     size: 5Gi

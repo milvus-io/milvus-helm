@@ -1,5 +1,5 @@
 persistence:
-  enabled: true
+  enabled: false 
   resourcePolicy: ""
   persistentVolumeClaim:
     dbdata:
