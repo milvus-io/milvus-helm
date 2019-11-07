@@ -146,6 +146,7 @@ engine:
 
     resource_config:
       search_resources:
+        - cpu 
         - gpu0
       index_build_device: gpu0
 
