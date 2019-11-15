@@ -1,0 +1,15 @@
+engine:
+  image:
+    repository: registry.zilliz.com/milvus/engine
+    tag: 0.6.0-gpu-ubuntu18.04-release
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+      nvidia.com/gpu: 1
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+
+  mainConf: "config/gpu/server_config.yaml"
+

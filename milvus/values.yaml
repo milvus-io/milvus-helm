@@ -86,7 +86,6 @@ engine:
     limits:
       memory: "12Gi"
       cpu: "4.0"
-      nvidia.com/gpu: 1
     requests:
       memory: "8Gi"
       cpu: "2.0"
