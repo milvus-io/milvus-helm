@@ -1,0 +1,181 @@
+# Default values for milvus.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Common
+initContainerImage: "alpine:3.8"
+
+expose:
+  # Set the way how to expose the service. Set the type as "loadBalancer",
+  # "clusterIP", "nodePort" or "loadBalancer" and fill the information
+  # in the corresponding section
+  type: loadBalancer
+  clusterIP:
+    # The name of ClusterIP service
+    name: engine-port
+    ports:
+      httpPort: 19530
+  nodePort:
+    name: engine-port
+    ports:
+      http:
+        port: 19530
+        nodePort: 30001
+  loadBalancer:
+    name: engine-port
+    ports:
+      httpPort: 19530
+
+extraContainers: |
+  # - name: filebeat
+  #   image: docker.elastic.co/beats/filebeat:7.0.1
+  #   args: [
+  #     "-c", "/etc/filebeat.yml",
+  #     "-e",
+  #   ]
+  #   resources:
+  #     limits:
+  #       memory: 500Mi
+  #     requests:
+  #       cpu: 100m
+  #       memory: 100Mi
+  #   securityContext:
+  #     runAsUser: 0
+  #   volumeMounts:
+  #   - name: filebeat-config
+  #     mountPath: /etc/filebeat.yml
+  #     subPath: filebeat.yml
+  #   - name: milvus-log-disk
+  #     mountPath: /opt/milvus/logs
+  #     subPath: logs
+
+extraVolumes: |
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts: |
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
+persistence:
+  enabled: true
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 50Gi
+      subPath: dbdata
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+      subPath: logs
+
+engine:
+  name: engine
+  image:
+    repository: registry.zilliz.com/milvus/engine
+    tag: 0.6.0-cpu-ubuntu18.04-release
+  replicas: 1
+  pullPolicy: Always
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+      nvidia.com/gpu: 1
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+  ports:
+    name: http
+    containerPort: 19530
+    protocol: TCP
+  livenessProbe:
+    enabled: true
+    tcpSocket:
+      port: 19530
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 10
+  readinessProbe:
+    enabled: true
+    tcpSocket:
+      port: 19530
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    timeoutSeconds: 10
+    successThreshold: 3
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  ## Additional deployment annotations
+  podAnnotations: {}
+
+  mainConf: "config/cpu/server_config.yaml"
+
+  logConf: "config/log_config.conf"
+
+  extraConfigFiles: {}
+    # filebeat.yml: |-
+    #   filebeat.inputs:
+    #   - type: log
+    #     paths:
+    #       - /opt/milvus/logs/*.log
+    #     tags: ["milvus"]
+    #     fields_under_root: true
+    #     fields:
+    #       app: milvus
+    #       type: log
+
+    #   output.logstash:
+    #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
+
+## Configuration values for the mysql dependency
+## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
+##
+mysql:
+  enabled: false
+  name: mysql
+  imageTag: "5.7.14"
+  imagePullPolicy: IfNotPresent
+  mysqlDatabase: milvus
+  mysqlUser: milvus
+  mysqlPassword: milvus
+  mysqlRootPassword: milvusroot
+  configurationFiles:
+    mysql.cnf: |-
+      [mysqld]
+      pid-file        = /var/run/mysqld/mysqld.pid
+      socket          = /var/run/mysqld/mysqld.sock
+      datadir         = /data
+      log-error       = /var/log/mysql/error.log # mount out to host
+      skip-name-resolve
+      # By default we only accept connections from localhost
+      bind-address   = 0.0.0.0
+      # Disabling symbolic-links is recommended to prevent assorted security risks
+      symbolic-links=0
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      init_connect='SET NAMES utf8mb4'
+      skip-character-set-client-handshake = true
+      max_connections = 1000
+      wait_timeout = 31536000
+
+  initializationFiles:
+    grant.sql: |-
+      GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
+      FLUSH PRIVILEGES;
+
+  persistence:
+    enabled: true
+    existingClaim: ""
+    annotations: {}
+  ##  "helm.sh/resource-policy": keep
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 50Gi

@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "milvus.engine" . }}
+  labels:
+{{ include "milvus.labels" . | indent 4 }}
+    component: engine
+spec:
+  replicas: {{ .Values.engine.replicas }}
+  selector:
+    matchLabels:
+{{ include "milvus.matchLabels" . | indent 6 }}
+      component: engine
+  template:
+    metadata:
+      labels:
+{{ include "milvus.matchLabels" . | indent 8 }}
+        component: engine
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/engine/engine-config.yaml") . | sha256sum }}
+{{- if .Values.engine.podAnnotations }}
+{{ toYaml .Values.engine.podAnnotations | indent 8 }}
+{{- end }}
+    spec:
+      {{- if .Values.mysql.enabled }}
+      initContainers:
+      - name: "wait-for-mysql"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+        - 'sh'
+        - '-c'
+        - >
+          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
+            sleep 2;
+          done;
+      {{- end }}
+      containers:
+      - name: {{ .Values.engine.name }}
+        image: "{{ .Values.engine.image.repository }}:{{ .Values.engine.image.tag }}"
+        imagePullPolicy: {{ .Values.engine.image.pullPolicy }}
+        ports:
+          - name: {{ .Values.engine.ports.name }}
+            containerPort: {{ .Values.engine.ports.containerPort }}
+            protocol: {{ .Values.engine.ports.protocol }}
+        {{- if .Values.engine.livenessProbe.enabled }}
+        livenessProbe:
+{{ toYaml .Values.engine.livenessProbe | indent 12 }}
+        {{- end }}
+        {{- if .Values.engine.readinessProbe.enabled }}
+        readinessProbe:
+{{ toYaml .Values.engine.readinessProbe | indent 12 }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.engine.resources | nindent 12 }}
+        volumeMounts:
+        - name: milvus-db-disk
+          mountPath: /opt/milvus/db
+          subPath: {{ .Values.persistence.persistentVolumeClaim.dbdata.subPath }}
+        - name: milvus-log-disk
+          mountPath: /opt/milvus/logs
+          subPath: {{ .Values.persistence.persistentVolumeClaim.logfile.subPath }}
+        - name: milvus-engine-configmap
+          mountPath: /opt/milvus/conf/server_config.yaml
+          subPath: config.yml
+        - name: milvus-engine-configmap
+          mountPath: /opt/milvus/conf/log_config.conf
+          subPath: log.conf
+        {{- if .Values.extraVolumeMounts }}
+{{ tpl .Values.extraVolumeMounts . | indent 8 }}
+        {{- end }}
+      {{- with .Values.extraContainers }}
+{{ tpl . $ | indent 6 }}
+      {{- end }}
+      {{- with .Values.engine.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.engine.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.engine.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+      - name: milvus-engine-configmap
+        configMap:
+            name: {{ template "milvus.engine" . }}
+      - name: milvus-db-disk
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.persistentVolumeClaim.dbdata.existingClaim | default (include "milvus.dbdata" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: milvus-log-disk
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.persistentVolumeClaim.logfile.existingClaim | default (include "milvus.logfile" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- if .Values.extraVolumes }}
+{{ tpl .Values.extraVolumes . | indent 6 }}
+      {{- end }}

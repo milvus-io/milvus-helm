@@ -1,0 +1,57 @@
+persistence:
+  enabled: false
+  resourcePolicy: ""
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 1Gi
+
+mysql:
+  enabled: true
+  persistence:
+    enabled: false
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+engine:
+  mainConf: |
+    server_config:
+      address: 0.0.0.0
+      port: 19530
+      mode: single
+      time_zone: UTC+8
+    db_config:
+      primary_path: /opt/milvus
+      secondary_path:
+      ## backend_url: sqlite://:@:/
+      backend_url: mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
+      insert_buffer_size: 4
+      preload_table:
+
+    metric_config:
+      enable_monitor: true
+      collector: prometheus
+      prometheus_config:
+        port: 8080
+
+    cache_config:
+      cpu_cache_capacity: 8
+      cpu_cache_threshold: 0.85
+      cache_insert_data: false
+
+    engine_config:
+      use_blas_threshold: 20
+
+    resource_config:
+      search_resources:
+        - cpu 
+        - gpu0
+      index_build_device: gpu0
