@@ -1,0 +1,25 @@
+persistence:
+  enabled: false
+  resourcePolicy: ""
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 1Gi
+
+mysql:
+  enabled: true
+  persistence:
+    enabled: false
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+engine:
+  mainConf: "ci/config/mysql/gpu/server_config.yaml"

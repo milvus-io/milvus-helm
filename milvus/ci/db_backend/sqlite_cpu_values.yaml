@@ -1,0 +1,20 @@
+persistence:
+  enabled: false
+  resourcePolicy: ""
+  persistentVolumeClaim:
+    dbdata:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 5Gi
+    logfile:
+      existingClaim: ""
+      storageClass: "default"
+      accessModes: ReadWriteMany
+      size: 1Gi
+
+mysql:
+  enabled: false
+
+engine:
+  mainConf: "ci/config/sqlite/cpu/server_config.yaml"

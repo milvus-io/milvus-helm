@@ -13,3 +13,8 @@ persistence:
       accessModes: ReadWriteMany
       size: 1Gi
 
+mysql:
+  enabled: false
+
+engine:
+  mainConf: "ci/config/sqlite/gpu/server_config.yaml"
