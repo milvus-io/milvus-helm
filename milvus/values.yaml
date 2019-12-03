@@ -46,7 +46,7 @@ extraContainers: |
   #     mountPath: /etc/filebeat.yml
   #     subPath: filebeat.yml
   #   - name: milvus-log-disk
-  #     mountPath: /opt/milvus/logs
+  #     mountPath: /var/lib/milvus/logs
   #     subPath: logs
 
 extraVolumes: |
@@ -124,7 +124,7 @@ engine:
     #   filebeat.inputs:
     #   - type: log
     #     paths:
-    #       - /opt/milvus/logs/*.log
+    #       - /var/lib/milvus/logs/*.log
     #     tags: ["milvus"]
     #     fields_under_root: true
     #     fields:
