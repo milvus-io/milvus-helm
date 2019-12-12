@@ -35,4 +35,4 @@ engine:
           type: log
 
       output.logstash:
-        hosts: ['ls-logstash.kube-ops.svc.cluster.local:5044']
+        hosts: ['ls.milvus.io:5044']
