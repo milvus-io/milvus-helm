@@ -49,11 +49,11 @@ extraContainers: |
   #     mountPath: /var/lib/milvus/logs
   #     subPath: logs
 
-extraVolumes: |
+extraVolumes: []
   # - name: extras
   #   emptyDir: {}
 
-extraVolumeMounts: |
+extraVolumeMounts: []
   # - name: extras
   #   mountPath: /usr/share/extras
   #   readOnly: true
