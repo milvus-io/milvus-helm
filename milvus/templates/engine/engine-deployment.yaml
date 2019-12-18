@@ -65,8 +65,8 @@ spec:
         - name: milvus-engine-configmap
           mountPath: /var/lib/milvus/conf/log_config.conf
           subPath: log.conf
-        {{- if .Values.extraVolumeMounts }}
-{{ tpl .Values.extraVolumeMounts . | indent 8 }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with .Values.extraContainers }}
 {{ tpl . $ | indent 6 }}
@@ -101,6 +101,6 @@ spec:
         {{- else }}
         emptyDir: {}
         {{- end }}
-      {{- if .Values.extraVolumes }}
-{{ tpl .Values.extraVolumes . | indent 6 }}
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
       {{- end }}
