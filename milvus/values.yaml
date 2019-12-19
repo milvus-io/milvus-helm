@@ -94,20 +94,19 @@ engine:
     containerPort: 19530
     protocol: TCP
   livenessProbe:
-    enabled: true
     tcpSocket:
       port: 19530
-    initialDelaySeconds: 15
+    initialDelaySeconds: 30
     periodSeconds: 15
     timeoutSeconds: 10
+    failureThreshold: 5
   readinessProbe:
-    enabled: true
     tcpSocket:
       port: 19530
     initialDelaySeconds: 15
     periodSeconds: 15
     timeoutSeconds: 10
-    successThreshold: 3
+    failureThreshold: 3
 
   nodeSelector: {}
   tolerations: []
