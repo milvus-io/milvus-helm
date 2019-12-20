@@ -80,8 +80,8 @@ engine:
   image:
     repository: registry.zilliz.com/milvus/engine
     tag: 0.6.0-cpu-ubuntu18.04-release
+    pullPolicy: Always
   replicas: 1
-  pullPolicy: Always
   resources:
     limits:
       memory: "12Gi"
