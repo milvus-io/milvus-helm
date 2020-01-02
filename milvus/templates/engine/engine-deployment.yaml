@@ -34,6 +34,12 @@ spec:
             sleep 2;
           done;
       {{- end }}
+      {{- if .Values.engine.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.engine.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
       containers:
       - name: {{ .Values.engine.name }}
         image: "{{ .Values.engine.image.repository }}:{{ .Values.engine.image.tag }}"

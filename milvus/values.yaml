@@ -81,6 +81,12 @@ engine:
     repository: registry.zilliz.com/milvus/engine
     tag: 0.6.0-cpu-ubuntu18.04-release
     pullPolicy: Always
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistryKeySecretName
   replicas: 1
   resources:
     limits:
