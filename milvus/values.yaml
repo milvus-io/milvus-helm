@@ -118,6 +118,12 @@ engine:
 
   logConf: "config/log_config.conf"
 
+  ## See `kubectl explain poddisruptionbudget.spec` for more
+  ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  podDisruptionBudget: {}
+  #  minAvailable: 1
+  #  maxUnavailable: 1
+
   extraConfigFiles: {}
     # filebeat.yml: |-
     #   filebeat.inputs:
