@@ -1,14 +1,13 @@
 image:
   repository: milvusdb/milvus
-  tag: gpu-latest
+  tag: cpu-latest
 resources:
   limits:
     memory: "12Gi"
     cpu: "4.0"
-    nvidia.com/gpu: 1
   requests:
     memory: "8Gi"
     cpu: "2.0"
 
-mainConf: "config/gpu/server_config.yaml"
+mainConf: "config/cpu/server_config.yaml"
 

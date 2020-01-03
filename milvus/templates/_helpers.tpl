@@ -45,9 +45,6 @@ release: {{ .Release.Name }}
 app: "{{ template "milvus.name" . }}"
 {{- end -}}
 
-{{- define "milvus.engine" -}}
-  {{- printf "%s-engine" (include "milvus.fullname" .) -}}
-{{- end -}}
 {{- define "milvus.dbdata" -}}
   {{- printf "%s-dbdata" (include "milvus.fullname" .) -}}
 {{- end -}}

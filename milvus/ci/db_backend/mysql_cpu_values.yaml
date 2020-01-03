@@ -13,6 +13,8 @@ persistence:
       accessModes: ReadWriteMany
       size: 1Gi
 
+mainConf: "ci/config/mysql/cpu/server_config.yaml"
+
 mysql:
   enabled: true
   persistence:
@@ -20,6 +22,3 @@ mysql:
     storageClass: default
     accessMode: ReadWriteOnce
     size: 5Gi
-
-engine:
-  mainConf: "ci/config/mysql/cpu/server_config.yaml"

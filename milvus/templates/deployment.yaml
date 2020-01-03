@@ -1,25 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus.engine" . }}
+  name: {{ template "milvus.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-    component: engine
 spec:
-  replicas: {{ .Values.engine.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-      component: engine
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-        component: engine
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/engine/engine-config.yaml") . | sha256sum }}
-{{- if .Values.engine.podAnnotations }}
-{{ toYaml .Values.engine.podAnnotations | indent 8 }}
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+{{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
       {{- if .Values.mysql.enabled }}
@@ -34,26 +31,26 @@ spec:
             sleep 2;
           done;
       {{- end }}
-      {{- if .Values.engine.image.pullSecrets }}
+      {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
-      {{- range .Values.engine.image.pullSecrets }}
+      {{- range .Values.image.pullSecrets }}
         - name: {{ . }}
       {{- end}}
       {{- end }}
       containers:
-      - name: {{ .Values.engine.name }}
-        image: "{{ .Values.engine.image.repository }}:{{ .Values.engine.image.tag }}"
-        imagePullPolicy: {{ .Values.engine.image.pullPolicy }}
+      - name: milvus
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-          - name: {{ .Values.engine.ports.name }}
-            containerPort: {{ .Values.engine.ports.containerPort }}
-            protocol: {{ .Values.engine.ports.protocol }}
+          - name: {{ .Values.ports.name }}
+            containerPort: {{ .Values.ports.containerPort }}
+            protocol: {{ .Values.ports.protocol }}
         livenessProbe:
-{{ toYaml .Values.engine.livenessProbe | indent 10 }}
+{{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
-{{ toYaml .Values.engine.readinessProbe | indent 10 }}
+{{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
-          {{- toYaml .Values.engine.resources | nindent 10 }}
+          {{- toYaml .Values.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-db-disk
           mountPath: /var/lib/milvus/db
@@ -61,34 +58,34 @@ spec:
         - name: milvus-log-disk
           mountPath: /var/lib/milvus/logs
           subPath: {{ .Values.persistence.persistentVolumeClaim.logfile.subPath }}
-        - name: milvus-engine-configmap
+        - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
-          subPath: config.yml
-        - name: milvus-engine-configmap
+          subPath: server_config.yaml
+        - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/log_config.conf
-          subPath: log.conf
+          subPath: log_config.conf
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with .Values.extraContainers }}
 {{ tpl . $ | indent 6 }}
       {{- end }}
-      {{- with .Values.engine.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.engine.affinity }}
+    {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.engine.tolerations }}
+    {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-      - name: milvus-engine-configmap
+      - name: milvus-configmap
         configMap:
-            name: {{ template "milvus.engine" . }}
+            name: {{ template "milvus.fullname" . }}
       - name: milvus-db-disk
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:

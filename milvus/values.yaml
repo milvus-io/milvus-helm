@@ -12,17 +12,17 @@ expose:
   type: loadBalancer
   clusterIP:
     # The name of ClusterIP service
-    name: engine-port
+    name: http
     ports:
       httpPort: 19530
   nodePort:
-    name: engine-port
+    name: http
     ports:
       http:
         port: 19530
         nodePort: 30001
   loadBalancer:
-    name: engine-port
+    name: http
     ports:
       httpPort: 19530
 
@@ -75,75 +75,73 @@ persistence:
       size: 5Gi
       subPath: logs
 
-engine:
-  name: engine
-  image:
-    repository: registry.zilliz.com/milvus/engine
-    tag: 0.6.0-cpu-ubuntu18.04-release
-    pullPolicy: Always
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ##
-    # pullSecrets:
-    #   - myRegistryKeySecretName
-  replicas: 1
-  resources:
-    limits:
-      memory: "12Gi"
-      cpu: "4.0"
-    requests:
-      memory: "8Gi"
-      cpu: "2.0"
-  ports:
-    name: http
-    containerPort: 19530
-    protocol: TCP
-  livenessProbe:
-    tcpSocket:
-      port: 19530
-    initialDelaySeconds: 30
-    periodSeconds: 15
-    timeoutSeconds: 10
-    failureThreshold: 5
-  readinessProbe:
-    tcpSocket:
-      port: 19530
-    initialDelaySeconds: 15
-    periodSeconds: 15
-    timeoutSeconds: 10
-    failureThreshold: 3
+image:
+  repository: milvusdb/milvus
+  tag: cpu-latest
+  pullPolicy: Always
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistryKeySecretName
+replicas: 1
+resources:
+  limits:
+    memory: "12Gi"
+    cpu: "4.0"
+  requests:
+    memory: "8Gi"
+    cpu: "2.0"
+ports:
+  name: http
+  containerPort: 19530
+  protocol: TCP
+livenessProbe:
+  tcpSocket:
+    port: 19530
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 10
+  failureThreshold: 5
+readinessProbe:
+  tcpSocket:
+    port: 19530
+  initialDelaySeconds: 15
+  periodSeconds: 15
+  timeoutSeconds: 10
+  failureThreshold: 3
 
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  ## Additional deployment annotations
-  podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+## Additional deployment annotations
+podAnnotations: {}
 
-  mainConf: "config/cpu/server_config.yaml"
+mainConf: "config/cpu/server_config.yaml"
 
-  logConf: "config/log_config.conf"
+logConf: "config/log_config.conf"
 
-  ## See `kubectl explain poddisruptionbudget.spec` for more
-  ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-  podDisruptionBudget: {}
-  #  minAvailable: 1
-  #  maxUnavailable: 1
+## See `kubectl explain poddisruptionbudget.spec` for more
+## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+podDisruptionBudget: {}
+#  minAvailable: 1
+#  maxUnavailable: 1
 
-  extraConfigFiles: {}
-    # filebeat.yml: |-
-    #   filebeat.inputs:
-    #   - type: log
-    #     paths:
-    #       - /var/lib/milvus/logs/*.log
-    #     tags: ["milvus"]
-    #     fields_under_root: true
-    #     fields:
-    #       app: milvus
-    #       type: log
+extraConfigFiles: {}
+  # filebeat.yml: |-
+  #   filebeat.inputs:
+  #   - type: log
+  #     paths:
+  #       - /var/lib/milvus/logs/*.log
+  #     tags: ["milvus"]
+  #     fields_under_root: true
+  #     fields:
+  #       app: milvus
+  #       type: log
 
-    #   output.logstash:
-    #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
+  #   output.logstash:
+  #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md

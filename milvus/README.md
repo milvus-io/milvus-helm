@@ -49,7 +49,7 @@ The following table lists the configurable parameters of the milvus chart and th
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `engine.image.repository`                 | Image repository                              | `milvusdb/milvus`                                       |
-| `engine.image.tag`                        | Image tag                                     | `cpu-latest`                                            |
-| `engine.image.pullPolicy`                 | Image pull policy                             | `IfNotPresent`                                          |
-| `engine.image.pullSecrets`                | Image pull secrets                            | `{}`                                                    |
+| `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
+| `image.tag`                               | Image tag                                     | `cpu-latest`                                            |
+| `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
+| `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |

@@ -14,25 +14,24 @@ extraContainers: |
     securityContext:
       runAsUser: 0
     volumeMounts:
-    - name: milvus-engine-configmap
+    - name: milvus-configmap
       mountPath: /etc/filebeat.yml
       subPath: filebeat.yml
     - name: milvus-log-disk
       mountPath: /var/lib/milvus/logs
       subPath: logs
 
-engine:
-  extraConfigFiles:
-    filebeat.yml: |-
-      filebeat.inputs:
-      - type: log
-        paths:
-          - /var/lib/milvus/logs/*.log
-        tags: ["milvus"]
-        fields_under_root: true
-        fields:
-          app: milvus
-          type: log
+extraConfigFiles:
+  filebeat.yml: |-
+    filebeat.inputs:
+    - type: log
+      paths:
+        - /var/lib/milvus/logs/*.log
+      tags: ["milvus"]
+      fields_under_root: true
+      fields:
+        app: milvus
+        type: log
 
-      output.logstash:
-        hosts: ['ls.milvus.io:5044']
+    output.logstash:
+      hosts: ['ls.milvus.io:5044']
