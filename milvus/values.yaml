@@ -157,7 +157,7 @@ extraConfigFiles: {}
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
 ##
 mysql:
-  enabled: false
+  enabled: true
   name: mysql
   imageTag: "5.7.14"
   imagePullPolicy: IfNotPresent
@@ -194,6 +194,6 @@ mysql:
     existingClaim: ""
     annotations: {}
   ##  "helm.sh/resource-policy": keep
-    storageClass: default
+    storageClass:
     accessMode: ReadWriteOnce
-    size: 50Gi
+    size: 8Gi

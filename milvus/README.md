@@ -17,6 +17,8 @@ $ cd milvus-helm/milvus
 $ helm install --name my-release .
 ```
 
+or
+
 ```console
 # Helm v3.x
 $ cd milvus-helm/milvus
@@ -35,6 +37,8 @@ To uninstall/delete the my-release deployment:
 # Helm v2.x
 $ helm delete my-release
 ```
+
+or
 
 ```console
 # Helm v3.x
@@ -101,3 +105,14 @@ The following table lists the configurable parameters of the mysql chart and the
 | `mysql.mysqlDatabase`                     | Database name                                 | `milvus`                                                |
 | `mysql.imageTag`                          | Image targe                                   | `5.7.14`                                                |
 | `mysql.imagePullPolicy`                   | Image pull policy                             | `IfNotPresent`                                          |
+| `mysql.mysqlUser`                         | Username of new user to create.               | `milvus`                                                |
+| `mysql.mysqlPassword`                     | Password for the new user. Ignored if existing secret is provided | `milvus`                            |
+| `mysql.mysqlRootPassword`                 | Password for the root user. Ignored if existing secret is provided | `milvusroot`                       |
+| `mysql.configurationFiles`                | List of mysql configuration files             | `...`                                                   |
+| `mysql.initializationFiles`               | List of SQL files which are run after the container started | `...`                                     |
+| `mysql.persistence.enabled`               | Create a volume to store data                 | `true`                                                  |
+| `mysql.persistence.existingClaim`         | Name of existing persistent volume            | `unset`                                                 |
+| `mysql.persistence.annotations`           | Persistent Volume annotations                 | `{}`                                                    |
+| `mysql.persistence.storageClass`          | Type of persistent volume claim               | `unset`                                                 |
+| `mysql.persistence.accessMode`            | ReadWriteOnce or ReadOnly                     | `ReadWriteOnce`                                         |
+| `mysql.persistence.size`                  | Size of persistent volume claim               | `8Gi RW`                                                |
