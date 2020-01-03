@@ -5,26 +5,30 @@
 # Common
 initContainerImage: "alpine:3.8"
 
-expose:
-  # Set the way how to expose the service. Set the type as "loadBalancer",
-  # "clusterIP", "nodePort" or "loadBalancer" and fill the information
-  # in the corresponding section
-  type: loadBalancer
-  clusterIP:
-    # The name of ClusterIP service
-    name: http
-    ports:
-      httpPort: 19530
-  nodePort:
-    name: http
-    ports:
-      http:
-        port: 19530
-        nodePort: 30001
-  loadBalancer:
-    name: http
-    ports:
-      httpPort: 19530
+## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
+## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+service:
+  type: ClusterIP
+  port: 19530
+  targetPort: 19530
+  annotations: {}
+  labels: {}
+  portName: service
+
+  ## List of IP addresses at which the Prometheus server service is available
+  ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+  ##
+  externalIPs: []
+  #   - externalIp1
+
+  # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+  # set allowed inbound rules on the security group assigned to the master load balancer
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  # Optionally assign a known public LB IP
+  # loadBalancerIP: 1.2.3.4
 
 extraContainers: |
   # - name: filebeat
@@ -59,18 +63,28 @@ extraVolumeMounts: []
   #   readOnly: true
 
 persistence:
+  ## If true, alertmanager will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  ##
   enabled: true
   resourcePolicy: "keep"
   persistentVolumeClaim:
     dbdata:
       existingClaim: ""
-      storageClass: "default"
+      ## milvus data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass:
       accessModes: ReadWriteMany
       size: 50Gi
       subPath: dbdata
     logfile:
       existingClaim: ""
-      storageClass: "default"
+      storageClass:
       accessModes: ReadWriteMany
       size: 5Gi
       subPath: logs
@@ -78,7 +92,7 @@ persistence:
 image:
   repository: milvusdb/milvus
   tag: cpu-latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -93,10 +107,6 @@ resources:
   requests:
     memory: "8Gi"
     cpu: "2.0"
-ports:
-  name: http
-  containerPort: 19530
-  protocol: TCP
 livenessProbe:
   tcpSocket:
     port: 19530

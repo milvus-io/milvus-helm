@@ -42,9 +42,9 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-          - name: {{ .Values.ports.name }}
-            containerPort: {{ .Values.ports.containerPort }}
-            protocol: {{ .Values.ports.protocol }}
+          - name: {{ .Values.service.portName }}
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
