@@ -1,4 +1,3 @@
-{{- if .Values.server.enabled -}}
 The Milvus server can be accessed via port {{ .Values.server.service.servicePort }} on the following DNS name from within your cluster:
 {{ template "milvus.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
 
@@ -16,7 +15,6 @@ Get the Milvus server URL by running these commands in the same shell:
 {{- else if contains "ClusterIP"  .Values.service.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "milvus.name" . }},release={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530
-{{- end }}
 {{- end }}
 
 For more information on running Milvus, visit:
