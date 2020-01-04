@@ -5,6 +5,8 @@
 # Common
 initContainerImage: "alpine:3.8"
 
+extraInitContainers: []
+
 ## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
@@ -62,12 +64,28 @@ extraVolumeMounts: []
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
+extraConfigFiles: {}
+  # filebeat.yml: |-
+  #   filebeat.inputs:
+  #   - type: log
+  #     paths:
+  #       - /var/lib/milvus/logs/*.log
+  #     tags: ["milvus"]
+  #     fields_under_root: true
+  #     fields:
+  #       app: milvus
+  #       type: log
+
+  #   output.logstash:
+  #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
+
 persistence:
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
   enabled: true
-  resourcePolicy: "keep"
+  annotations: {}
+  #  helm.sh/resource-policy: keep
   persistentVolumeClaim:
     dbdata:
       existingClaim: ""
@@ -138,21 +156,6 @@ podDisruptionBudget: {}
 #  minAvailable: 1
 #  maxUnavailable: 1
 
-extraConfigFiles: {}
-  # filebeat.yml: |-
-  #   filebeat.inputs:
-  #   - type: log
-  #     paths:
-  #       - /var/lib/milvus/logs/*.log
-  #     tags: ["milvus"]
-  #     fields_under_root: true
-  #     fields:
-  #       app: milvus
-  #       type: log
-
-  #   output.logstash:
-  #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
-
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
 ##
@@ -193,7 +196,7 @@ mysql:
     enabled: true
     existingClaim: ""
     annotations: {}
-  ##  "helm.sh/resource-policy": keep
+    #  "helm.sh/resource-policy": keep
     storageClass:
     accessMode: ReadWriteOnce
     size: 8Gi

@@ -4,10 +4,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ template "milvus.dbdata" . }}
-  {{- if eq .Values.persistence.resourcePolicy "keep" }}
+{{- with .Values.persistence.annotations  }}
   annotations:
-    helm.sh/resource-policy: keep
-  {{- end }}
+{{ toYaml . | indent 4 }}
+{{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
 spec:

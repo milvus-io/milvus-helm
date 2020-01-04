@@ -56,14 +56,19 @@ The following table lists the configurable parameters of the milvus chart and th
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `replicas`                                | Number of nodes                               | `1`                                                     |
-| `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
-| `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
-| `livenessProbe`                           | Liveness Probe settings                       | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 5 }` |
-| `readinessProbe`                          | Readiness Probe settings                      | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 3 }` |
+| `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
 | `image.tag`                               | Image tag                                     | `cpu-latest`                                            |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
+| `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
+| `extraInitContainers`                     | Additional init containers                    | `[]`                                                    |
+| `extraContainers`                         | Additional containers                         | `unset`                                                 |
+| `extraVolumes`                            | Additional volumes for use in extraContainers | `unset`                                                 |
+| `extraVolumeMounts`                       | Additional volume mounts to add to the pods   | `unset`                                                 |
+| `extraConfigFiles`                        | Content of additional configuration files.    | `{}`                                                    |
+| `livenessProbe`                           | Liveness Probe settings                       | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 5 }` |
+| `readinessProbe`                          | Readiness Probe settings                      | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 3 }` |
 | `service.type`                            | Kubernetes service type                       | `ClusterIP`                                             |
 | `service.port`                            | Kubernetes port where service is exposed      | `19530`                                                 |
 | `service.portName`                        | Name of the port on the service               | `service`                                               |
@@ -75,8 +80,8 @@ The following table lists the configurable parameters of the milvus chart and th
 | `service.loadBalancerIP`                  | IP address to assign to load balancer (if supported) | `unset`                                          |
 | `service.loadBalancerSourceRanges`        | list of IP CIDRs allowed access to lb (if supported) | `[]`                                             |
 | `serivce.externalIPs`                     | service external IP addresses                 | `[]`                                                    |
-| `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
 | `persistence.enabled`                     | Use persistent volume to store data           | `false`                                                 |
+| `persistence.annotations`                 | PersistentVolumeClaim annotations             | `{}`                                                    |
 | `persistence.persistentVolumeClaim.dbdata.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                        |
 | `persistence.persistentVolumeClaim.dbdata.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                 |
 | `persistence.persistentVolumeClaim.dbdata.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                 |
