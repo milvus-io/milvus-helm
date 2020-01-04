@@ -2,6 +2,24 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Milvus Server Configuration
+
+primaryPath: "/var/lib/milvus/data"
+deployMode: "single"
+InsertBufferSize: 4
+cpuCacheCapacity: 16
+cacheInsertData: false
+useBLASThreshold: 1100
+gpuSearchThreshold: 1100
+
+gpu:
+  enable: false
+  cacheCapacity: 4
+  searchResources:
+    - gpu0
+  buildIndexResources:
+    - gpu0
+
 # Common
 initContainerImage: "alpine:3.8"
 
@@ -14,7 +32,6 @@ extraInitContainers: []
 service:
   type: ClusterIP
   port: 19530
-  targetPort: 19530
   annotations: {}
   labels: {}
   portName: service
@@ -87,25 +104,18 @@ persistence:
   annotations: {}
   #  helm.sh/resource-policy: keep
   persistentVolumeClaim:
-    dbdata:
-      existingClaim: ""
-      ## milvus data Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      storageClass:
-      accessModes: ReadWriteMany
-      size: 50Gi
-      subPath: dbdata
-    logfile:
-      existingClaim: ""
-      storageClass:
-      accessModes: ReadWriteMany
-      size: 5Gi
-      subPath: logs
+    existingClaim: ""
+    ## milvus data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+    accessModes: ReadWriteMany
+    size: 50Gi
+    subPath: data
 
 image:
   repository: milvusdb/milvus
@@ -145,10 +155,6 @@ tolerations: []
 affinity: {}
 ## Additional deployment annotations
 podAnnotations: {}
-
-mainConf: "config/cpu/server_config.yaml"
-
-logConf: "config/log_config.conf"
 
 ## See `kubectl explain poddisruptionbudget.spec` for more
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

@@ -4,10 +4,10 @@ metadata:
   name: {{ template "milvus.fullname" . }}
 data:
   server_config.yaml: |
-{{ tpl (.Files.Get .Values.mainConf) . | indent 4 }}
+    {{- include "milvus.serverConfig" . | nindent 4 }}
 
   log_config.conf: |
-{{ tpl (.Files.Get .Values.logConf) . | indent 4 }}
+    {{- include "milvus.logConfig" . | nindent 4 }}
 
 {{- range $key, $value := .Values.extraConfigFiles }}
   {{ $key }}: |-

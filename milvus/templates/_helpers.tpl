@@ -44,10 +44,3 @@ app: "{{ template "milvus.name" . }}"
 release: {{ .Release.Name }}
 app: "{{ template "milvus.name" . }}"
 {{- end -}}
-
-{{- define "milvus.dbdata" -}}
-  {{- printf "%s-dbdata" (include "milvus.fullname" .) -}}
-{{- end -}}
-{{- define "milvus.logfile" -}}
-  {{- printf "%s-logfile" (include "milvus.fullname" .) -}}
-{{- end -}}

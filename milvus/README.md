@@ -72,7 +72,6 @@ The following table lists the configurable parameters of the milvus chart and th
 | `service.type`                            | Kubernetes service type                       | `ClusterIP`                                             |
 | `service.port`                            | Kubernetes port where service is exposed      | `19530`                                                 |
 | `service.portName`                        | Name of the port on the service               | `service`                                               |
-| `service.targetPort`                      | Internal service is port                      | `19530`                                                 |
 | `service.nodePort`                        | Kubernetes service nodePort                   | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
 | `service.labels`                          | Custom labels                                 | `{}`                                                    |
@@ -82,16 +81,11 @@ The following table lists the configurable parameters of the milvus chart and th
 | `serivce.externalIPs`                     | service external IP addresses                 | `[]`                                                    |
 | `persistence.enabled`                     | Use persistent volume to store data           | `false`                                                 |
 | `persistence.annotations`                 | PersistentVolumeClaim annotations             | `{}`                                                    |
-| `persistence.persistentVolumeClaim.dbdata.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                        |
-| `persistence.persistentVolumeClaim.dbdata.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                 |
-| `persistence.persistentVolumeClaim.dbdata.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                 |
-| `persistence.persistentVolumeClaim.dbdata.size` | The size of milvus data Persistent Volume Storage Class | `50Gi`                                  |
-| `persistence.persistentVolumeClaim.dbdata.subPath` | SubPath for milvus data mount        | `dbdata`                                                |
-| `persistence.persistentVolumeClaim.logfile.existingClaim` | Use your own logfile Persistent Volume existing claim name | `unset`                    |
-| `persistence.persistentVolumeClaim.logfile.storageClass` | The milvus logfile Persistent Volume Storage Class | `unset`                             |
-| `persistence.persistentVolumeClaim.logfile.accessModes` | The milvus logfile Persistence access modes | `ReadWriteMany`                             |
-| `persistence.persistentVolumeClaim.logfile.size` | The size of milvus logfile Persistent Volume Storage Class | `5Gi`                               |
-| `persistence.persistentVolumeClaim.logfile.subPath` | SubPath for milvus logfile mount    | `logs`                                                  |
+| `persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                        |
+| `persistence.persistentVolumeClaim.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                 |
+| `persistence.persistentVolumeClaim.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                 |
+| `persistence.persistentVolumeClaim.size` | The size of milvus data Persistent Volume Storage Class | `50Gi`                                  |
+| `persistence.persistentVolumeClaim.subPath` | SubPath for milvus data mount        | `data`                                                |
 | `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
 | `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
 | `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
