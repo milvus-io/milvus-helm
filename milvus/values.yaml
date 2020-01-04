@@ -13,12 +13,16 @@ useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 
 gpu:
-  enable: false
+  enabled: false
   cacheCapacity: 4
   searchResources:
     - gpu0
   buildIndexResources:
     - gpu0
+
+metrics:
+  enabled: false
+  port: 8080
 
 # Common
 initContainerImage: "alpine:3.8"
@@ -100,7 +104,7 @@ persistence:
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
-  enabled: true
+  enabled: false
   annotations: {}
   #  helm.sh/resource-policy: keep
   persistentVolumeClaim:

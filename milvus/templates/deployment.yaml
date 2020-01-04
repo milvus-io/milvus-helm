@@ -49,7 +49,7 @@ spec:
             containerPort: 19530
             protocol: TCP
           - name: metrics
-            containerPort: 8080
+            containerPort: {{ .Values.metrics.port }}
             protocol: TCP
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}

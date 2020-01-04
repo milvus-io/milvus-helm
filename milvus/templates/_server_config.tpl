@@ -23,10 +23,10 @@ db_config:
                                     # you can specify preload tables like this: table1,table2,table3
 
 metric_config:
-  enable_monitor: false             # enable monitoring or not, must be a boolean
+  enable_monitor: {{ .Values.metrics.enabled }}             # enable monitoring or not, must be a boolean
   collector: prometheus             # prometheus
   prometheus_config:
-    port: 8080                      # port prometheus uses to fetch metrics, must in range [1025, 65534]
+    port: {{ .Values.metrics.port }}                      # port prometheus uses to fetch metrics, must in range [1025, 65534]
 
 cache_config:
   cpu_cache_capacity: {{ .Values.cpuCacheCapacity }}            # GB, size of CPU memory used for cache, must be a positive integer
@@ -38,7 +38,7 @@ engine_config:
   gpu_search_threshold: {{ .Values.gpuSearchThreshold }}        # threshold beyond which the search computation is executed on GPUs only
 
 gpu_resource_config:
-  enable: {{ .Values.gpu.enable }}  # whether to enable GPU resources
+  enable: {{ .Values.gpu.enabled }}  # whether to enable GPU resources
   cache_capacity: {{ .Values.gpu.cacheCapacity }}                 # GB, size of GPU memory per card used for cache, must be a positive integer
   {{- with .Values.gpu.searchResources }}
   search_resources:                 # define the GPU devices used for search computation, must be in format gpux
