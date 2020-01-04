@@ -1,4 +1,4 @@
-The Milvus server can be accessed via port {{ .Values.server.service.servicePort }} on the following DNS name from within your cluster:
+The Milvus server can be accessed via port {{ .Values.service.port }} on the following DNS name from within your cluster:
 {{ template "milvus.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
 
 Get the Milvus server URL by running these commands in the same shell:
