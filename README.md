@@ -49,7 +49,26 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-### Milvus Configuration
+### Milvus Server Configuration
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `primaryPath`                             | Path used to store data and metadata          | `/var/lib/milvus/data`                                  |
+| `timeZone`                                | Time zone                                     | `UTC+8`                                                 |
+| `backendURL`                              | URI format: dialect://username:password@host:port/database,Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
+| `deployMode`                              | Deployment type: single, cluster_readonly, cluster_writable | `single`                                  |
+| `insertBufferSize`                        | Maximum insert buffer size allowed (GB)       | `4`                                                     |
+| `cpuCacheCapacity`                        | Size of CPU memory used for cache  (GB)       | `16`                                                    |
+| `cacheInsertData`                         | Load inserted data into cache                 | `false`                                                 |
+| `useBLASThreshold`                        | BLAS threshold                                | `1100`                                                  |
+| `gpuSearchThreshold`                      | GPU search threshold                          | `1100`                                                  |
+| `gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
+| `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `4`                                                     |
+| `gpu.searchResources`                     | Define the GPU devices used for search computation | `[gpu0]`                                           |
+| `gpu.buildIndexResources`                 | Define the GPU devices used for index building | `[gpu0]`                                               |
+| `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |
+| `metrics.port`                            | Prometheus monitoring metrics port            | `8080`                                                  |
+
+### Milvus Deploy Configuration
 
 The following table lists the configurable parameters of the milvus chart and their default values.
 
@@ -75,17 +94,17 @@ The following table lists the configurable parameters of the milvus chart and th
 | `service.nodePort`                        | Kubernetes service nodePort                   | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
 | `service.labels`                          | Custom labels                                 | `{}`                                                    |
-| `service.clusterIP`                       | internal cluster service IP                   | `unset`                                                 |
+| `service.clusterIP`                       | Internal cluster service IP                   | `unset`                                                 |
 | `service.loadBalancerIP`                  | IP address to assign to load balancer (if supported) | `unset`                                          |
 | `service.loadBalancerSourceRanges`        | list of IP CIDRs allowed access to lb (if supported) | `[]`                                             |
 | `serivce.externalIPs`                     | service external IP addresses                 | `[]`                                                    |
 | `persistence.enabled`                     | Use persistent volume to store data           | `false`                                                 |
 | `persistence.annotations`                 | PersistentVolumeClaim annotations             | `{}`                                                    |
-| `persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                        |
-| `persistence.persistentVolumeClaim.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                 |
-| `persistence.persistentVolumeClaim.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                 |
-| `persistence.persistentVolumeClaim.size` | The size of milvus data Persistent Volume Storage Class | `50Gi`                                  |
-| `persistence.persistentVolumeClaim.subPath` | SubPath for milvus data mount        | `data`                                                |
+| `persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                               |
+| `persistence.persistentVolumeClaim.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                        |
+| `persistence.persistentVolumeClaim.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                        |
+| `persistence.persistentVolumeClaim.size` | The size of milvus data Persistent Volume Storage Class | `50Gi`                                         |
+| `persistence.persistentVolumeClaim.subPath` | SubPath for milvus data mount               | `data`                                                  |
 | `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
 | `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
 | `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
@@ -114,4 +133,4 @@ The following table lists the configurable parameters of the mysql chart and the
 | `mysql.persistence.annotations`           | Persistent Volume annotations                 | `{}`                                                    |
 | `mysql.persistence.storageClass`          | Type of persistent volume claim               | `unset`                                                 |
 | `mysql.persistence.accessMode`            | ReadWriteOnce or ReadOnly                     | `ReadWriteOnce`                                         |
-| `mysql.persistence.size`                  | Size of persistent volume claim               | `8Gi RW`                                                |
+| `mysql.persistence.size`                  | Size of persistent volume claim               | `8Gi`                                                   |

@@ -1,0 +1,10 @@
+gpu:
+  enabled: false
+
+mysql:
+  enabled: true
+  persistence:
+    enabled: false
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 5Gi

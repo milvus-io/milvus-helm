@@ -89,7 +89,7 @@ spec:
       - name: milvus-configmap
         configMap:
             name: {{ template "milvus.fullname" . }}
-      - name: milvus-db-disk
+      - name: milvus-data-disk
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.fullname" .) }}

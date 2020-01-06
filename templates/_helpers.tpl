@@ -44,3 +44,11 @@ app: "{{ template "milvus.name" . }}"
 release: {{ .Release.Name }}
 app: "{{ template "milvus.name" . }}"
 {{- end -}}
+
+{{/* Milvus backend URL */}}
+{{- define "milvus.mysqlURL" -}}
+mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
+{{- end -}}
+{{- define "milvus.sqliteURL" -}}
+sqlite://:@:/
+{{- end -}}

@@ -6,17 +6,25 @@ server_config:
   address: 0.0.0.0                  # milvus server ip address (IPv4)
   port: 19530                       # milvus server port, must in range [1025, 65534]
   deploy_mode: {{ .Values.deployMode }}               # deployment type: single, cluster_readonly, cluster_writable
-  time_zone: UTC+8                  # time zone, must be in format: UTC+X
+  time_zone: {{ .Values.timeZone }}                  # time zone, must be in format: UTC+X
 
 db_config:
   primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
 
-  backend_url: mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}       # URI format: dialect://username:password@host:port/database
+{{- if not .Values.backendURL }}
+  {{- if .Values.mysql.enabled }}
+  backend_url: {{ template "milvus.mysqlURL" . }}       # URI format: dialect://username:password@host:port/database
+  {{- else }}
+  backend_url: {{ template "milvus.sqliteURL" . }}       # URI format: dialect://username:password@host:port/database
+  {{- end }}
+{{- else }}
+  backend_url: {{ .Values.backendURL }}       # URI format: dialect://username:password@host:port/database
+{{- end }}
                                     # Keep 'dialect://:@:/', and replace other texts with real values
                                     # Replace 'dialect' with 'mysql' or 'sqlite'
 
-  insert_buffer_size: {{ .Values.InsertBufferSize }}             # GB, maximum insert buffer size allowed, must be a positive integer
+  insert_buffer_size: {{ .Values.insertBufferSize }}             # GB, maximum insert buffer size allowed, must be a positive integer
                                     # sum of insert_buffer_size and cpu_cache_capacity cannot exceed total memory
 
   preload_table:                    # preload data at startup, '*' means load all tables, empty value means no preload
