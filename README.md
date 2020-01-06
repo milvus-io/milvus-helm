@@ -1,6 +1,13 @@
 # Milvus Helm Chart
 
-* Installs the milvus system [Milvus](https://milvus.io/)
+* The canonical source for Helm charts is the [Helm Hub](https://hub.helm.sh/), an aggregator for distributed chart repos.
+
+* For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
+
+* Installs the milvus system [Milvus installation](https://milvus.io/docs/guides/get_started/install_milvus/install_milvus.md)
+
+## Introduction
+This chart bootstraps an milvus deployment on a Kubernetes cluster using the Helm package manager.
 
 ## Prerequisites
 
@@ -59,13 +66,13 @@ The following table lists the configurable parameters of the milvus server and t
 | `timeZone`                                | Time zone                                     | `UTC+8`                                                 |
 | `backendURL`                              | URI format: dialect://username:password@host:port/database,Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
 | `deployMode`                              | Deployment type: single, cluster_readonly, cluster_writable | `single`                                  |
-| `insertBufferSize`                        | Maximum insert buffer size allowed (GB)       | `4`                                                     |
-| `cpuCacheCapacity`                        | Size of CPU memory used for cache  (GB)       | `16`                                                    |
+| `insertBufferSize`                        | Maximum insert buffer size allowed (GB)       | `1`                                                     |
+| `cpuCacheCapacity`                        | Size of CPU memory used for cache  (GB)       | `4`                                                    |
 | `cacheInsertData`                         | Load inserted data into cache                 | `false`                                                 |
 | `useBLASThreshold`                        | BLAS threshold                                | `1100`                                                  |
 | `gpuSearchThreshold`                      | GPU search threshold                          | `1100`                                                  |
 | `gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
-| `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `4`                                                     |
+| `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `1`                                                     |
 | `gpu.searchResources`                     | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `gpu.buildIndexResources`                 | Define the GPU devices used for index building | `[gpu0]`                                               |
 | `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |

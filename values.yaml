@@ -8,15 +8,15 @@ primaryPath: "/var/lib/milvus/data"
 timeZone: "UTC+8"
 #backendURL: ""
 deployMode: "single"
-insertBufferSize: 4
-cpuCacheCapacity: 16
+insertBufferSize: 1
+cpuCacheCapacity: 4
 cacheInsertData: false
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 
 gpu:
   enabled: false
-  cacheCapacity: 4
+  cacheCapacity: 1
   searchResources:
     - gpu0
   buildIndexResources:
