@@ -18,7 +18,7 @@ To install the chart with the release name `my-release`:
 
 ```console
 # Helm v2.x
-$ cd milvus-helm/milvus
+$ cd milvus-helm
 $ helm install --name my-release .
 ```
 
@@ -26,7 +26,7 @@ or
 
 ```console
 # Helm v3.x
-$ cd milvus-helm/milvus
+$ cd milvus-helm
 $ helm install my-release  .
 ```
 
