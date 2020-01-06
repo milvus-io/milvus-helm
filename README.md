@@ -62,7 +62,7 @@ The following table lists the configurable parameters of the Milvus server and t
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `primaryPath`                             | Path used to store data and metadata          | `/var/lib/milvus/data`                                  |
 | `timeZone`                                | Time zone                                     | `UTC+8`                                                 |
-| `backendURL`                              | URI format: dialect://username:password@host:port/database,Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
+| `backendURL`                              | URI format: dialect://username:password@host:port/database. Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
 | `deployMode`                              | Deployment type: single, cluster_readonly, cluster_writable | `single`                                  |
 | `insertBufferSize`                        | Maximum insert buffer size allowed (GB)       | `1`                                                     |
 | `cpuCacheCapacity`                        | Size of CPU memory used for cache  (GB)       | `4`                                                    |
