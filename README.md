@@ -5,7 +5,7 @@
 * To install Milvus, refer to [Milvus installation](https://milvus.io/docs/guides/get_started/install_milvus/install_milvus.md)
 
 ## Introduction
-This chart bootstraps an milvus deployment on a Kubernetes cluster using the Helm package manager.
+This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm package manager.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ $ cd milvus-helm
 $ helm install my-release  .
 ```
 
-After a few minutes, you should see service statuses being written to the configured output, which is a log file inside the milvus container.
+After a few minutes, you should see service statuses being written to the configured output, which is a log file inside the Milvus container.
 
 > **Tip**: List all releases using `helm list`
 
@@ -54,9 +54,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-### Milvus Server Configuration
+### Milvus server Configuration
 
-The following table lists the configurable parameters of the milvus server and their default values.
+The following table lists the configurable parameters of the Milvus server and their default values.
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
@@ -78,7 +78,7 @@ The following table lists the configurable parameters of the milvus server and t
 
 ### Milvus Deploy Configuration
 
-The following table lists the configurable parameters of the milvus chart and their default values.
+The following table lists the configurable parameters of the Milvus chart and their default values.
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
@@ -109,10 +109,10 @@ The following table lists the configurable parameters of the milvus chart and th
 | `persistence.enabled`                     | Use persistent volume to store data           | `false`                                                 |
 | `persistence.annotations`                 | PersistentVolumeClaim annotations             | `{}`                                                    |
 | `persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                               |
-| `persistence.persistentVolumeClaim.storageClass` | The milvus data Persistent Volume Storage Class | `unset`                                        |
-| `persistence.persistentVolumeClaim.accessModes` | The milvus data Persistence access modes | `ReadWriteMany`                                        |
-| `persistence.persistentVolumeClaim.size` | The size of milvus data Persistent Volume Storage Class | `50Gi`                                         |
-| `persistence.persistentVolumeClaim.subPath` | SubPath for milvus data mount               | `data`                                                  |
+| `persistence.persistentVolumeClaim.storageClass` | The Milvus data Persistent Volume Storage Class | `unset`                                        |
+| `persistence.persistentVolumeClaim.accessModes` | The Milvus data Persistence access modes | `ReadWriteMany`                                        |
+| `persistence.persistentVolumeClaim.size` | The size of Milvus data Persistent Volume Storage Class | `50Gi`                                         |
+| `persistence.persistentVolumeClaim.subPath` | SubPath for Milvus data mount               | `data`                                                  |
 | `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
 | `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
 | `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
