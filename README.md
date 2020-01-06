@@ -1,8 +1,8 @@
 # Milvus Helm Chart
 
-* For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
+For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
 
-* To install Milvus, refer to [Milvus installation](https://milvus.io/docs/guides/get_started/install_milvus/install_milvus.md)
+To install Milvus, refer to [Milvus installation](https://milvus.io/docs/guides/get_started/install_milvus/install_milvus.md).
 
 ## Introduction
 This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm package manager.
@@ -12,7 +12,7 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 - Kubernetes 1.10+
 - Helm >= 2.12.0
 
-## Installing the Chart
+## Install the Chart
 
 To install the chart with the release name `my-release`:
 
@@ -32,7 +32,7 @@ $ helm install my-release  .
 
 After a few minutes, you should see service statuses being written to the configured output, which is a log file inside the Milvus container.
 
-> **Tip**: List all releases using `helm list`
+> **Tip**: To list all releases, using `helm list`.
 
 ## Uninstall the Chart
 
