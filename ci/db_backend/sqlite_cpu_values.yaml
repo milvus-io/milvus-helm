@@ -1,0 +1,8 @@
+insertBufferSize: 4
+cpuCacheCapacity: 8
+
+gpu:
+  enabled: false
+
+mysql:
+  enabled: false
