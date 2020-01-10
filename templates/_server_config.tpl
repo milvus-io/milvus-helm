@@ -29,12 +29,6 @@ db_config:
 storage_config:
   primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
-  minio_enable: false
-  minio_address: 127.0.0.1
-  minio_port: 9000
-  minio_access_key: minioadmin
-  minio_secret_key: minioadmin
-  minio_bucket: milvus-bucket
 
 metric_config:
   enable_monitor: {{ .Values.metrics.enabled }}             # enable monitoring or not, must be a boolean
