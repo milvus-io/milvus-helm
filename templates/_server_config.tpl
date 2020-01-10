@@ -9,7 +9,7 @@ server_config:
   time_zone: {{ .Values.timeZone }}                  # time zone, must be in format: UTC+X
 
 db_config:
-  primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
+  primary_path: "{{ .Values.primaryPath }}/db"         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
 
 {{- if not .Values.backendURL }}
