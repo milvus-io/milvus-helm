@@ -9,9 +9,6 @@ server_config:
   time_zone: {{ .Values.timeZone }}                  # time zone, must be in format: UTC+X
 
 db_config:
-  primary_path: "{{ .Values.primaryPath }}/db"         # path used to store data and meta
-  secondary_path:                   # path used to store data only, split by semicolon
-
 {{- if not .Values.backendURL }}
   {{- if .Values.mysql.enabled }}
   backend_url: {{ template "milvus.mysqlURL" . }}       # URI format: dialect://username:password@host:port/database
@@ -29,6 +26,15 @@ db_config:
 
   preload_table:                    # preload data at startup, '*' means load all tables, empty value means no preload
                                     # you can specify preload tables like this: table1,table2,table3
+storage_config:
+  primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
+  secondary_path:                   # path used to store data only, split by semicolon
+  minio_enable: false
+  minio_address: 127.0.0.1
+  minio_port: 9000
+  minio_access_key: minioadmin
+  minio_secret_key: minioadmin
+  minio_bucket: milvus-bucket
 
 metric_config:
   enable_monitor: {{ .Values.metrics.enabled }}             # enable monitoring or not, must be a boolean
