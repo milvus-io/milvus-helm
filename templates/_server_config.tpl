@@ -32,9 +32,8 @@ storage_config:
 
 metric_config:
   enable_monitor: {{ .Values.metrics.enabled }}             # enable monitoring or not, must be a boolean
-  collector: prometheus             # prometheus
-  prometheus_config:
-    port: {{ .Values.metrics.port }}                      # port prometheus uses to fetch metrics, must in range [1025, 65534]
+  address: {{ .Values.metrics.address }}
+  port: {{ .Values.metrics.port }}                      # port prometheus uses to fetch metrics, must in range [1025, 65534]
 
 cache_config:
   cpu_cache_capacity: {{ .Values.cpuCacheCapacity }}            # GB, size of CPU memory used for cache, must be a positive integer
