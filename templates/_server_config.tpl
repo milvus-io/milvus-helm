@@ -20,10 +20,6 @@ db_config:
 {{- end }}
                                     # Keep 'dialect://:@:/', and replace other texts with real values
                                     # Replace 'dialect' with 'mysql' or 'sqlite'
-
-  insert_buffer_size: {{ .Values.insertBufferSize }}             # GB, maximum insert buffer size allowed, must be a positive integer
-                                    # sum of insert_buffer_size and cpu_cache_capacity cannot exceed total memory
-
   preload_table:                    # preload data at startup, '*' means load all tables, empty value means no preload
                                     # you can specify preload tables like this: table1,table2,table3
 storage_config:
@@ -38,6 +34,8 @@ metric_config:
 cache_config:
   cpu_cache_capacity: {{ .Values.cpuCacheCapacity }}            # GB, size of CPU memory used for cache, must be a positive integer
   cache_insert_data: {{ .Values.cacheInsertData }}          # whether to load inserted data into cache, must be a boolean
+  insert_buffer_size: {{ .Values.insertBufferSize }}             # GB, maximum insert buffer size allowed, must be a positive integer
+                                    # sum of insert_buffer_size and cpu_cache_capacity cannot exceed total memory
 
 engine_config:
   use_blas_threshold: {{ .Values.useBLASThreshold }}          # if nq <  use_blas_threshold, use SSE, faster with fluctuated response times
