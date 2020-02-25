@@ -32,6 +32,7 @@ wal:
   ignoreErrorLog: false
   bufferSize: 128
   recordSize: 2 
+  path: /var/lib/milvus/data/wal
 
 # Common
 initContainerImage: "alpine:3.8"
