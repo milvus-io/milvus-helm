@@ -54,3 +54,10 @@ gpu_resource_config:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}
+
+wal_config:
+  enable:  {{ .Values.wal.enabled }}
+  recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
+  buffer_size: {{ .Values.wal.bufferSize }}
+  record_size: {{ .Values.wal.recordSize }}
+  wal_path: {{ .Values.wal.path }}

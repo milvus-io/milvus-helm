@@ -27,6 +27,13 @@ metrics:
   address: 127.0.0.1
   port: 8080
 
+wal:
+  enabled: true
+  ignoreErrorLog: false
+  bufferSize: 128
+  recordSize: 2 
+  path: /var/lib/milvus/data/wal
+
 # Common
 initContainerImage: "alpine:3.8"
 
