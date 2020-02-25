@@ -53,7 +53,6 @@ gpu_resource_config:
   build_index_resources:            # define the GPU devices used for index building, must be in format gpux
     {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
 
 wal_config:
   enable:  {{ .Values.wal.enabled }}
@@ -61,3 +60,4 @@ wal_config:
   buffer_size: {{ .Values.wal.bufferSize }}
   record_size: {{ .Values.wal.recordSize }}
   wal_path: {{ .Values.wal.path }}
+{{- end }}
