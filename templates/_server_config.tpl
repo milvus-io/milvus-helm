@@ -22,6 +22,8 @@ db_config:
                                     # Replace 'dialect' with 'mysql' or 'sqlite'
   preload_table:                    # preload data at startup, '*' means load all tables, empty value means no preload
                                     # you can specify preload tables like this: table1,table2,table3
+  auto_flush_interval: {{ .Values.autoFlushInterval }}
+
 storage_config:
   primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
