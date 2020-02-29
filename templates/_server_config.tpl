@@ -22,6 +22,8 @@ db_config:
                                     # Replace 'dialect' with 'mysql' or 'sqlite'
   preload_table:                    # preload data at startup, '*' means load all tables, empty value means no preload
                                     # you can specify preload tables like this: table1,table2,table3
+  auto_flush_interval: {{ .Values.autoFlushInterval }}
+
 storage_config:
   primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
@@ -53,4 +55,11 @@ gpu_resource_config:
   build_index_resources:            # define the GPU devices used for index building, must be in format gpux
     {{- toYaml . | nindent 4 }}
   {{- end }}
+
+wal_config:
+  enable:  {{ .Values.wal.enabled }}
+  recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
+  buffer_size: {{ .Values.wal.bufferSize }}
+  record_size: {{ .Values.wal.recordSize }}
+  wal_path: {{ .Values.wal.path }}
 {{- end }}
