@@ -13,7 +13,7 @@ cpuCacheCapacity: 4
 cacheInsertData: false
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
-autoFlushInterval: 1000
+autoFlushInterval: 1
 
 gpu:
   enabled: false
