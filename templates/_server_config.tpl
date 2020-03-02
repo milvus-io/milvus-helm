@@ -1,6 +1,6 @@
 {{- define "milvus.serverConfig" -}}
 # Default values are used when you make no changes to the following parameters.
-version: 0.2
+version: 0.1
 
 server_config:
   address: 0.0.0.0                  # milvus server ip address (IPv4)
