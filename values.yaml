@@ -6,6 +6,7 @@
 
 version: 0.2
 primaryPath: "/var/lib/milvus/data"
+logPath: "/var/lib/milvus/logs"
 timeZone: "UTC+8"
 #backendURL: ""
 deployMode: "single"
@@ -116,7 +117,7 @@ persistence:
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
-  enabled: false
+  enabled: true
   annotations: {}
   #  helm.sh/resource-policy: keep
   persistentVolumeClaim:
@@ -133,6 +134,7 @@ persistence:
     size: 50Gi
     subPath: data
 
+
 image:
   repository: milvusdb/milvus
   tag: cpu-latest
@@ -143,7 +145,12 @@ image:
   ##
   # pullSecrets:
   #   - myRegistryKeySecretName
-replicas: 1
+
+writeonlyReplicas: 1
+readonlyReplicas: 2
+proxyReplicas: 2
+
+## todo: ro, wo need different resource
 resources:
   limits:
     memory: "12Gi"
@@ -222,3 +229,17 @@ mysql:
     storageClass:
     accessMode: ReadWriteOnce
     size: 8Gi
+
+mishards:
+  image:
+    repository: milvusdb/mishards
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      memory: "8"
+      cpu: "4.0"
+    requests:
+      memory: "4Gi"
+      cpu: "2.0"

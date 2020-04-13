@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "milvus.fullname" . }}
+  name: {{ template "mishards.fullname" . }} # todo: temporoarily ro and wo use the same configfile
 data:
   server_config.yaml: |
     {{- include "milvus.serverConfig" . | nindent 4 }}
 
   log_config.conf: |
     {{- include "milvus.logConfig" . | nindent 4 }}
+
+  milvus_proxy_config.yaml: |
+    {{- include "milvus.proxyconfig" . | nindent 4 }}
 
 {{- range $key, $value := .Values.extraConfigFiles }}
   {{ $key }}: |-

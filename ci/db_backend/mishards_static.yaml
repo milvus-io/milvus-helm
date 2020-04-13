@@ -1,0 +1,13 @@
+insertBufferSize: 4
+cpuCacheCapacity: 8
+
+gpu:
+  enabled: false
+
+mysql:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClass: default
+    accessMode: ReadWriteOnce
+    size: 5Gi
