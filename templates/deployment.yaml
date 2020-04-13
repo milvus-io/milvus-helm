@@ -1,4 +1,3 @@
-# todo: writeonly => Values.romilvusName
 {{- $_ := set . "deploy_name" "writeonly" -}}
 apiVersion: apps/v1
 kind: Deployment
