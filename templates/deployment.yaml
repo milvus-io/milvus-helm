@@ -264,7 +264,11 @@ spec:
       - name: milvus-proxy
         image: "{{ .Values.mishards.image.repository }}:{{ .Values.mishards.image.tag }}"
         imagePullPolicy: {{ .Values.mishards.image.pullPolicy }}
-        command: ["python", "mishards/main.py"]
+        command:
+        - 'sh'
+        - '-c'
+        - >
+            pip install mysqlclient && python mishards/main.py
         ports:
           - name: proxy
             containerPort: 19530
@@ -301,16 +305,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-      - name: milvus-configmap
+      - name: mishards-env
         configMap:
           name: {{ template "mishards.fullname" . }}
-      # - name: milvus-data-disk
-      #   {{- if .Values.persistence.enabled }}
-      #   persistentVolumeClaim:
-      #     claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "mishards.fullname" .) }}
-      #   {{- else }}
-      #   emptyDir: {}
-      #   {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 6 }}
       {{- end }}

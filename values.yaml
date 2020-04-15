@@ -238,7 +238,7 @@ mishards:
 
   resources:
     limits:
-      memory: "8"
+      memory: "8Gi"
       cpu: "4.0"
     requests:
       memory: "4Gi"
