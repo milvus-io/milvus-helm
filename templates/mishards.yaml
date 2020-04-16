@@ -1,0 +1,89 @@
+{{- if .Values.mishards.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mishards.fullname" . }}
+  labels:
+{{ include "mishards.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.proxyReplicas }}
+  selector:
+    matchLabels:
+{{ include "mishards.matchLabels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "mishards.matchLabels" . | indent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+    spec:
+      {{- if .Values.mysql.enabled }}
+      initContainers:
+      - name: "wait-for-mysql"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+        - 'sh'
+        - '-c'
+        - >
+          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
+            sleep 2;
+          done;
+      {{- end }}
+{{- if .Values.extraInitContainers }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+{{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
+      containers:
+      - name: mishards
+        image: "{{ .Values.mishards.image.repository }}:{{ .Values.mishards.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - 'sh'
+        - '-c'
+        - >
+            pip install mysqlclient && python mishards/main.py
+        ports:
+          - name: proxy
+            containerPort: 19530
+            protocol: TCP
+        livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+        resources:
+          {{- toYaml .Values.mishards.resources | nindent 10 }}
+        volumeMounts:
+          - name: mishards-env
+            mountPath: /source/mishards/.env
+            subPath: milvus_proxy_config.yaml
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.extraContainers }}
+{{ tpl . $ | indent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+      - name: mishards-env
+        configMap:
+          name: {{ template "milvus.sharename" . }}
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+{{- end }}

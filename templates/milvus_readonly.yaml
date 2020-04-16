@@ -1,0 +1,103 @@
+{{- if .Values.mishards.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "milvus.fullname.readonly" . }}
+  labels:
+{{ include "milvus.labels.readonly" . | indent 4 }}
+spec:
+  replicas: {{ .Values.readonlyReplicas }}
+  selector:
+    matchLabels:
+{{ include "milvus.matchLabels.readonly" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "milvus.matchLabels.readonly" . | indent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+{{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+{{- end }}
+    spec:
+      {{- if .Values.mysql.enabled }}
+      initContainers:
+      - name: "wait-for-mysql"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+        - 'sh'
+        - '-c'
+        - >
+          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
+            sleep 2;
+          done;
+      {{- end }}
+{{- if .Values.extraInitContainers }}
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+{{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
+      containers:
+      - name: milvus
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: milvus
+            containerPort: 19530
+            protocol: TCP
+          - name: metrics
+            containerPort: {{ .Values.metrics.port }}
+            protocol: TCP
+        livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        volumeMounts:
+        - name: milvus-data-disk
+          mountPath: /var/lib/milvus/data
+          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath }}
+        - name: milvus-configmap
+          mountPath: /var/lib/milvus/conf/server_config.yaml
+          subPath: server_config.yaml
+        - name: milvus-configmap
+          mountPath: /var/lib/milvus/conf/log_config.conf
+          subPath: log_config.conf
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.extraContainers }}
+{{ tpl . $ | indent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+      - name: milvus-configmap
+        configMap:
+          name: {{ template "milvus.sharename" . }}
+      - name: milvus-data-disk
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.sharename" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+{{- end }}

@@ -148,7 +148,6 @@ image:
 
 replicas: 1
 
-## todo: ro, wo need different resource
 resources:
   limits:
     memory: "12Gi"
@@ -228,6 +227,9 @@ mysql:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+readonlyReplicas: 2
+proxyReplicas: 2
+
 mishards:
   enabled: false
   image:
@@ -241,7 +243,3 @@ mishards:
     requests:
       memory: "2Gi"
       cpu: "2.0"
-
-writeonlyReplicas: 1
-readonlyReplicas: 2
-proxyReplicas: 2

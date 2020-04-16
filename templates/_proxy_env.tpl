@@ -1,8 +1,4 @@
 {{- define "milvus.proxyconfig" -}}
-{{- $_ := set . "deploy_name" "readonly" -}}
-{{- $ro_milvus := include "milvus.fullname" . -}}
-{{- $_ := set . "deploy_name" "writeonly" -}}
-{{- $wo_milvus := include "milvus.fullname" . -}}
 FROM_EXAMPLE='true'
 {{- if .Values.mysql.enabled }}
 SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURL" . }}
@@ -11,9 +7,9 @@ SQLALCHEMY_DATABASE_URI={{ template "milvus.sqliteURL" . }}
 {{- end }}
 DEBUG='true'
 SERVER_PORT=19530
-WOSERVER=tcp://{{ $wo_milvus }}:19530
+WOSERVER=tcp://{{ template "milvus.fullname" }}:19530
 DISCOVERY_PLUGIN_PATH=static
-DISCOVERY_STATIC_HOSTS={{ $wo_milvus }},{{ $ro_milvus }}
+DISCOVERY_STATIC_HOSTS={{ template "milvus.fullname" }},{{ template "milvus.fullname.readonly" }}
 TRACER_CLASS_NAME=jaeger
 TRACING_SERVICE_NAME=mishards-demo
 TRACING_REPORTING_HOST=jaeger
