@@ -43,7 +43,7 @@ mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:330
 sqlite://:@:/
 {{- end -}}
 
-{{/* Mishards fullname */}}
+{{/* share between romilvus and womilvus  */}}
 {{- define "milvus.sharename" -}}
 {{- printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
