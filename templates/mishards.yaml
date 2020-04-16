@@ -48,7 +48,7 @@ spec:
         - >
             pip install mysqlclient && python mishards/main.py
         ports:
-          - name: proxy
+          - name: mishards
             containerPort: 19530
             protocol: TCP
         livenessProbe:
