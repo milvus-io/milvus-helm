@@ -117,7 +117,7 @@ persistence:
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
-  enabled: true
+  enabled: false
   annotations: {}
   #  helm.sh/resource-policy: keep
   persistentVolumeClaim:
@@ -146,9 +146,7 @@ image:
   # pullSecrets:
   #   - myRegistryKeySecretName
 
-writeonlyReplicas: 1
-readonlyReplicas: 2
-proxyReplicas: 2
+replicas: 1
 
 ## todo: ro, wo need different resource
 resources:
@@ -189,7 +187,7 @@ podDisruptionBudget: {}
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
 ##
 mysql:
-  enabled: false
+  enabled: true
   name: mysql
   imageTag: "5.7.14"
   imagePullPolicy: IfNotPresent
@@ -243,3 +241,7 @@ mishards:
     requests:
       memory: "2Gi"
       cpu: "2.0"
+
+writeonlyReplicas: 1
+readonlyReplicas: 2
+proxyReplicas: 2
