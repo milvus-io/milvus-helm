@@ -1,18 +1,19 @@
+{{- if .Values.mishards.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus.fullname" . }}
+  name: {{ template "milvus.fullname.readonly" . }}
   labels:
-{{ include "milvus.labels" . | indent 4 }}
+{{ include "milvus.labels.readonly" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.readonlyReplicas }}
   selector:
     matchLabels:
-{{ include "milvus.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels.readonly" . | indent 6 }}
   template:
     metadata:
       labels:
-{{ include "milvus.matchLabels" . | indent 8 }}
+{{ include "milvus.matchLabels.readonly" . | indent 8 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
@@ -88,14 +89,15 @@ spec:
       volumes:
       - name: milvus-configmap
         configMap:
-          name: {{ template "milvus.fullname" . }}
+          name: {{ template "milvus.sharename" . }}
       - name: milvus-data-disk
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.fullname" .) }}
+          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.sharename" .) }}
         {{- else }}
         emptyDir: {}
         {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 6 }}
       {{- end }}
+{{- end }}

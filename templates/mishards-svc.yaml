@@ -1,9 +1,10 @@
+{{- if .Values.mishards.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus.fullname" . }}
+  name: {{ template "mishards.fullname" . }}
   labels:
-{{ include "milvus.labels" . | indent 4 }}
+{{ include "mishards.labels" . | indent 4 }}
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
@@ -47,4 +48,5 @@ spec:
       targetPort: metrics
     {{- end }}
   selector:
-{{ include "milvus.matchLabels" . | indent 4 }}
+{{ include "mishards.matchLabels" . | indent 4 }}
+{{- end }}

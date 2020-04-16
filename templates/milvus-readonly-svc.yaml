@@ -1,0 +1,28 @@
+{{- if .Values.mishards.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus.fullname.readonly" . }}
+  labels:
+{{ include "milvus.labels.readonly" . | indent 4 }}
+{{- if .Values.service.labels }}
+{{ toYaml .Values.service.labels | indent 4 }}
+{{- end }}
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  ports:
+    - name: {{ .Values.service.portName }}
+      port: {{ .Values.service.port }}
+      protocol: TCP
+      targetPort: milvus
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      port: {{ .Values.metrics.port }}
+      targetPort: metrics
+    {{- end }}
+  selector:
+{{ include "milvus.matchLabels.readonly" . | indent 4 }}
+{{- end }}
