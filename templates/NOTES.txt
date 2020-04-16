@@ -1,3 +1,8 @@
+{{- if .Values.mishards.enabled }}
+{{- $_ := set . "deploy_name" "proxy" -}}
+{{- else }}
+{{- $_ := set . "deploy_name" "standalone" -}}
+{{- end }}
 The Milvus server can be accessed via port {{ .Values.service.port }} on the following DNS name from within your cluster:
 {{ template "milvus.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
 

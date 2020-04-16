@@ -4,7 +4,11 @@
 {{- $_ := set . "deploy_name" "writeonly" -}}
 {{- $wo_milvus := include "milvus.fullname" . -}}
 FROM_EXAMPLE='true'
+{{- if .Values.mysql.enabled }}
 SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURL" . }}
+{{- else }}
+SQLALCHEMY_DATABASE_URI={{ template "milvus.sqliteURL" . }}
+{{- end }}
 DEBUG='true'
 SERVER_PORT=19530
 WOSERVER=tcp://{{ $wo_milvus }}:19530

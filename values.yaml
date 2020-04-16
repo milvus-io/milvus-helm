@@ -6,7 +6,7 @@
 
 version: 0.2
 primaryPath: "/var/lib/milvus/data"
-logPath: "/var/lib/milvus/logs"
+logPath: "/var/lib/milvus/data"
 timeZone: "UTC+8"
 #backendURL: ""
 deployMode: "single"
@@ -189,7 +189,7 @@ podDisruptionBudget: {}
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
 ##
 mysql:
-  enabled: true
+  enabled: false
   name: mysql
   imageTag: "5.7.14"
   imagePullPolicy: IfNotPresent
@@ -231,15 +231,15 @@ mysql:
     size: 8Gi
 
 mishards:
+  enabled: false
   image:
     repository: milvusdb/mishards
     tag: latest
-    pullPolicy: IfNotPresent
 
   resources:
     limits:
-      memory: "8Gi"
+      memory: "4Gi"
       cpu: "4.0"
     requests:
-      memory: "4Gi"
+      memory: "2Gi"
       cpu: "2.0"

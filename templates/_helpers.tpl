@@ -44,6 +44,6 @@ sqlite://:@:/
 {{- end -}}
 
 {{/* Mishards fullname */}}
-{{- define "mishards.fullname" -}}
+{{- define "milvus.sharename" -}}
 {{- printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

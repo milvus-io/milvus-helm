@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ template "mishards.fullname" . }}
+  name: {{ template "milvus.sharename" . }}
 {{- with .Values.persistence.annotations  }}
   annotations:
 {{ toYaml . | indent 4 }}
