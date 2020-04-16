@@ -107,3 +107,19 @@ app: "{{ template "mishards.name" . }}"
 release: {{ .Release.Name }}
 app: "{{ template "mishards.name" . }}"
 {{- end -}}
+
+{{- define "svc.name" -}}
+{{- if .Values.mishards.enabled }}
+{{ template "mishards.name" . }}
+{{- else }}
+{{ template "milvus.name" . }}
+{{- end }}
+{{- end -}}
+
+{{- define "svc.fullname" -}}
+{{- if .Values.mishards.enabled }}
+{{ template "mishards.fullname" . }}
+{{- else }}
+{{ template "milvus.fullname" . }}
+{{- end }}
+{{- end -}}
