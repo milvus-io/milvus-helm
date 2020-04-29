@@ -64,7 +64,7 @@ spec:
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath }}
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
-          subPath: server_config.yaml
+          subPath: ro_server_config.yaml
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/log_config.conf
           subPath: log_config.conf

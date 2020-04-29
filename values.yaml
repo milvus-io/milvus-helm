@@ -10,6 +10,7 @@ logPath: "/var/lib/milvus/data"
 timeZone: "UTC+8"
 #backendURL: ""
 deployMode: "single"
+rodeployMode: "cluster_readonly"
 insertBufferSize: 1
 cpuCacheCapacity: 4
 cacheInsertData: false
