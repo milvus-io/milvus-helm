@@ -10,6 +10,9 @@ data:
     {{- include "milvus.logConfig" . | nindent 4 }}
 
   {{- if .Values.mishards.enabled }}
+  ro_server_config.yaml: |
+    {{- include "milvus.roserverConfig" . | nindent 4 }}
+
   milvus_proxy_config.yaml: |
     {{- include "milvus.proxyconfig" . | nindent 4 }}
   {{- end }}
