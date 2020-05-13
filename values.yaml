@@ -15,6 +15,9 @@ cacheInsertData: false
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
+fileCleanupTimeout: 10
+webEnable: true
+webPort: 19121
 
 gpu:
   enabled: false

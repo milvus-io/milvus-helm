@@ -7,6 +7,8 @@ server_config:
   port: 19530                       # milvus server port, must in range [1025, 65534]
   deploy_mode: {{ .Values.deployMode }}               # deployment type: single, cluster_readonly, cluster_writable
   time_zone: {{ .Values.timeZone }}                  # time zone, must be in format: UTC+X
+  web_enable: {{ .Values.webEnable }}
+  web_port: {{ .Values.webPort }}
 
 db_config:
 {{- if not .Values.backendURL }}
@@ -27,6 +29,7 @@ db_config:
 storage_config:
   primary_path: {{ .Values.primaryPath }}         # path used to store data and meta
   secondary_path:                   # path used to store data only, split by semicolon
+  file_cleanup_timeout: {{ .Values.fileCleanupTimeout }}
 
 metric_config:
   enable_monitor: {{ .Values.metrics.enabled }}             # enable monitoring or not, must be a boolean
