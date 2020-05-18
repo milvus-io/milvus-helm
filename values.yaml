@@ -4,7 +4,7 @@
 
 # Milvus Server Configuration
 
-version: 0.3
+version: 0.4
 primaryPath: "/var/lib/milvus/data"
 timeZone: "UTC+8"
 #backendURL: ""
@@ -15,6 +15,9 @@ cacheInsertData: false
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
+fileCleanupTimeout: 10
+webEnable: true
+webPort: 19121
 
 gpu:
   enabled: false
