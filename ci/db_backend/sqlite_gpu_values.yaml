@@ -1,5 +1,6 @@
-insertBufferSize: 4
-cpuCacheCapacity: 8
+cache:
+  insertBufferSize: 4
+  cpuCacheCapacity: 8
 
 resources:
   limits:

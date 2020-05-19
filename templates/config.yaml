@@ -6,9 +6,6 @@ data:
   server_config.yaml: |
     {{- include "milvus.serverConfig" . | nindent 4 }}
 
-  log_config.conf: |
-    {{- include "milvus.logConfig" . | nindent 4 }}
-
 {{- range $key, $value := .Values.extraConfigFiles }}
   {{ $key }}: |-
 {{ $value | indent 4 }}

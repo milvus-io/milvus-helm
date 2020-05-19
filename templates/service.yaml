@@ -34,17 +34,29 @@ spec:
 {{ toYaml .Values.service.externalIPs | indent 4 }}
 {{- end }}
   ports:
-    - name: {{ .Values.service.portName }}
+    - name: engine
       port: {{ .Values.service.port }}
       protocol: TCP
-      targetPort: milvus
+      targetPort: engine
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
+    {{- if .Values.web.enabled }}
+    - name: web
+      port: {{ .Values.web.port }}
+      protocol: TCP
+      targetPort: web
+{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.webNodePort))) }}
+      nodePort: {{.Values.service.webNodePort}}
+{{ end }}
+    {{- end }}
     {{- if .Values.metrics.enabled }}
     - name: metrics
       port: {{ .Values.metrics.port }}
       targetPort: metrics
+{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.metricsNodePort))) }}
+      nodePort: {{.Values.service.metricsNodePort}}
+{{ end }}
     {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}

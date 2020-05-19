@@ -60,21 +60,34 @@ The following table lists the configurable parameters of the Milvus server and t
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `primaryPath`                             | Path used to store data and metadata          | `/var/lib/milvus/data`                                  |
-| `timeZone`                                | Time zone                                     | `UTC+8`                                                 |
-| `backendURL`                              | URI format: dialect://username:password@host:port/database. Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
+| `version`                                 | Configuration Version                         | `0.4`                                                   |
+| `primaryPath`                             | Primary directory used to save meta data, vector data and index data. | `/var/lib/milvus`               |
+| `timeZone`                                | Use UTC-x or UTC+x to specify a time zone.    | `UTC+8`                                                 |
 | `deployMode`                              | Deployment type: single, cluster_readonly, cluster_writable | `single`                                  |
-| `insertBufferSize`                        | Maximum insert buffer size allowed (GB)       | `1`                                                     |
-| `cpuCacheCapacity`                        | Size of CPU memory used for cache  (GB)       | `4`                                                    |
-| `cacheInsertData`                         | Load inserted data into cache                 | `false`                                                 |
+| `backendURL`                              | URI format: dialect://username:password@host:port/database. Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
 | `useBLASThreshold`                        | BLAS threshold                                | `1100`                                                  |
 | `gpuSearchThreshold`                      | GPU search threshold                          | `1100`                                                  |
+| `autoFlushInterval`                       | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
+| `fileCleanupTimeout`                      | The time gap between marking a file as 'deleted' and physically deleting this file from disk, range [0, 3600]. (s) | `10` |
+| `logs.path`                               | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
+| `logs.maxLogFileSize`                     | The maximum size of each log file, size range [512, 4096]. (MB) | `1024`                                |
+| `logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
+| `cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1`                                                     |
+| `cache.cpuCacheCapacity`                  | Size of CPU memory used for cache  (GB)       | `4`                                                     |
+| `cache.cacheInsertData`                   | Load inserted data into cache                 | `false`                                                 |
+| `web.enabled`                             | Enable web server or not.                     | `true`                                                  |
+| `web.port`                                | Port that Milvus web server monitors.         | `19121`                                                 |
+| `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
+| `wal.ignoreErrorLog`                      | Whether to ignore logs with errors that happens during WAL | `true`                                     |
+| `wal.bufferSize`                          | Sum total of the read buffer and the write buffer. (MB) | `256`                                         |
+| `wal.path`                                | Location of WAL log files.                    | `/var/lib/milvus/wal`                                   |
 | `gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
-| `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `1`                                                     |
+| `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `1`                                                   |
 | `gpu.searchResources`                     | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `gpu.buildIndexResources`                 | Define the GPU devices used for index building | `[gpu0]`                                               |
 | `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |
-| `metrics.port`                            | Prometheus monitoring metrics port            | `8080`                                                  |
+| `metrics.address`                         | Pushgateway address                           | `127.0.0.1`                                             |
+| `metrics.port`                            | Prometheus monitoring metrics port            | `9091`                                                  |
 
 ### Milvus Deploy Configuration
 
@@ -98,8 +111,9 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `readinessProbe`                          | Readiness Probe settings                      | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 3 }` |
 | `service.type`                            | Kubernetes service type                       | `ClusterIP`                                             |
 | `service.port`                            | Kubernetes port where service is exposed      | `19530`                                                 |
-| `service.portName`                        | Name of the port on the service               | `service`                                               |
 | `service.nodePort`                        | Kubernetes service nodePort                   | `unset`                                                 |
+| `service.webNodePort`                     | Kubernetes web server nodePort                | `unset`                                                 |
+| `service.metricsNodePort`                 | Kubernetes metrics server nodePort            | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
 | `service.labels`                          | Custom labels                                 | `{}`                                                    |
 | `service.clusterIP`                       | Internal cluster service IP                   | `unset`                                                 |
@@ -112,7 +126,14 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `persistence.persistentVolumeClaim.storageClass` | The Milvus data Persistent Volume Storage Class | `unset`                                        |
 | `persistence.persistentVolumeClaim.accessModes` | The Milvus data Persistence access modes | `ReadWriteMany`                                        |
 | `persistence.persistentVolumeClaim.size` | The size of Milvus data Persistent Volume Storage Class | `50Gi`                                         |
-| `persistence.persistentVolumeClaim.subPath` | SubPath for Milvus data mount               | `data`                                                  |
+| `persistence.persistentVolumeClaim.subPath` | SubPath for Milvus data mount               | `unset`                                                 |
+| `logsPersistence.enabled`                 | Use persistent volume to store logs           | `false`                                                 |
+| `logsPersistence.annotations`             | PersistentVolumeClaim annotations             | `{}`                                                    |
+| `logsPersistence.persistentVolumeClaim.existingClaim` | Use your own logs Persistent Volume existing claim name | `unset`                           |
+| `logsPersistence.persistentVolumeClaim.storageClass` | The Milvus logs Persistent Volume Storage Class | `unset`                                    |
+| `logsPersistence.persistentVolumeClaim.accessModes` | The Milvus logs Persistence access modes | `ReadWriteMany`                                    |
+| `logsPersistence.persistentVolumeClaim.size` | The size of Milvus logs Persistent Volume Storage Class | `5Gi`                                      |
+| `logsPersistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs mount               | `unset`                                             |
 | `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
 | `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
 | `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
