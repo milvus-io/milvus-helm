@@ -1,3 +1,4 @@
+{{- if .Values.mishards.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,8 +8,8 @@ metadata:
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
-{{- with .Values.service.annotations }}
     component: "{{ .Values.readonlyMilvus.name }}"
+{{- with .Values.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
@@ -41,3 +42,4 @@ spec:
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
     component: "{{ .Values.readonlyMilvus.name }}"
+{{- end }}

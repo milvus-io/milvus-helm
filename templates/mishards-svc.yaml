@@ -1,3 +1,4 @@
+{{- if .Values.mishards.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -45,3 +46,4 @@ spec:
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
     component: "{{ .Values.mishards.name }}"
+{{- end }}

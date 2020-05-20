@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-{{- if .Values.mishards.enabled -}}
+{{- if .Values.mishards.enabled }}
   name: {{ template "milvus.writable.fullname" . }}
-{{- else -}}
+{{- else }}
   name: {{ template "milvus.fullname" . }}
-{{- end -}}
+{{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-{{- if .Values.mishards.enabled -}}
+{{- if .Values.mishards.enabled }}
     component: "{{ .Values.writableMilvus.name }}"
-{{- else -}}
+{{- else }}
     component: "{{ .Values.name }}"
-{{- end -}}
+{{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-{{- if .Values.mishards.enabled -}}
+{{- if .Values.mishards.enabled }}
       component: "{{ .Values.writableMilvus.name }}"
-{{- else -}}
+{{- else }}
       component: "{{ .Values.name }}"
-{{- end -}}
+{{- end }}
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-{{- if .Values.mishards.enabled -}}
+{{- if .Values.mishards.enabled }}
         component: "{{ .Values.writableMilvus.name }}"
-{{- else -}}
+{{- else }}
         component: "{{ .Values.name }}"
-{{- end -}}
+{{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
