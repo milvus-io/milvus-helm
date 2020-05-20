@@ -10,7 +10,7 @@ spec:
   replicas: {{ .Values.mishards.replicas }}
   selector:
     matchLabels:
-{{ include "milvus.labels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: "{{ .Values.mishards.name }}"
   template:
     metadata:
@@ -28,7 +28,10 @@ spec:
         - 'sh'
         - '-c'
         - >
-          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
+          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 
+          && nc -z -w 2 {{ .Release.Name }}-{{ .Values.readonlyMilvus.name }} {{ .Values.service.port }} 
+          && nc -z -w 2 {{ .Release.Name }}-{{ .Values.writableMilvus.name }} {{ .Values.service.port }} 
+          && echo ready to go; do
             sleep 2;
           done;
       {{- end }}
