@@ -5,19 +5,34 @@
 # Milvus Server Configuration
 
 version: 0.4
-primaryPath: "/var/lib/milvus/data"
+primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
-#backendURL: ""
+# backendURL: ""
 deployMode: "single"
-insertBufferSize: 1
-cpuCacheCapacity: 4
-cacheInsertData: false
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
 fileCleanupTimeout: 10
-webEnable: true
-webPort: 19121
+
+logs:
+  path: /var/lib/milvus/logs
+  maxLogFileSize: 1024
+  logRotateNum: 0
+
+cache:
+  insertBufferSize: 1
+  cpuCacheCapacity: 4
+  cacheInsertData: false
+
+web:
+  enabled: true
+  port: 19121
+
+wal:
+  enabled: true
+  ignoreErrorLog: true
+  bufferSize: 256
+  path: /var/lib/milvus/db/wal
 
 gpu:
   enabled: false
@@ -30,14 +45,9 @@ gpu:
 metrics:
   enabled: false
   address: 127.0.0.1
-  port: 8080
+  port: 9091
 
-wal:
-  enabled: true
-  ignoreErrorLog: false
-  bufferSize: 128
-  recordSize: 2 
-  path: /var/lib/milvus/data/wal
+
 
 # Common
 initContainerImage: "alpine:3.8"
@@ -53,7 +63,6 @@ service:
   port: 19530
   annotations: {}
   labels: {}
-  portName: service
 
   ## List of IP addresses at which the Prometheus server service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -134,7 +143,28 @@ persistence:
     storageClass:
     accessModes: ReadWriteMany
     size: 50Gi
-    subPath: data
+    subPath: ""
+
+logsPersistence:
+  ## If true, alertmanager will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  ##
+  enabled: false
+  annotations: {}
+  #  helm.sh/resource-policy: keep
+  persistentVolumeClaim:
+    existingClaim: ""
+    ## milvus logs Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+    accessModes: ReadWriteMany
+    size: 5Gi
+    subPath: ""
 
 image:
   repository: milvusdb/milvus

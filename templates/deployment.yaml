@@ -45,8 +45,11 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-          - name: milvus
+          - name: engine
             containerPort: 19530
+            protocol: TCP
+          - name: web
+            containerPort: {{ .Values.web.port }}
             protocol: TCP
           - name: metrics
             containerPort: {{ .Values.metrics.port }}
@@ -59,14 +62,14 @@ spec:
           {{- toYaml .Values.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-data-disk
-          mountPath: /var/lib/milvus/data
-          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath }}
+          mountPath: "{{ .Values.primaryPath }}/db"
+          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
+        - name: milvus-logs-disk
+          mountPath: {{ .Values.logs.path }}
+          subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
           subPath: server_config.yaml
-        - name: milvus-configmap
-          mountPath: /var/lib/milvus/conf/log_config.conf
-          subPath: log_config.conf
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -93,6 +96,13 @@ spec:
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.fullname" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: milvus-logs-disk
+        {{- if .Values.logsPersistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default printf "%s-logs" (include "milvus.fullname" . | trunc 58) }}
         {{- else }}
         emptyDir: {}
         {{- end }}
