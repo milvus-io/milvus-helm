@@ -80,7 +80,7 @@ The following table lists the configurable parameters of the Milvus server and t
 | `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
 | `wal.ignoreErrorLog`                      | Whether to ignore logs with errors that happens during WAL | `true`                                     |
 | `wal.bufferSize`                          | Sum total of the read buffer and the write buffer. (MB) | `256`                                         |
-| `wal.path`                                | Location of WAL log files.                    | `/var/lib/milvus/wal`                                   |
+| `wal.path`                                | Location of WAL log files.                    | `/var/lib/milvus/db/wal`                                   |
 | `gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
 | `gpu.cacheCapacity`                       | Size of GPU memory per card used for cache (GB) | `1`                                                   |
 | `gpu.searchResources`                     | Define the GPU devices used for search computation | `[gpu0]`                                           |
