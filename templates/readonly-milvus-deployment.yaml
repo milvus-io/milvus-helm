@@ -1,18 +1,22 @@
+{{- if .Values.mishards.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus.fullname" . }}
+  name: {{ template "milvus.readonly.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
+    component: "{{ .Values.readonlyMilvus.name }}"
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.readonlyMilvus.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
+      component: "{{ .Values.readonlyMilvus.name }}"
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
+        component: "{{ .Values.readonlyMilvus.name }}"
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
@@ -69,7 +73,7 @@ spec:
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
-          subPath: server_config.yaml
+          subPath: readonly_server_config.yaml
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -109,3 +113,4 @@ spec:
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 6 }}
       {{- end }}
+{{- end }}

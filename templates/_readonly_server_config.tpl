@@ -1,4 +1,4 @@
-{{- define "milvus.serverConfig" -}}
+{{- define "milvus.readonly.serverConfig" -}}
 # Copyright (C) 2019-2020 Zilliz. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -32,14 +32,10 @@ version: {{ .Values.version }}
 server_config:
   address: 0.0.0.0
   port: {{ .Values.service.port }}
-{{- if .Values.mishards.enabled }}
-  deploy_mode: {{ .Values.writableMilvus.deployMode }}
-{{- else }}
-  deploy_mode: {{ .Values.deployMode }}
-{{- end }}
-  time_zone: {{ .Values.timeZone }}
-  web_enable: {{ .Values.web.enabled }}
-  web_port: {{ .Values.web.port }}
+  deploy_mode: {{ .Values.readonlyMilvus.deployMode }}
+  time_zone: {{ .Values.readonlyMilvus.timeZone }}
+  web_enable: {{ .Values.readonlyMilvus.web.enabled }}
+  web_port: {{ .Values.readonlyMilvus.web.port }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # DataBase Config      | Description                                                | Type       | Default         |
@@ -70,7 +66,7 @@ db_config:
   backend_url: {{ .Values.backendURL }}
 {{- end }}
   preload_collection:
-  auto_flush_interval: {{ .Values.autoFlushInterval }}
+  auto_flush_interval: {{ .Values.readonlyMilvus.autoFlushInterval }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Storage Config       | Description                                                | Type       | Default         |
@@ -85,9 +81,9 @@ db_config:
 #                      | physically deleting this file from disk, range [0, 3600]   |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 storage_config:
-  primary_path: {{ .Values.primaryPath }}
+  primary_path: {{ .Values.readonlyMilvus.primaryPath }}
   secondary_path:
-  file_cleanup_timeout: {{ .Values.fileCleanupTimeout }}
+  file_cleanup_timeout: {{ .Values.readonlyMilvus.fileCleanupTimeout }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Metric Config        | Description                                                | Type       | Default         |
@@ -99,9 +95,9 @@ storage_config:
 # port                 | Pushgateway port, port range (1024, 65535)                 | Integer    | 9091            |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 metric_config:
-  enable_monitor: {{ .Values.metrics.enabled }}
-  address: {{ .Values.metrics.address }}
-  port: {{ .Values.metrics.port }}
+  enable_monitor: {{ .Values.readonlyMilvus.metrics.enabled }}
+  address: {{ .Values.readonlyMilvus.metrics.address }}
+  port: {{ .Values.readonlyMilvus.metrics.port }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Cache Config         | Description                                                | Type       | Default         |
@@ -117,9 +113,9 @@ metric_config:
 # cache_insert_data    | Whether to load data to cache for hot query                | Boolean    | false           |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 cache_config:
-  cpu_cache_capacity: {{ .Values.cache.cpuCacheCapacity }}
-  insert_buffer_size: {{ .Values.cache.insertBufferSize }}
-  cache_insert_data: {{ .Values.cache.cacheInsertData }}
+  cpu_cache_capacity: {{ .Values.readonlyMilvus.cache.cpuCacheCapacity }}
+  insert_buffer_size: {{ .Values.readonlyMilvus.cache.insertBufferSize }}
+  cache_insert_data: {{ .Values.readonlyMilvus.cache.cacheInsertData }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Engine Config        | Description                                                | Type       | Default         |
@@ -141,8 +137,8 @@ cache_config:
 #                      | be executed on both CPUs and GPUs.                         |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 engine_config:
-  use_blas_threshold: {{ .Values.useBLASThreshold }}
-  gpu_search_threshold: {{ .Values.gpuSearchThreshold }}
+  use_blas_threshold: {{ .Values.readonlyMilvus.useBLASThreshold }}
+  gpu_search_threshold: {{ .Values.readonlyMilvus.gpuSearchThreshold }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # GPU Resource Config  | Description                                                | Type       | Default         |
@@ -158,13 +154,13 @@ engine_config:
 #                      | Must be in format gpux.                                    |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 gpu_resource_config:
-  enable: {{ .Values.gpu.enabled }}
-  cache_capacity: {{ .Values.gpu.cacheCapacity }}
-  {{- with .Values.gpu.searchResources }}
+  enable: {{ .Values.readonlyMilvus.gpu.enabled }}
+  cache_capacity: {{ .Values.readonlyMilvus.gpu.cacheCapacity }}
+  {{- with .Values.readonlyMilvus.gpu.searchResources }}
   search_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.gpu.buildIndexResources }}
+  {{- with .Values.readonlyMilvus.gpu.buildIndexResources }}
   build_index_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -203,10 +199,10 @@ tracing_config:
 # wal_path             | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal_config:
-  enable: {{ .Values.wal.enabled }}
-  recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
-  buffer_size: {{ .Values.wal.bufferSize }}
-  wal_path: {{ .Values.wal.path }}
+  enable: {{ .Values.readonlyMilvus.wal.enabled }}
+  recovery_error_ignore: {{ .Values.readonlyMilvus.wal.ignoreErrorLog }}
+  buffer_size: {{ .Values.readonlyMilvus.wal.bufferSize }}
+  wal_path: {{ .Values.readonlyMilvus.wal.path }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Logs                 | Description                                                | Type       | Default         |
@@ -237,8 +233,8 @@ logs:
   warning.enable: true
   error.enable: true
   fatal.enable: true
-  path: {{ .Values.logs.path }}
-  max_log_file_size: {{ .Values.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.logs.logRotateNum }}
+  path: {{ .Values.readonlyMilvus.logs.path }}
+  max_log_file_size: {{ .Values.readonlyMilvus.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.readonlyMilvus.logs.logRotateNum }}
 
 {{- end }}

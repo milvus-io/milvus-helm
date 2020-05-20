@@ -5,6 +5,7 @@
 # Milvus Server Configuration
 
 version: 0.4
+name: "standalone"
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 # backendURL: ""
@@ -255,3 +256,107 @@ mysql:
     storageClass:
     accessMode: ReadWriteOnce
     size: 8Gi
+
+## Define serviceAccount names for Mishards
+serviceAccounts:
+  mishards:
+    create: false
+    name:
+
+## Mishards Configuration
+mishards:
+  name: mishards
+  enabled: false
+  image:
+    repository: milvusdb/mishards
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "4Gi"
+      cpu: "4.0"
+    requests:
+      memory: "2Gi"
+      cpu: "2.0"
+
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+
+  ## Mishards conf
+  debug: true
+  serverport: 19530
+  maxworkers: 50
+
+  # discoverypluginpath: "static"
+  # tracerclassname: "jaeger"
+  # tracingservicename: "mishards-demo"
+  # tracingreportinghost: "jaeger"
+  # tracingreportingport: 5775
+
+
+## Milvus writable Server Configuration
+writableMilvus:
+  name: writable
+  deployMode: "cluster_writable"
+  wal:
+    enabled: false
+
+## Milvus Readonly Server Configuration
+readonlyMilvus:
+  name: readonly
+  primaryPath: "/var/lib/milvus"
+  timeZone: "UTC+8"
+  deployMode: "cluster_readonly"
+  useBLASThreshold: 1100
+  gpuSearchThreshold: 1100
+  autoFlushInterval: 1
+  fileCleanupTimeout: 10
+
+  logs:
+    path: /var/lib/milvus/logs
+    maxLogFileSize: 1024
+    logRotateNum: 0
+
+  cache:
+    insertBufferSize: 1
+    cpuCacheCapacity: 4
+    cacheInsertData: false
+
+  web:
+    enabled: false
+    port: 19121
+
+  wal:
+    enabled: false
+    ignoreErrorLog: true
+    bufferSize: 256
+    path: /var/lib/milvus/db/wal
+
+  gpu:
+    enabled: false
+    cacheCapacity: 1
+    searchResources:
+      - gpu0
+    buildIndexResources:
+      - gpu0
+
+  metrics:
+    enabled: false
+    address: 127.0.0.1
+    port: 9091
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+      
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
