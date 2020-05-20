@@ -32,7 +32,7 @@ wal:
   enabled: true
   ignoreErrorLog: true
   bufferSize: 256
-  path: /var/lib/milvus/wal
+  path: /var/lib/milvus/db/wal
 
 gpu:
   enabled: false
