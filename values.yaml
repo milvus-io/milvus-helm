@@ -9,7 +9,6 @@ name: "standalone"
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 # backendURL: ""
-deployMode: "single"
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
@@ -290,7 +289,6 @@ mishards:
 
   ## Mishards conf
   debug: true
-  serverport: 19530
   maxworkers: 50
 
   # discoverypluginpath: "static"
@@ -303,20 +301,14 @@ mishards:
 ## Milvus writable Server Configuration
 writableMilvus:
   name: writable
-  deployMode: "cluster_writable"
   wal:
     enabled: false
 
 ## Milvus Readonly Server Configuration
 readonlyMilvus:
   name: readonly
-  primaryPath: "/var/lib/milvus"
-  timeZone: "UTC+8"
-  deployMode: "cluster_readonly"
   useBLASThreshold: 1100
   gpuSearchThreshold: 1100
-  autoFlushInterval: 1
-  fileCleanupTimeout: 10
 
   logs:
     path: /var/lib/milvus/logs
@@ -330,13 +322,6 @@ readonlyMilvus:
 
   web:
     enabled: false
-    port: 19121
-
-  wal:
-    enabled: false
-    ignoreErrorLog: true
-    bufferSize: 256
-    path: /var/lib/milvus/db/wal
 
   gpu:
     enabled: false
@@ -345,11 +330,6 @@ readonlyMilvus:
       - gpu0
     buildIndexResources:
       - gpu0
-
-  metrics:
-    enabled: false
-    address: 127.0.0.1
-    port: 9091
 
   replicas: 1
   resources:

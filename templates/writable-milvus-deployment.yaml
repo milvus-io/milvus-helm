@@ -68,10 +68,7 @@ spec:
             containerPort: 19530
             protocol: TCP
           - name: web
-            containerPort: {{ .Values.web.port }}
-            protocol: TCP
-          - name: metrics
-            containerPort: {{ .Values.metrics.port }}
+            containerPort: 19121
             protocol: TCP
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}

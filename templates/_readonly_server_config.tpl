@@ -31,11 +31,11 @@ version: {{ .Values.version }}
 #----------------------+------------------------------------------------------------+------------+-----------------+
 server_config:
   address: 0.0.0.0
-  port: {{ .Values.service.port }}
-  deploy_mode: {{ .Values.readonlyMilvus.deployMode }}
-  time_zone: {{ .Values.readonlyMilvus.timeZone }}
+  port: 19530
+  deploy_mode: cluster_readonly
+  time_zone: {{ .Values.timeZone }}
   web_enable: {{ .Values.readonlyMilvus.web.enabled }}
-  web_port: {{ .Values.readonlyMilvus.web.port }}
+  web_port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # DataBase Config      | Description                                                | Type       | Default         |
@@ -66,7 +66,7 @@ db_config:
   backend_url: {{ .Values.backendURL }}
 {{- end }}
   preload_collection:
-  auto_flush_interval: {{ .Values.readonlyMilvus.autoFlushInterval }}
+  auto_flush_interval: {{ .Values.autoFlushInterval }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Storage Config       | Description                                                | Type       | Default         |
@@ -81,9 +81,9 @@ db_config:
 #                      | physically deleting this file from disk, range [0, 3600]   |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 storage_config:
-  primary_path: {{ .Values.readonlyMilvus.primaryPath }}
+  primary_path: {{ .Values.primaryPath }}
   secondary_path:
-  file_cleanup_timeout: {{ .Values.readonlyMilvus.fileCleanupTimeout }}
+  file_cleanup_timeout: {{ .Values.fileCleanupTimeout }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Metric Config        | Description                                                | Type       | Default         |
@@ -95,9 +95,9 @@ storage_config:
 # port                 | Pushgateway port, port range (1024, 65535)                 | Integer    | 9091            |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 metric_config:
-  enable_monitor: {{ .Values.readonlyMilvus.metrics.enabled }}
-  address: {{ .Values.readonlyMilvus.metrics.address }}
-  port: {{ .Values.readonlyMilvus.metrics.port }}
+  enable_monitor: {{ .Values.metrics.enabled }}
+  address: {{ .Values.metrics.address }}
+  port: {{ .Values.metrics.port }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Cache Config         | Description                                                | Type       | Default         |
@@ -199,10 +199,10 @@ tracing_config:
 # wal_path             | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal_config:
-  enable: {{ .Values.readonlyMilvus.wal.enabled }}
-  recovery_error_ignore: {{ .Values.readonlyMilvus.wal.ignoreErrorLog }}
-  buffer_size: {{ .Values.readonlyMilvus.wal.bufferSize }}
-  wal_path: {{ .Values.readonlyMilvus.wal.path }}
+  enable: false
+  recovery_error_ignore: true
+  buffer_size: {{ .Values.wal.bufferSize }}
+  wal_path: {{ .Values.wal.path }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Logs                 | Description                                                | Type       | Default         |

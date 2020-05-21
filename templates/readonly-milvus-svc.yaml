@@ -31,14 +31,6 @@ spec:
       nodePort: {{.Values.service.webNodePort}}
 {{ end }}
     {{- end }}
-    {{- if .Values.metrics.enabled }}
-    - name: metrics
-      port: {{ .Values.metrics.port }}
-      targetPort: metrics
-{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.metricsNodePort))) }}
-      nodePort: {{.Values.service.metricsNodePort}}
-{{ end }}
-    {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
     component: "{{ .Values.readonlyMilvus.name }}"

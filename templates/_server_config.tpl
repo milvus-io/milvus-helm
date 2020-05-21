@@ -31,15 +31,15 @@ version: {{ .Values.version }}
 #----------------------+------------------------------------------------------------+------------+-----------------+
 server_config:
   address: 0.0.0.0
-  port: {{ .Values.service.port }}
+  port: 19530
 {{- if .Values.cluster.enabled }}
-  deploy_mode: {{ .Values.writableMilvus.deployMode }}
+  deploy_mode: cluster_writable
 {{- else }}
-  deploy_mode: {{ .Values.deployMode }}
+  deploy_mode: single
 {{- end }}
   time_zone: {{ .Values.timeZone }}
   web_enable: {{ .Values.web.enabled }}
-  web_port: {{ .Values.web.port }}
+  web_port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # DataBase Config      | Description                                                | Type       | Default         |
@@ -203,7 +203,11 @@ tracing_config:
 # wal_path             | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal_config:
+{{- if .Values.cluster.enabled }}
+  enable: {{ .Values.writableMilvus.wal.enabled }}
+{{- else }}
   enable: {{ .Values.wal.enabled }}
+{{- end }}
   recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
   buffer_size: {{ .Values.wal.bufferSize }}
   wal_path: {{ .Values.wal.path }}
