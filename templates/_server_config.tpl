@@ -32,7 +32,7 @@ version: {{ .Values.version }}
 server_config:
   address: 0.0.0.0
   port: {{ .Values.service.port }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
   deploy_mode: {{ .Values.writableMilvus.deployMode }}
 {{- else }}
   deploy_mode: {{ .Values.deployMode }}

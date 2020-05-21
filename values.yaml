@@ -257,6 +257,10 @@ mysql:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+## Cluster control switch
+cluster:
+  enabled: false
+
 ## Define serviceAccount names for Mishards
 serviceAccounts:
   mishards:
@@ -266,7 +270,6 @@ serviceAccounts:
 ## Mishards Configuration
 mishards:
   name: mishards
-  enabled: false
   image:
     repository: milvusdb/mishards
     tag: latest

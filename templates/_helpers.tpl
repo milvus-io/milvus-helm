@@ -89,7 +89,7 @@ sqlite://:@:/
 {{- end -}}
 
 {{- define "svc.fullname" -}}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
 {{ template "milvus.mishards.fullname" . }}
 {{- else }}
 {{ template "milvus.fullname" . }}

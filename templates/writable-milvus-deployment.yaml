@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
   name: {{ template "milvus.writable.fullname" . }}
 {{- else }}
   name: {{ template "milvus.fullname" . }}
 {{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
     component: "{{ .Values.writableMilvus.name }}"
 {{- else }}
     component: "{{ .Values.name }}"
@@ -18,7 +18,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
       component: "{{ .Values.writableMilvus.name }}"
 {{- else }}
       component: "{{ .Values.name }}"
@@ -27,7 +27,7 @@ spec:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
         component: "{{ .Values.writableMilvus.name }}"
 {{- else }}
         component: "{{ .Values.name }}"

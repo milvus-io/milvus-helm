@@ -1,4 +1,4 @@
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
 apiVersion: v1
 kind: Service
 metadata:

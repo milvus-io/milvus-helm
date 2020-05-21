@@ -6,7 +6,7 @@ data:
   server_config.yaml: |
     {{- include "milvus.serverConfig" . | nindent 4 }}
 
-  {{- if .Values.mishards.enabled }}
+  {{- if .Values.cluster.enabled }}
   readonly_server_config.yaml: |
     {{- include "milvus.readonly.serverConfig" . | nindent 4 }}
 

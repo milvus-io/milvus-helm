@@ -1,4 +1,4 @@
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

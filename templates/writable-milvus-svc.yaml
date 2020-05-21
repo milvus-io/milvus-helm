@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
   name: {{ template "milvus.writable.fullname" . }}
 {{- else }}
   name: {{ template "milvus.fullname" . }}
@@ -11,7 +11,7 @@ metadata:
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
     component: "{{ .Values.writableMilvus.name }}"
 {{- else }}
     component: "{{ .Values.name }}"
@@ -21,7 +21,7 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-{{- if not .Values.mishards.enabled }}
+{{- if not .Values.cluster.enabled }}
 {{- if (or (eq .Values.service.type "ClusterIP") (empty .Values.service.type)) }}
   type: ClusterIP
   {{- if .Values.service.clusterIP }}
@@ -71,7 +71,7 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
-{{- if .Values.mishards.enabled }}
+{{- if .Values.cluster.enabled }}
     component: "{{ .Values.writableMilvus.name }}"
 {{- else }}
     component: "{{ .Values.name }}"
