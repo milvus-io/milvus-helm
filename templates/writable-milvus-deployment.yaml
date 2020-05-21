@@ -9,9 +9,9 @@ metadata:
   labels:
 {{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.cluster.enabled }}
-    component: "{{ .Values.writableMilvus.name }}"
+    component: "writable"
 {{- else }}
-    component: "{{ .Values.name }}"
+    component: "standalone"
 {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
@@ -19,18 +19,18 @@ spec:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
 {{- if .Values.cluster.enabled }}
-      component: "{{ .Values.writableMilvus.name }}"
+      component: "writable"
 {{- else }}
-      component: "{{ .Values.name }}"
+      component: "standalone"
 {{- end }}
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
 {{- if .Values.cluster.enabled }}
-        component: "{{ .Values.writableMilvus.name }}"
+        component: "writable"
 {{- else }}
-        component: "{{ .Values.name }}"
+        component: "standalone"
 {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}

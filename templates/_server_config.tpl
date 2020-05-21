@@ -203,11 +203,7 @@ tracing_config:
 # wal_path             | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal_config:
-{{- if .Values.cluster.enabled }}
-  enable: {{ .Values.writableMilvus.wal.enabled }}
-{{- else }}
   enable: {{ .Values.wal.enabled }}
-{{- end }}
   recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
   buffer_size: {{ .Values.wal.bufferSize }}
   wal_path: {{ .Values.wal.path }}

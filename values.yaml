@@ -5,7 +5,6 @@
 # Milvus Server Configuration
 
 version: 0.4
-name: "standalone"
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 # backendURL: ""
@@ -268,7 +267,6 @@ serviceAccounts:
 
 ## Mishards Configuration
 mishards:
-  name: mishards
   image:
     repository: milvusdb/mishards
     tag: latest
@@ -297,16 +295,8 @@ mishards:
   # tracingreportinghost: "jaeger"
   # tracingreportingport: 5775
 
-
-## Milvus writable Server Configuration
-writableMilvus:
-  name: writable
-  wal:
-    enabled: false
-
 ## Milvus Readonly Server Configuration
 readonlyMilvus:
-  name: readonly
   useBLASThreshold: 1100
   gpuSearchThreshold: 1100
 

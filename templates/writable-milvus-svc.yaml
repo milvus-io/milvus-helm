@@ -12,9 +12,9 @@ metadata:
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
 {{- if .Values.cluster.enabled }}
-    component: "{{ .Values.writableMilvus.name }}"
+    component: "writable"
 {{- else }}
-    component: "{{ .Values.name }}"
+    component: "standalone"
 {{- end }}
 {{- with .Values.service.annotations }}
   annotations:
@@ -64,7 +64,7 @@ spec:
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
 {{- if .Values.cluster.enabled }}
-    component: "{{ .Values.writableMilvus.name }}"
+    component: "writable"
 {{- else }}
-    component: "{{ .Values.name }}"
+    component: "standalone"
 {{- end }}

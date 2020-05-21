@@ -5,18 +5,18 @@ metadata:
   name: {{ template "milvus.readonly.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-    component: "{{ .Values.readonlyMilvus.name }}"
+    component: "readonly"
 spec:
   replicas: {{ .Values.readonlyMilvus.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-      component: "{{ .Values.readonlyMilvus.name }}"
+      component: "readonly"
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-        component: "{{ .Values.readonlyMilvus.name }}"
+        component: "readonly"
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}

@@ -29,7 +29,7 @@ Create a default fully qualified mishards name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "milvus.mishards.fullname" -}}
-{{ template "milvus.fullname" . }}-{{ .Values.mishards.name }}
+{{ template "milvus.fullname" . }}-mishards
 {{- end -}}
 
 {{/*
@@ -37,7 +37,7 @@ Create a default fully qualified ro-milvus name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "milvus.readonly.fullname" -}}
-{{ template "milvus.fullname" . }}-{{ .Values.readonlyMilvus.name }}
+{{ template "milvus.fullname" . }}-readonly
 {{- end -}}
 
 {{/*
@@ -45,7 +45,7 @@ Create a default fully qualified writable-milvus name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "milvus.writable.fullname" -}}
-{{ template "milvus.fullname" . }}-{{ .Values.writableMilvus.name }}
+{{ template "milvus.fullname" . }}-writable
 {{- end -}}
 
 {{/*
@@ -86,6 +86,14 @@ mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:330
 {{- end -}}
 {{- define "milvus.sqliteURL" -}}
 sqlite://:@:/
+{{- end -}}
+
+{{- define "svc.name" -}}
+{{- if .Values.cluster.enabled }}
+mishards
+{{- else }}
+standalone
+{{- end }}
 {{- end -}}
 
 {{- define "svc.fullname" -}}
