@@ -1,0 +1,47 @@
+name: Helm
+
+# This workflow is triggered on pushes or pull request to the repository.
+on:
+  push:
+    # file paths to consider in the event. Optional; defaults to all.
+    paths:
+      - 'templates/**'
+      - 'Chart.yaml'
+      - 'requirements.yaml'
+      - 'values.yaml'
+      - '.github/workflows/helm.yml'
+      - '!**.txt'
+  pull_request:
+    # file paths to consider in the event. Optional; defaults to all.
+    paths:
+      - 'templates/**'
+      - 'Chart.yaml'
+      - 'requirements.yaml'
+      - 'values.yaml'
+      - '.github/workflows/helm.yml'
+      - '!**.txt'
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      # This step checks out a copy of your repository.
+      - name: Checkout Milvus Helm
+        uses: actions/checkout@v2
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+      - name: Run chart-testing (lint)
+        id: lint
+        uses: helm/chart-testing-action@v1.0.0-rc.1
+        with:
+          command: lint
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.0.0-alpha.3
+        # Only build a kind cluster if there are chart changes to test.
+        if: steps.lint.outputs.changed == 'true'
+      - name: Run chart-testing (install)
+        uses: helm/chart-testing-action@v1.0.0-rc.1
+        with:
+          command: install
