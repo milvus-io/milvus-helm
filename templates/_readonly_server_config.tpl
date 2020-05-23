@@ -1,4 +1,4 @@
-{{- define "milvus.serverConfig" -}}
+{{- define "milvus.readonly.serverConfig" -}}
 # Copyright (C) 2019-2020 Zilliz. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -32,13 +32,9 @@ version: {{ .Values.version }}
 server_config:
   address: 0.0.0.0
   port: 19530
-{{- if .Values.cluster.enabled }}
-  deploy_mode: cluster_writable
-{{- else }}
-  deploy_mode: single
-{{- end }}
+  deploy_mode: cluster_readonly
   time_zone: {{ .Values.timeZone }}
-  web_enable: {{ .Values.web.enabled }}
+  web_enable: {{ .Values.readonlyMilvus.web.enabled }}
   web_port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
@@ -117,9 +113,9 @@ metric_config:
 # cache_insert_data    | Whether to load data to cache for hot query                | Boolean    | false           |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 cache_config:
-  cpu_cache_capacity: {{ .Values.cache.cpuCacheCapacity }}
-  insert_buffer_size: {{ .Values.cache.insertBufferSize }}
-  cache_insert_data: {{ .Values.cache.cacheInsertData }}
+  cpu_cache_capacity: {{ .Values.readonlyMilvus.cache.cpuCacheCapacity }}
+  insert_buffer_size: {{ .Values.readonlyMilvus.cache.insertBufferSize }}
+  cache_insert_data: {{ .Values.readonlyMilvus.cache.cacheInsertData }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Engine Config        | Description                                                | Type       | Default         |
@@ -141,8 +137,8 @@ cache_config:
 #                      | be executed on both CPUs and GPUs.                         |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 engine_config:
-  use_blas_threshold: {{ .Values.useBLASThreshold }}
-  gpu_search_threshold: {{ .Values.gpuSearchThreshold }}
+  use_blas_threshold: {{ .Values.readonlyMilvus.useBLASThreshold }}
+  gpu_search_threshold: {{ .Values.readonlyMilvus.gpuSearchThreshold }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # GPU Resource Config  | Description                                                | Type       | Default         |
@@ -158,13 +154,13 @@ engine_config:
 #                      | Must be in format gpux.                                    |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 gpu_resource_config:
-  enable: {{ .Values.gpu.enabled }}
-  cache_capacity: {{ .Values.gpu.cacheCapacity }}
-  {{- with .Values.gpu.searchResources }}
+  enable: {{ .Values.readonlyMilvus.gpu.enabled }}
+  cache_capacity: {{ .Values.readonlyMilvus.gpu.cacheCapacity }}
+  {{- with .Values.readonlyMilvus.gpu.searchResources }}
   search_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.gpu.buildIndexResources }}
+  {{- with .Values.readonlyMilvus.gpu.buildIndexResources }}
   build_index_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -203,8 +199,8 @@ tracing_config:
 # wal_path             | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal_config:
-  enable: {{ .Values.wal.enabled }}
-  recovery_error_ignore: {{ .Values.wal.ignoreErrorLog }}
+  enable: false
+  recovery_error_ignore: true
   buffer_size: {{ .Values.wal.bufferSize }}
   wal_path: {{ .Values.wal.path }}
 
@@ -237,8 +233,8 @@ logs:
   warning.enable: true
   error.enable: true
   fatal.enable: true
-  path: {{ .Values.logs.path }}
-  max_log_file_size: {{ .Values.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.logs.logRotateNum }}
+  path: {{ .Values.readonlyMilvus.logs.path }}
+  max_log_file_size: {{ .Values.readonlyMilvus.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.readonlyMilvus.logs.logRotateNum }}
 
 {{- end }}

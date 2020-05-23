@@ -1,17 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
+{{- if .Values.cluster.enabled }}
+  name: {{ template "milvus.writable.fullname" . }}
+{{- else }}
   name: {{ template "milvus.fullname" . }}
+{{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
+{{- end }}
+{{- if .Values.cluster.enabled }}
+    component: "writable"
+{{- else }}
+    component: "standalone"
 {{- end }}
 {{- with .Values.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
+{{- if not .Values.cluster.enabled }}
 {{- if (or (eq .Values.service.type "ClusterIP") (empty .Values.service.type)) }}
   type: ClusterIP
   {{- if .Values.service.clusterIP }}
@@ -33,6 +43,7 @@ spec:
   externalIPs:
 {{ toYaml .Values.service.externalIPs | indent 4 }}
 {{- end }}
+{{- end }}
   ports:
     - name: engine
       port: {{ .Values.service.port }}
@@ -50,13 +61,10 @@ spec:
       nodePort: {{.Values.service.webNodePort}}
 {{ end }}
     {{- end }}
-    {{- if .Values.metrics.enabled }}
-    - name: metrics
-      port: {{ .Values.metrics.port }}
-      targetPort: metrics
-{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.metricsNodePort))) }}
-      nodePort: {{.Values.service.metricsNodePort}}
-{{ end }}
-    {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
+{{- if .Values.cluster.enabled }}
+    component: "writable"
+{{- else }}
+    component: "standalone"
+{{- end }}

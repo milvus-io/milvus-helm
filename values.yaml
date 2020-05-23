@@ -8,7 +8,6 @@ version: 0.4
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 # backendURL: ""
-deployMode: "single"
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
@@ -255,3 +254,82 @@ mysql:
     storageClass:
     accessMode: ReadWriteOnce
     size: 8Gi
+
+## Cluster control switch
+cluster:
+  enabled: false
+
+## Define serviceAccount names for Mishards
+serviceAccounts:
+  mishards:
+    create: false
+    name:
+
+## Mishards Configuration
+mishards:
+  image:
+    repository: milvusdb/mishards
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "4Gi"
+      cpu: "4.0"
+    requests:
+      memory: "2Gi"
+      cpu: "2.0"
+
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+
+  ## Mishards conf
+  debug: true
+  maxworkers: 50
+
+  # discoverypluginpath: "static"
+  # tracerclassname: "jaeger"
+  # tracingservicename: "mishards-demo"
+  # tracingreportinghost: "jaeger"
+  # tracingreportingport: 5775
+
+## Milvus Readonly Server Configuration
+readonlyMilvus:
+  useBLASThreshold: 1100
+  gpuSearchThreshold: 1100
+
+  logs:
+    path: /var/lib/milvus/logs
+    maxLogFileSize: 1024
+    logRotateNum: 0
+
+  cache:
+    insertBufferSize: 1
+    cpuCacheCapacity: 4
+    cacheInsertData: false
+
+  web:
+    enabled: false
+
+  gpu:
+    enabled: false
+    cacheCapacity: 1
+    searchResources:
+      - gpu0
+    buildIndexResources:
+      - gpu0
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+      
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
