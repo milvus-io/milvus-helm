@@ -64,7 +64,7 @@ spec:
         resources:
           {{- toYaml .Values.mishards.resources | nindent 10 }}
         volumeMounts:
-          - name: mishards-env
+          - name: milvus-configmap
             mountPath: /source/mishards/.env
             subPath: mishards_config.yaml
         {{- with .Values.extraVolumeMounts }}
@@ -86,10 +86,24 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-      - name: mishards-env
+      - name: milvus-configmap
         configMap:
           name: {{ template "milvus.fullname" . }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      - name: milvus-data-disk
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.fullname" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: milvus-logs-disk
+        {{- if .Values.logsPersistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default printf "%s-logs" (include "milvus.fullname" . | trunc 58) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
 {{- end }}
