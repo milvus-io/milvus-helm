@@ -123,6 +123,7 @@ extraConfigFiles: {}
   #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
 
 persistence:
+  mountPath: "/var/lib/milvus/db"
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
@@ -144,6 +145,7 @@ persistence:
     subPath: ""
 
 logsPersistence:
+  mountPath: "/var/lib/milvus/logs"
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
