@@ -53,7 +53,7 @@ initContainerImage: "alpine:3.8"
 
 extraInitContainers: []
 
-## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
+## Expose the Milvus service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
 ##
@@ -63,7 +63,7 @@ service:
   annotations: {}
   labels: {}
 
-  ## List of IP addresses at which the Prometheus server service is available
+  ## List of IP addresses at which the Milvus server service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
   ##
   externalIPs: []
@@ -183,15 +183,11 @@ resources:
     memory: "8Gi"
     cpu: "2.0"
 livenessProbe:
-  tcpSocket:
-    port: 19530
   initialDelaySeconds: 30
   periodSeconds: 15
   timeoutSeconds: 10
   failureThreshold: 5
 readinessProbe:
-  tcpSocket:
-    port: 19530
   initialDelaySeconds: 15
   periodSeconds: 15
   timeoutSeconds: 10
@@ -202,12 +198,6 @@ tolerations: []
 affinity: {}
 ## Additional deployment annotations
 podAnnotations: {}
-
-## See `kubectl explain poddisruptionbudget.spec` for more
-## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-podDisruptionBudget: {}
-#  minAvailable: 1
-#  maxUnavailable: 1
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
@@ -280,10 +270,6 @@ mishards:
       memory: "2Gi"
       cpu: "2.0"
 
-  podDisruptionBudget:
-    enabled: false
-    minAvailable: 1
-
   ## Mishards conf
   debug: true
   maxworkers: 50
@@ -328,7 +314,43 @@ readonlyMilvus:
     requests:
       memory: "8Gi"
       cpu: "2.0"
-      
-  podDisruptionBudget:
-    enabled: false
-    minAvailable: 1
+
+## Milvus Admin Configuration
+admin:
+  enabled: false
+  image:
+    repository: milvusdb/milvus-admin
+    tag: v0.2.0
+    pullPolicy: IfNotPresent
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "4Gi"
+      cpu: "2.0"
+    requests:
+      memory: "2Gi"
+      cpu: "1.0"
+
+  ## Expose the Milvus admin service to be accessed from outside the cluster (LoadBalancer service).
+  ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+  ## ref: http://kubernetes.io/docs/user-guide/services/
+  ##
+  service:
+    type: ClusterIP
+    port: 3000
+    annotations: {}
+    labels: {}
+
+    ## List of IP addresses at which the Milvus server service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: []
+    #   - externalIp1
+
+    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+    # set allowed inbound rules on the security group assigned to the master load balancer
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
