@@ -35,9 +35,6 @@ spec:
             sleep 2;
           done;
       {{- end }}
-{{- if .Values.extraInitContainers }}
-{{ toYaml .Values.extraInitContainers | indent 6 }}
-{{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.image.pullSecrets }}
@@ -67,12 +64,6 @@ spec:
           - name: milvus-configmap
             mountPath: /source/mishards/.env
             subPath: mishards_config.yaml
-        {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-      {{- with .Values.extraContainers }}
-{{ tpl . $ | indent 6 }}
-      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -89,21 +80,4 @@ spec:
       - name: milvus-configmap
         configMap:
           name: {{ template "milvus.fullname" . }}
-      {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
-      - name: milvus-data-disk
-        {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (include "milvus.fullname" .) }}
-        {{- else }}
-        emptyDir: {}
-        {{- end }}
-      - name: milvus-logs-disk
-        {{- if .Values.logsPersistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default printf "%s-logs" (include "milvus.fullname" . | trunc 58) }}
-        {{- else }}
-        emptyDir: {}
-        {{- end }}
 {{- end }}
