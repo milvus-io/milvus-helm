@@ -82,10 +82,10 @@ spec:
           {{- toYaml .Values.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-data-disk
-          mountPath: "{{ .Values.primaryPath }}/db"
+          mountPath: {{ .Values.persistence.mountPath | quote }}
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-logs-disk
-          mountPath: {{ .Values.logs.path }}
+          mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
