@@ -95,11 +95,3 @@ mishards
 standalone
 {{- end }}
 {{- end -}}
-
-{{- define "svc.fullname" -}}
-{{- if .Values.cluster.enabled }}
-{{ template "milvus.mishards.fullname" . }}
-{{- else }}
-{{ template "milvus.fullname" . }}
-{{- end }}
-{{- end -}}
