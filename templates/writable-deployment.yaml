@@ -1,44 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-{{- if .Values.cluster.enabled }}
   name: {{ template "milvus.writable.fullname" . }}
-{{- else }}
-  name: {{ template "milvus.fullname" . }}
-{{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-{{- if .Values.cluster.enabled }}
     component: "writable"
-{{- else }}
-    component: "standalone"
-{{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-{{- if .Values.cluster.enabled }}
       component: "writable"
-{{- else }}
-      component: "standalone"
-{{- end }}
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-{{- if .Values.cluster.enabled }}
         component: "writable"
-{{- else }}
-        component: "standalone"
-{{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
-      {{- if .Values.mysql.enabled }}
+      {{- if or .Values.mysql.enabled .Values.cluster.enabled }}
       initContainers:
       - name: "wait-for-mysql"
         image: "{{ .Values.initContainerImage }}"
@@ -49,6 +33,25 @@ spec:
           until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
             sleep 2;
           done;
+      {{- if .Values.cluster.enabled }}
+      - name: "create-for-share-storage"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+        - 'sh'
+        - '-c'
+        - >
+          mkdir -p {{ .Values.primaryPath }}/db/test;
+          until touch {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
+            sleep 2;
+          done;
+        volumeMounts:
+        - name: milvus-data-disk
+          mountPath: {{ .Values.persistence.mountPath | quote }}
+          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
       {{- end }}
 {{- if .Values.extraInitContainers }}
 {{ toYaml .Values.extraInitContainers | indent 6 }}

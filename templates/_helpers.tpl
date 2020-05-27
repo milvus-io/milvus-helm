@@ -87,11 +87,3 @@ mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:330
 {{- define "milvus.sqliteURL" -}}
 sqlite://:@:/
 {{- end -}}
-
-{{- define "svc.name" -}}
-{{- if .Values.cluster.enabled }}
-mishards
-{{- else }}
-standalone
-{{- end }}
-{{- end -}}

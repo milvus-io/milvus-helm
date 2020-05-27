@@ -2,6 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+## Cluster control switch
+cluster:
+  enabled: false
+
 # Milvus Server Configuration
 
 version: 0.4
@@ -201,55 +205,6 @@ affinity: {}
 ## Additional deployment annotations
 podAnnotations: {}
 
-## Configuration values for the mysql dependency
-## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
-##
-mysql:
-  enabled: true
-  name: mysql
-  imageTag: "5.7.14"
-  imagePullPolicy: IfNotPresent
-  mysqlDatabase: milvus
-  mysqlUser: milvus
-  mysqlPassword: milvus
-  mysqlRootPassword: milvusroot
-  configurationFiles:
-    mysql.cnf: |-
-      [mysqld]
-      pid-file        = /var/run/mysqld/mysqld.pid
-      socket          = /var/run/mysqld/mysqld.sock
-      datadir         = /data
-      log-error       = /var/log/mysql/error.log # mount out to host
-      skip-name-resolve
-      # By default we only accept connections from localhost
-      bind-address   = 0.0.0.0
-      # Disabling symbolic-links is recommended to prevent assorted security risks
-      symbolic-links=0
-      character-set-server = utf8mb4
-      collation-server = utf8mb4_unicode_ci
-      init_connect='SET NAMES utf8mb4'
-      skip-character-set-client-handshake = true
-      max_connections = 1000
-      wait_timeout = 31536000
-
-  initializationFiles:
-    grant.sql: |-
-      GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
-      FLUSH PRIVILEGES;
-
-  persistence:
-    enabled: true
-    existingClaim: ""
-    annotations: {}
-    #  "helm.sh/resource-policy": keep
-    storageClass:
-    accessMode: ReadWriteOnce
-    size: 8Gi
-
-## Cluster control switch
-cluster:
-  enabled: false
-
 ## Define serviceAccount names for Mishards
 serviceAccounts:
   mishards:
@@ -356,3 +311,48 @@ admin:
     - 0.0.0.0/0
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
+
+## Configuration values for the mysql dependency
+## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
+##
+mysql:
+  enabled: true
+  name: mysql
+  imageTag: "5.7.14"
+  imagePullPolicy: IfNotPresent
+  mysqlDatabase: milvus
+  mysqlUser: milvus
+  mysqlPassword: milvus
+  mysqlRootPassword: milvusroot
+  configurationFiles:
+    mysql.cnf: |-
+      [mysqld]
+      pid-file        = /var/run/mysqld/mysqld.pid
+      socket          = /var/run/mysqld/mysqld.sock
+      datadir         = /data
+      log-error       = /var/log/mysql/error.log # mount out to host
+      skip-name-resolve
+      # By default we only accept connections from localhost
+      bind-address   = 0.0.0.0
+      # Disabling symbolic-links is recommended to prevent assorted security risks
+      symbolic-links=0
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      init_connect='SET NAMES utf8mb4'
+      skip-character-set-client-handshake = true
+      max_connections = 1000
+      wait_timeout = 31536000
+
+  initializationFiles:
+    grant.sql: |-
+      GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
+      FLUSH PRIVILEGES;
+
+  persistence:
+    enabled: true
+    existingClaim: ""
+    annotations: {}
+    #  "helm.sh/resource-policy": keep
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 8Gi
