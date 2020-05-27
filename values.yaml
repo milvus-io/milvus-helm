@@ -329,7 +329,6 @@ mysql:
       [mysqld]
       pid-file        = /var/run/mysqld/mysqld.pid
       socket          = /var/run/mysqld/mysqld.sock
-      datadir         = /data
       log-error       = /var/log/mysql/error.log # mount out to host
       skip-name-resolve
       # By default we only accept connections from localhost
