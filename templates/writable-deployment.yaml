@@ -40,7 +40,8 @@ spec:
         - 'sh'
         - '-c'
         - >
-          until touch {{ .Values.primaryPath }}/db/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
+          mkdir -p {{ .Values.primaryPath }}/db/test
+          until touch {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
             sleep 2;
           done;
         volumeMounts:

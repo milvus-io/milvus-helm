@@ -41,7 +41,7 @@ spec:
         - 'sh'
         - '-c'
         - >
-          until test -f {{ .Values.primaryPath }}/db/{{ template "milvus.fullname" . }}.txt && echo read from share storage; do
+          until test -f {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo read from share storage; do
             sleep 2;
           done;
         volumeMounts:
