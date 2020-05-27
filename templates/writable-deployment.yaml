@@ -22,7 +22,7 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
-      {{- if .Values.mysql.enabled }}
+      {{- if or .Values.mysql.enabled .Values.cluster.enabled }}
       initContainers:
       - name: "wait-for-mysql"
         image: "{{ .Values.initContainerImage }}"
@@ -33,6 +33,17 @@ spec:
           until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
             sleep 2;
           done;
+      {{- if .Values.cluster.enabled }}
+      - name: "create-for-share-storage"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+        - 'sh'
+        - '-c'
+        - >
+          until touch {{ .Values.primaryPath }}/db/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
+            sleep 2;
+          done;
+      {{- end }}
       {{- end }}
 {{- if .Values.extraInitContainers }}
 {{ toYaml .Values.extraInitContainers | indent 6 }}
