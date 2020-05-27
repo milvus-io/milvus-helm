@@ -34,7 +34,7 @@ server_config:
   port: 19530
   deploy_mode: cluster_readonly
   time_zone: {{ .Values.timeZone }}
-  web_enable: {{ .Values.readonlyMilvus.web.enabled }}
+  web_enable: false
   web_port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
@@ -113,9 +113,9 @@ metric_config:
 # cache_insert_data    | Whether to load data to cache for hot query                | Boolean    | false           |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 cache_config:
-  cpu_cache_capacity: {{ .Values.readonlyMilvus.cache.cpuCacheCapacity }}
-  insert_buffer_size: {{ .Values.readonlyMilvus.cache.insertBufferSize }}
-  cache_insert_data: {{ .Values.readonlyMilvus.cache.cacheInsertData }}
+  cpu_cache_capacity: {{ .Values.readonly.cache.cpuCacheCapacity }}
+  insert_buffer_size: {{ .Values.readonly.cache.insertBufferSize }}
+  cache_insert_data: {{ .Values.readonly.cache.cacheInsertData }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Engine Config        | Description                                                | Type       | Default         |
@@ -137,8 +137,8 @@ cache_config:
 #                      | be executed on both CPUs and GPUs.                         |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 engine_config:
-  use_blas_threshold: {{ .Values.readonlyMilvus.useBLASThreshold }}
-  gpu_search_threshold: {{ .Values.readonlyMilvus.gpuSearchThreshold }}
+  use_blas_threshold: {{ .Values.readonly.useBLASThreshold }}
+  gpu_search_threshold: {{ .Values.readonly.gpuSearchThreshold }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # GPU Resource Config  | Description                                                | Type       | Default         |
@@ -154,13 +154,13 @@ engine_config:
 #                      | Must be in format gpux.                                    |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 gpu_resource_config:
-  enable: {{ .Values.readonlyMilvus.gpu.enabled }}
-  cache_capacity: {{ .Values.readonlyMilvus.gpu.cacheCapacity }}
-  {{- with .Values.readonlyMilvus.gpu.searchResources }}
+  enable: {{ .Values.readonly.gpu.enabled }}
+  cache_capacity: {{ .Values.readonly.gpu.cacheCapacity }}
+  {{- with .Values.readonly.gpu.searchResources }}
   search_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.readonlyMilvus.gpu.buildIndexResources }}
+  {{- with .Values.readonly.gpu.buildIndexResources }}
   build_index_resources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -233,8 +233,8 @@ logs:
   warning.enable: true
   error.enable: true
   fatal.enable: true
-  path: {{ .Values.readonlyMilvus.logs.path }}
-  max_log_file_size: {{ .Values.readonlyMilvus.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.readonlyMilvus.logs.logRotateNum }}
+  path: {{ .Values.readonly.logs.path }}
+  max_log_file_size: {{ .Values.readonly.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.readonly.logs.logRotateNum }}
 
 {{- end }}
