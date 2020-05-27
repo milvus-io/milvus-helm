@@ -43,6 +43,13 @@ spec:
           until touch {{ .Values.primaryPath }}/db/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
             sleep 2;
           done;
+        volumeMounts:
+        - name: milvus-data-disk
+          mountPath: {{ .Values.persistence.mountPath | quote }}
+          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- end }}
       {{- end }}
 {{- if .Values.extraInitContainers }}
