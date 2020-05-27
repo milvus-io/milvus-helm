@@ -215,7 +215,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: latest
+    tag: 0.9.0
     pullPolicy: IfNotPresent
 
   replicas: 1
