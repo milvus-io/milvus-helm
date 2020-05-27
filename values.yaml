@@ -238,7 +238,7 @@ mishards:
   # tracingreportingport: 5775
 
 ## Milvus Readonly Server Configuration
-readonlyMilvus:
+readonly:
   useBLASThreshold: 1100
   gpuSearchThreshold: 1100
 
@@ -251,9 +251,6 @@ readonlyMilvus:
     insertBufferSize: 1
     cpuCacheCapacity: 4
     cacheInsertData: false
-
-  web:
-    enabled: false
 
   gpu:
     enabled: false
