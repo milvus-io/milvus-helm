@@ -1,37 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-{{- if .Values.cluster.enabled }}
   name: {{ template "milvus.writable.fullname" . }}
-{{- else }}
-  name: {{ template "milvus.fullname" . }}
-{{- end }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-{{- if .Values.cluster.enabled }}
     component: "writable"
-{{- else }}
-    component: "standalone"
-{{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-{{- if .Values.cluster.enabled }}
       component: "writable"
-{{- else }}
-      component: "standalone"
-{{- end }}
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-{{- if .Values.cluster.enabled }}
         component: "writable"
-{{- else }}
-        component: "standalone"
-{{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}

@@ -11,11 +11,7 @@ metadata:
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
-{{- if .Values.cluster.enabled }}
     component: "writable"
-{{- else }}
-    component: "standalone"
-{{- end }}
 {{- with .Values.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
@@ -39,17 +35,22 @@ spec:
 {{- else }}
   type: {{ .Values.service.type }}
 {{- end }}
+{{- else }}
+  type: ClusterIP
+  {{- if .Values.service.clusterIP }}
+  clusterIP: {{ .Values.service.clusterIP }}
+  {{end}}
+{{- end }}
 {{- if .Values.service.externalIPs }}
   externalIPs:
 {{ toYaml .Values.service.externalIPs | indent 4 }}
-{{- end }}
 {{- end }}
   ports:
     - name: engine
       port: {{ .Values.service.port }}
       protocol: TCP
       targetPort: engine
-{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
+{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)) (not .Values.cluster.enabled)) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
     {{- if .Values.web.enabled }}
@@ -57,14 +58,10 @@ spec:
       port: {{ .Values.web.port }}
       protocol: TCP
       targetPort: web
-{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.webNodePort))) }}
+{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.webNodePort)) (not .Values.cluster.enabled)) }}
       nodePort: {{.Values.service.webNodePort}}
 {{ end }}
     {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
-{{- if .Values.cluster.enabled }}
     component: "writable"
-{{- else }}
-    component: "standalone"
-{{- end }}
