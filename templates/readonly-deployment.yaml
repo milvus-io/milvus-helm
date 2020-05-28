@@ -48,6 +48,7 @@ spec:
         - name: milvus-data-disk
           mountPath: {{ .Values.persistence.mountPath | quote }}
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
+          readOnly: true
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
