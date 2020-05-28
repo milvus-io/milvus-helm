@@ -19,6 +19,7 @@ extraContainers: |
       subPath: filebeat.yml
     - name: milvus-logs-disk
       mountPath: /var/lib/milvus/logs
+      readOnly: true
 
 extraConfigFiles:
   filebeat.yml: |-
