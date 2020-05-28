@@ -30,9 +30,22 @@ $ cd milvus-helm
 $ helm install my-release  .
 ```
 
-After a few minutes, you should see service statuses being written to the configured output, which is a log file inside the Milvus container.
-
 > **Tip**: To list all releases, using `helm list`.
+
+### Deploying Milvus with cluster enabled
+
+```bash
+$ helm install --set cluster.enabled=true --set persistence.enabled=true --set mysql.enabled=true my-release  .
+```
+
+> **NOTE:**: Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
+that is shared. This is controlled by setting `persistence.enabled=true`. You will have to ensure yourself the
+PVC are shared properly between your pods:
+- If you are on AWS, you can use [Elastic File System (EFS)](https://aws.amazon.com/efs/).
+- If you are on Azure, you can use
+[Azure File Storage (AFS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv).
+
+To share a PV with multiple Pods, the PV needs to have accessMode 'ReadOnlyMany' or 'ReadWriteMany'.
 
 ## Uninstall the Chart
 
