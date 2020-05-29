@@ -173,7 +173,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 0.9.0-cpu-d051520-cb92b1
+  tag: 0.9.1-cpu-d052920-e04ed5
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -216,7 +216,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 0.9.0
+    tag: 0.9.1
     pullPolicy: IfNotPresent
 
   replicas: 1
@@ -275,7 +275,7 @@ admin:
   enabled: false
   image:
     repository: milvusdb/milvus-admin
-    tag: v0.2.0
+    tag: v0.3.0
     pullPolicy: IfNotPresent
 
   replicas: 1
