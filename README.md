@@ -175,7 +175,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
 | `admin.enabled`                           | Enable deployment of Milvus admin             | `false`                                                 |
 | `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-admin`                                 |
-| `admin.image.tag`                         | Milvus Admin image tag                        | `v0.2.0`                                                |
+| `admin.image.tag`                         | Milvus Admin image tag                        | `v0.3.0`                                                |
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
