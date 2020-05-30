@@ -35,10 +35,10 @@ $ helm install my-release  .
 ### Deploying Milvus with cluster enabled
 
 ```bash
-$ helm install --set cluster.enabled=true --set persistence.enabled=true --set mysql.enabled=true my-release  .
+$ helm install --set cluster.enabled=true --set persistence.enabled=true my-release  .
 ```
 
-> **NOTE:**: Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
+> **NOTE:** Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
 that is shared. This is controlled by setting `persistence.enabled=true`. You will have to ensure yourself the
 PVC are shared properly between your pods:
 - If you are on AWS, you can use [Elastic File System (EFS)](https://aws.amazon.com/efs/).
