@@ -35,10 +35,10 @@ $ helm install my-release  .
 ### Deploying Milvus with cluster enabled
 
 ```bash
-$ helm install --set cluster.enabled=true --set persistence.enabled=true --set mysql.enabled=true my-release  .
+$ helm install --set cluster.enabled=true --set persistence.enabled=true my-release  .
 ```
 
-> **NOTE:**: Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
+> **NOTE:** Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
 that is shared. This is controlled by setting `persistence.enabled=true`. You will have to ensure yourself the
 PVC are shared properly between your pods:
 - If you are on AWS, you can use [Elastic File System (EFS)](https://aws.amazon.com/efs/).
@@ -175,7 +175,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
 | `admin.enabled`                           | Enable deployment of Milvus admin             | `false`                                                 |
 | `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-admin`                                 |
-| `admin.image.tag`                         | Milvus Admin image tag                        | `v0.2.0`                                                |
+| `admin.image.tag`                         | Milvus Admin image tag                        | `v0.3.0`                                                |
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
