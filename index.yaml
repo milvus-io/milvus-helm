@@ -1,0 +1,57 @@
+apiVersion: v1
+entries:
+  milvus:
+  - apiVersion: v1
+    appVersion: 0.9.1
+    created: 2020-06-01T17:28:42.77826+08:00
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
+    digest: 2e728f991ccdb5602c7d7e443beb76b48e6f33e306181391eb80030df114196e
+    home: https://milvus.io/
+    icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
+    keywords:
+    - milvus
+    - elastic
+    - vector
+    - search
+    - deploy
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: dev.milvus@zilliz.com
+      name: milvus-dev
+    - email: community@zilliz.com
+      name: community
+    name: milvus
+    sources:
+    - https://github.com/milvus-io/milvus
+    - https://github.com/milvus-io/milvus-helm
+    urls:
+    - milvus-0.9.1.tgz
+    version: 0.9.1
+  mysql:
+  - apiVersion: v1
+    appVersion: 5.7.30
+    created: 2020-06-01T17:28:42.788166+08:00
+    description: Fast, reliable, scalable, and easy to use open-source relational
+      database system.
+    digest: d9a99412fa7f28f8a2443060a40cfed95f5cb5f09fffa1acfe51e114e9c73d18
+    engine: gotpl
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - database
+    - sql
+    maintainers:
+    - email: o.with@sportradar.com
+      name: olemarkus
+    - email: viglesias@google.com
+      name: viglesiasce
+    name: mysql
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://github.com/docker-library/mysql
+    urls:
+    - charts/mysql-1.6.4.tgz
+    version: 1.6.4
+generated: 2020-06-01T17:28:42.761865+08:00
