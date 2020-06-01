@@ -65,16 +65,18 @@ Create chart name and version as used by the chart label.
 
 {{/* Helm required labels */}}
 {{- define "milvus.labels" -}}
-heritage: {{ .Release.Service }}
-release: {{ .Release.Name }}
-chart: {{ .Chart.Name }}
-app: "{{ template "milvus.name" . }}"
+helm.sh/chart: {{ include "milvus.chart" . }}
+{{ include "milvus.matchLabels" . }}
+{{- if or .Chart.AppVersion .Values.image.tag }}
+app.kubernetes.io/version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/* matchLabels */}}
 {{- define "milvus.matchLabels" -}}
-release: {{ .Release.Name }}
-app: "{{ template "milvus.name" . }}"
+app.kubernetes.io/name: {{ include "milvus.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
