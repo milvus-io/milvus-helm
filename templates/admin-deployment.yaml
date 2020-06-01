@@ -20,7 +20,7 @@ spec:
     spec:
       initContainers:
       - name: "wait-for-milvus"
-        image: "{{ .Values.initContainerImage }}"
+        image: "{{ .Values.initContainerImage | quote }}"
         command:
         - 'sh'
         - '-c'
