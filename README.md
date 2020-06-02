@@ -12,11 +12,25 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 - Kubernetes 1.10+
 - Helm >= 2.12.0
 
-## Install the Chart
+## Installing the Chart
 
+1. Add the stable repository
+
+```bash
+$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+```
+
+2. Install Chart dependencies
+
+```bash
+# in 'milvus-helm/'
+$ helm dep update
+```
+
+3. Install Helm package:
 To install the chart with the release name `my-release`:
 
-```console
+```bash
 # Helm v2.x
 $ cd milvus-helm
 $ helm install --name my-release .
@@ -24,7 +38,7 @@ $ helm install --name my-release .
 
 or
 
-```console
+```bash
 # Helm v3.x
 $ cd milvus-helm
 $ helm install my-release  .
@@ -51,14 +65,14 @@ To share a PV with multiple Pods, the PV needs to have accessMode 'ReadOnlyMany'
 
 To uninstall/delete the my-release deployment:
 
-```console
+```bash
 # Helm v2.x
 $ helm delete my-release
 ```
 
 or
 
-```console
+```bash
 # Helm v3.x
 $ helm uninstall my-release
 ```
