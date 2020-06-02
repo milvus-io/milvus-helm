@@ -23,7 +23,7 @@ spec:
       {{- if .Values.mysql.enabled }}
       initContainers:
       - name: "wait-for-mysql"
-        image: "{{ .Values.initContainerImage | quote }}"
+        image: {{ .Values.initContainerImage | quote }}
         command:
         - 'sh'
         - '-c'
