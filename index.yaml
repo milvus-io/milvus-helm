@@ -3,10 +3,17 @@ entries:
   milvus:
   - apiVersion: v1
     appVersion: 0.9.1
-    created: 2020-06-01T17:28:42.77826+08:00
+    created: "2020-06-02T16:47:36.486256+08:00"
+    dependencies:
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      tags:
+      - mysql-database
+      version: 1.6.4
     description: Milvus is an open source similarity search engine for massive-scalefeature
       vectors.
-    digest: 2e728f991ccdb5602c7d7e443beb76b48e6f33e306181391eb80030df114196e
+    digest: 47e266decb96acbfd0c9dca15915e1309166c57868d3382eab3bea42d8149a55
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
     keywords:
@@ -31,11 +38,10 @@ entries:
   mysql:
   - apiVersion: v1
     appVersion: 5.7.30
-    created: 2020-06-01T17:28:42.788166+08:00
+    created: "2020-06-02T16:47:36.487453+08:00"
     description: Fast, reliable, scalable, and easy to use open-source relational
       database system.
     digest: d9a99412fa7f28f8a2443060a40cfed95f5cb5f09fffa1acfe51e114e9c73d18
-    engine: gotpl
     home: https://www.mysql.com/
     icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
     keywords:
@@ -54,4 +60,4 @@ entries:
     urls:
     - charts/mysql-1.6.4.tgz
     version: 1.6.4
-generated: 2020-06-01T17:28:42.761865+08:00
+generated: "2020-06-02T16:47:36.482247+08:00"
