@@ -15,19 +15,15 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 ## Installing the Chart
 
 1. Add the stable repository
-
 ```bash
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 ```
-
 2. Install Chart dependencies
-
 ```bash
 # in 'milvus-helm/'
 $ helm dep update
 ```
-
-3. Install Helm package:
+3. Install Helm package
 
 To install the chart with the release name `my-release`:
 
