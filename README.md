@@ -198,7 +198,7 @@ The following table lists the configurable parameters of the mysql chart and the
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `mysql.enable`                            | Enable deployment of MySQL                    | `true`                                                  |
+| `mysql.enabled`                           | Enable deployment of MySQL                    | `true`                                                  |
 | `mysql.mysqlDatabase`                     | Database name                                 | `milvus`                                                |
 | `mysql.imageTag`                          | Image targe                                   | `5.7.14`                                                |
 | `mysql.imagePullPolicy`                   | Image pull policy                             | `IfNotPresent`                                          |
