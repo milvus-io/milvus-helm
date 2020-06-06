@@ -23,9 +23,9 @@ Get the Milvus server URL by running these commands in the same shell:
   {{- end }}
 {{- else if contains "ClusterIP"  .Values.service.type }}
 {{- if .Values.cluster.enabled }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "milvus.name" . }},release={{ .Release.Name }},component=mishards" -o jsonpath="{.items[0].metadata.name}")
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=mishards" -o jsonpath="{.items[0].metadata.name}")
 {{- else }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "milvus.name" . }},release={{ .Release.Name }},component=standalone" -o jsonpath="{.items[0].metadata.name}")
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=standalone" -o jsonpath="{.items[0].metadata.name}")
 {{- end }}
 {{- if .Values.web.enabled }}
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530 19121
@@ -47,7 +47,7 @@ Get the Milvus Admin server URL by running these commands in the same shell:
   export ADMIN_SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "milvus.admin.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   echo http://$ADMIN_SERVICE_IP:{{ .Values.admin.service.port }}
 {{- else if contains "ClusterIP"  .Values.admin.service.type }}
-  export ADMIN_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "milvus.name" . }},release={{ .Release.Name }},component=admin" -o jsonpath="{.items[0].metadata.name}")
+  export ADMIN_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=admin" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace {{ .Release.Namespace }} port-forward $ADMIN_POD_NAME 80
 {{- end }}
 {{- end }}
