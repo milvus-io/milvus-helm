@@ -29,8 +29,8 @@ spec:
         - '-c'
         - >
           until nc -z -w 2 {{ .Release.Name }}-mysql 3306 
-          && nc -z -w 2 {{ .Release.Name }}-readonly {{ .Values.service.port }} 
-          && nc -z -w 2 {{ .Release.Name }}-writable {{ .Values.service.port }} 
+          && nc -z -w 2 {{ template "milvus.readonly.fullname" . }} {{ .Values.service.port }}
+          && nc -z -w 2 {{ template "milvus.writable.fullname" . }} {{ .Values.service.port }}
           && echo ready to go; do
             sleep 2;
           done;
