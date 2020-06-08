@@ -126,7 +126,7 @@ spec:
       - name: milvus-logs-disk
         {{- if .Values.logsPersistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default printf "%s-logs" (include "milvus.fullname" . | trunc 58) }}
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
         {{- else }}
         emptyDir: {}
         {{- end }}
