@@ -92,8 +92,21 @@ Create the name of the service account to use for the mishards component
 
 {{/* Milvus backend URL */}}
 {{- define "milvus.mysqlURL" -}}
+{{- if .Values.externalBackend.enabled -}}
+mysql://root:{{ .Values.externalBackend.rootPassword }}@{{ .Values.externalBackend.IP }}:{{ .Values.externalBackend.PORT }}/{{ .Values.externalBackend.database }}
+{{- else -}}
 mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
 {{- end -}}
+{{- end -}}
+
 {{- define "milvus.sqliteURL" -}}
 sqlite://:@:/
+{{- end -}}
+
+{{- define "milvus.backend.url" -}}
+{{- if .Values.externalBackend.enabled -}}
+{{ .Values.externalBackend.IP }} {{ .Values.externalBackend.PORT }} 
+{{- else -}}
+{{ .Release.Name }}-mysql 3306
+{{- end -}}
 {{- end -}}

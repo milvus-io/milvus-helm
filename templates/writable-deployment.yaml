@@ -32,7 +32,7 @@ spec:
         - 'sh'
         - '-c'
         - >
-          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 && echo mysql database ok; do
+          until nc -z -w 2 {{ template "milvus.backend.url" . }} && echo mysql database ok; do
             sleep 2;
           done;
       {{- if .Values.cluster.enabled }}

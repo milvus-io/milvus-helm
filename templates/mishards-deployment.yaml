@@ -20,7 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
     spec:
-      {{- if .Values.mysql.enabled }}
+      {{- if or .Values.mysql.enabled .Values.externalBackend.enabled}}
       initContainers:
       - name: "wait-for-mysql"
         image: {{ .Values.initContainerImage | quote }}
@@ -28,7 +28,7 @@ spec:
         - 'sh'
         - '-c'
         - >
-          until nc -z -w 2 {{ .Release.Name }}-mysql 3306 
+          until nc -z -w 2 {{ template "milvus.backend.url" . }} 
           && nc -z -w 2 {{ template "milvus.readonly.fullname" . }} {{ .Values.service.port }}
           && nc -z -w 2 {{ template "milvus.writable.fullname" . }} {{ .Values.service.port }}
           && echo ready to go; do
