@@ -60,14 +60,10 @@ server_config:
 #                      | 0 means disable the regular flush.                         |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 db_config:
-{{- if not .Values.backendURL }}
-  {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
+{{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
   backend_url: {{ template "milvus.mysqlURL" . }}
-  {{- else }}
-  backend_url: {{ template "milvus.sqliteURL" . }}
-  {{- end }}
 {{- else }}
-  backend_url: {{ .Values.backendURL }}
+  backend_url: {{ template "milvus.sqliteURL" . }}
 {{- end }}
   preload_collection:
   auto_flush_interval: {{ .Values.autoFlushInterval }}

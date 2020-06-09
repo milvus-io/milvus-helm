@@ -87,7 +87,6 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `version`                                 | Configuration Version                         | `0.4`                                                   |
 | `primaryPath`                             | Primary directory used to save meta data, vector data and index data. | `/var/lib/milvus`               |
 | `timeZone`                                | Use UTC-x or UTC+x to specify a time zone.    | `UTC+8`                                                 |
-| `backendURL`                              | URI format: dialect://username:password@host:port/database. Replace 'dialect' with 'mysql' or 'sqlite' | `""` |
 | `useBLASThreshold`                        | BLAS threshold                                | `1100`                                                  |
 | `gpuSearchThreshold`                      | GPU search threshold                          | `1100`                                                  |
 | `autoFlushInterval`                       | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
