@@ -93,7 +93,7 @@ Create the name of the service account to use for the mishards component
 {{/* Milvus backend URL */}}
 {{- define "milvus.mysqlURL" -}}
 {{- if .Values.externalMysql.enabled -}}
-mysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.IP }}:{{ .Values.externalMysql.PORT }}/{{ .Values.externalMysql.database }}
+mysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.ip }}:{{ .Values.externalMysql.port }}/{{ .Values.externalMysql.database }}
 {{- else -}}
 mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
 {{- end -}}

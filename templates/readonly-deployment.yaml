@@ -32,7 +32,7 @@ spec:
         - '-c'
         - >
           {{- if .Values.externalMysql.enabled }}
-          until nc -z -w 2 {{ .Values.externalMysql.IP }} {{ .Values.externalMysql.PORT }} 
+          until nc -z -w 2 {{ .Values.externalMysql.ip }} {{ .Values.externalMysql.port }} 
           {{- else }}
           until nc -z -w 2 {{ .Release.Name }}-mysql 3306
           {{- end }}

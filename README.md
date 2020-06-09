@@ -191,8 +191,8 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
 | `externalMysql.enabled`                   | Use exist mysql database                      | `false`                                                 |
-| `externalMysql.IP`                        | IP address                                    | `{}`                                                    |
-| `externalMysql.PORT`                      | Port                                          | `{}`                                                    |
+| `externalMysql.ip`                        | IP address                                    | `{}`                                                    |
+| `externalMysql.port`                      | Port                                          | `{}`                                                    |
 | `externalMysql.user`                      | Username                                      | `{}`                                                    |
 | `externalMysql.password`                  | Password for the user                         | `{}`                                                    |
 | `externalMysql.database`                  | Database name                                 | `{}`                                                    |

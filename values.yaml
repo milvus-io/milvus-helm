@@ -312,8 +312,8 @@ admin:
 ## only support mysql now
 externalMysql:
   enabled: false
-  IP:
-  PORT:
+  ip:
+  port:
   user:
   password:
   database:
