@@ -7,7 +7,6 @@
 version: 0.4
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
-# backendURL: ""
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
@@ -311,11 +310,12 @@ admin:
 
 ## use External Backend
 ## only support mysql now
-externalBackend:
+externalMysql:
   enabled: false
   IP:
   PORT:
-  rootPassword:
+  user:
+  password:
   database:
 
 ## Configuration values for the mysql dependency

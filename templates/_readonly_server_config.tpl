@@ -57,7 +57,7 @@ server_config:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 db_config:
 {{- if not .Values.backendURL }}
-  {{- if or .Values.mysql.enabled .Values.externalBackend.enabled }}
+  {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
   backend_url: {{ template "milvus.mysqlURL" . }}
   {{- else }}
   backend_url: {{ template "milvus.sqliteURL" . }}
