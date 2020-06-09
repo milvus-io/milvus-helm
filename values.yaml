@@ -7,7 +7,6 @@
 version: 0.4
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
-# backendURL: ""
 useBLASThreshold: 1100
 gpuSearchThreshold: 1100
 autoFlushInterval: 1
@@ -308,6 +307,16 @@ admin:
     - 0.0.0.0/0
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
+
+## use External Backend
+## only support mysql now
+externalMysql:
+  enabled: false
+  ip:
+  port:
+  user:
+  password:
+  database:
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md

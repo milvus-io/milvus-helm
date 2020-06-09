@@ -190,6 +190,12 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
+| `externalMysql.enabled`                   | Use exist mysql database                      | `false`                                                 |
+| `externalMysql.ip`                        | IP address                                    | `{}`                                                    |
+| `externalMysql.port`                      | Port                                          | `{}`                                                    |
+| `externalMysql.user`                      | Username                                      | `{}`                                                    |
+| `externalMysql.password`                  | Password for the user                         | `{}`                                                    |
+| `externalMysql.database`                  | Database name                                 | `{}`                                                    |
 
 
 ### MySQL Configuration
