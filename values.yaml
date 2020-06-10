@@ -31,7 +31,7 @@ wal:
   enabled: true
   recoveryErrorIgnore: false 
   bufferSize: 256MB
-  path: /var/lib/milvus/wal
+  path: /var/lib/milvus/db/wal
 
 gpu:
   enabled: false

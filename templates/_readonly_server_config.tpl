@@ -37,9 +37,9 @@ cluster:
 general:
   time_zone: {{ .Values.timeZone }}
 {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
-  meta_uri: {{ template "milvus.mysqlURL" . }}
+  meta_uri: {{ template "milvus.mysqlURI" . }}
 {{- else }}
-  meta_uri: {{ template "milvus.sqliteURL" . }}
+  meta_uri: {{ template "milvus.sqliteURI" . }}
 {{- end }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+

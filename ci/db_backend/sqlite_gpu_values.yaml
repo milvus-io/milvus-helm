@@ -1,6 +1,6 @@
 cache:
-  insertBufferSize: 4
-  cpuCacheCapacity: 8
+  insertBufferSize: 1GB
+  cacheSize: 8GB
 
 resources:
   limits:
@@ -13,10 +13,10 @@ resources:
 
 gpu:
   enabled: true
-  cacheCapacity: 2
-  searchResources:
+  cacheSize: 2GB
+  searchDevices:
     - gpu0
-  buildIndexResources:
+  buildIndexDevices:
     - gpu0
 
 mysql:
