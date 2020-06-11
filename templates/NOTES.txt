@@ -17,7 +17,7 @@ Get the Milvus server URL by running these commands in the same shell:
 
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "milvus.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   {{- if .Values.network.httpEnabled }}
-  echo $SERVICE_IP:{{ .Values.service.port }} $SERVICE_IP:{{ .Values.web.port }}
+  echo $SERVICE_IP:{{ .Values.service.port }} $SERVICE_IP:{{ .Values.network.httpPort }}
   {{- else }}
   echo $SERVICE_IP:{{ .Values.service.port }}
   {{- end }}
