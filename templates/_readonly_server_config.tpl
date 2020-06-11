@@ -1,4 +1,4 @@
-{{- define "milvus.serverConfig" -}}
+{{- define "milvus.readonly.serverConfig" -}}
 # Copyright (C) 2019-2020 Zilliz. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -21,7 +21,7 @@ version: {{ .Values.version }}
 #----------------------+------------------------------------------------------------+------------+-----------------+
 cluster:
   enable: {{ .Values.cluster.enabled }}
-  role: rw
+  role: ro
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # General Config       | Description                                                | Type       | Default         |
@@ -57,8 +57,8 @@ general:
 network:
   bind.address: {{ .Values.network.bindAddress }}
   bind.port: {{ .Values.network.bindPort }}
-  http.enable: {{ .Values.network.httpEnabled }}
-  http.port: {{ .Values.network.httpPort }}
+  http.enable: false
+  http.port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Storage Config       | Description                                                | Type       | Default         |
@@ -98,8 +98,8 @@ storage:
 # path                 | Location of WAL log files.                                 | String     |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 wal:
-  enable: {{ .Values.wal.enabled }}
-  recovery_error_ignore: {{ .Values.wal.recoveryErrorIgnore }}
+  enable: false
+  recovery_error_ignore: true
   buffer_size: {{ .Values.wal.bufferSize }}
   wal_path: {{ .Values.wal.path }}
 
@@ -120,8 +120,8 @@ wal:
 #                      | double-quote required).                                    |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 cache:
-  cache_size: {{ .Values.cache.cacheSize }}
-  insert_buffer_size: {{ .Values.cache.insertBufferSize }}
+  cache_size: {{ .Values.readonly.cache.cacheSize }}
+  insert_buffer_size: {{ .Values.readonly.cache.insertBufferSize }}
   preload_collection:
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
@@ -146,14 +146,14 @@ cache:
 #                      | Must be in format gpux.                                    |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 gpu:
-  enable: {{ .Values.gpu.enabled }}
-  cache_size: {{ .Values.gpu.cacheSize }}
-  gpu_search_threshold: {{ .Values.gpu.gpuSearchThreshold }}
-  {{- with .Values.gpu.searchDevices }}
+  enable: {{ .Values.readonly.gpu.enabled }}
+  cache_size: {{ .Values.readonly.gpu.cacheSize }}
+  gpu_search_threshold: {{ .Values.readonly.gpu.gpuSearchThreshold }}
+  {{- with .Values.readonly.gpu.searchDevices }}
   search_devices:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.gpu.buildIndexDevices }}
+  {{- with .Values.readonly.gpu.buildIndexDevices }}
   build_index_devices:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -175,12 +175,11 @@ gpu:
 #                      | logging level, num range [0, 1024], 0 means unlimited.     |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 logs:
-  level: {{ .Values.logs.level }}
+  level: {{ .Values.readonly.logs.level }}
   trace.enable: true
-  path: {{ .Values.logs.path }}
-  max_log_file_size: {{ .Values.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.logs.logRotateNum }}
-
+  path: {{ .Values.readonly.logs.path }}
+  max_log_file_size: {{ .Values.readonly.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.readonly.logs.logRotateNum }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Metric Config        | Description                                                | Type       | Default         |

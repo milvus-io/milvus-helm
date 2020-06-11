@@ -4,44 +4,59 @@
 
 # Milvus Server Configuration
 
-version: 0.4
-primaryPath: "/var/lib/milvus/data"
+version: 0.5
+primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
-#backendURL: ""
-deployMode: "single"
-insertBufferSize: 1
-cpuCacheCapacity: 4
-cacheInsertData: false
-useBLASThreshold: 1100
-gpuSearchThreshold: 1100
-autoFlushInterval: 1
+
+logs:
+  level: debug
+  path: /var/lib/milvus/logs
+  maxLogFileSize: 1024MB
+  logRotateNum: 0
+
+cache:
+  insertBufferSize: 1GB
+  cacheSize: 4GB
+
+network:
+  bindAddress: 0.0.0.0
+  bindPort: 19530
+  httpEnabled: true
+  httpPort: 19121
+
+storage:
+  autoFlushInterval: 1
+
+wal:
+  enabled: true
+  recoveryErrorIgnore: false 
+  bufferSize: 256MB
+  path: /var/lib/milvus/db/wal
 
 gpu:
   enabled: false
-  cacheCapacity: 1
-  searchResources:
+  cacheSize: 1GB
+  gpuSearchThreshold: 1000
+  searchDevices:
     - gpu0
-  buildIndexResources:
+  buildIndexDevices:
     - gpu0
 
 metrics:
   enabled: false
   address: 127.0.0.1
-  port: 8080
+  port: 9091
 
-wal:
-  enabled: true
-  ignoreErrorLog: false
-  bufferSize: 128
-  recordSize: 2 
-  path: /var/lib/milvus/data/wal
+## Cluster control switch
+cluster:
+  enabled: false
 
 # Common
 initContainerImage: "alpine:3.8"
 
 extraInitContainers: []
 
-## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
+## Expose the Milvus service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
 ##
@@ -50,9 +65,8 @@ service:
   port: 19530
   annotations: {}
   labels: {}
-  portName: service
 
-  ## List of IP addresses at which the Prometheus server service is available
+  ## List of IP addresses at which the Milvus server service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
   ##
   externalIPs: []
@@ -84,9 +98,9 @@ extraContainers: |
 #    - name: milvus-configmap
 #      mountPath: /etc/filebeat.yml
 #      subPath: filebeat.yml
-#    - name: milvus-data-disk
-#      mountPath: /var/lib/milvus/data
-#      subPath: data
+#    - name: milvus-logs-disk
+#      mountPath: /var/lib/milvus/logs
+#      readOnly: true
 
 extraVolumes: []
   # - name: extras
@@ -102,7 +116,7 @@ extraConfigFiles: {}
   #   filebeat.inputs:
   #   - type: log
   #     paths:
-  #       - /var/lib/milvus/data/logs/*.log
+  #       - /var/lib/milvus/logs/*.log
   #     tags: ["milvus"]
   #     fields_under_root: true
   #     fields:
@@ -113,6 +127,7 @@ extraConfigFiles: {}
   #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
 
 persistence:
+  mountPath: "/var/lib/milvus/db"
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
@@ -131,11 +146,33 @@ persistence:
     storageClass:
     accessModes: ReadWriteMany
     size: 50Gi
-    subPath: data
+    subPath: ""
+
+logsPersistence:
+  mountPath: "/var/lib/milvus/logs"
+  ## If true, alertmanager will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  ##
+  enabled: false
+  annotations: {}
+  #  helm.sh/resource-policy: keep
+  persistentVolumeClaim:
+    existingClaim: ""
+    ## milvus logs Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
+    accessModes: ReadWriteMany
+    size: 5Gi
+    subPath: ""
 
 image:
   repository: milvusdb/milvus
-  tag: cpu-latest
+  tag: 0.9.1-cpu-d052920-e04ed5
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -152,15 +189,11 @@ resources:
     memory: "8Gi"
     cpu: "2.0"
 livenessProbe:
-  tcpSocket:
-    port: 19530
   initialDelaySeconds: 30
   periodSeconds: 15
   timeoutSeconds: 10
   failureThreshold: 5
 readinessProbe:
-  tcpSocket:
-    port: 19530
   initialDelaySeconds: 15
   periodSeconds: 15
   timeoutSeconds: 10
@@ -172,11 +205,117 @@ affinity: {}
 ## Additional deployment annotations
 podAnnotations: {}
 
-## See `kubectl explain poddisruptionbudget.spec` for more
-## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-podDisruptionBudget: {}
-#  minAvailable: 1
-#  maxUnavailable: 1
+## Define serviceAccount names for Mishards
+serviceAccounts:
+  mishards:
+    create: false
+    name:
+
+## Mishards Configuration
+mishards:
+  image:
+    repository: milvusdb/mishards
+    tag: 0.9.1
+    pullPolicy: IfNotPresent
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "4Gi"
+      cpu: "4.0"
+    requests:
+      memory: "2Gi"
+      cpu: "2.0"
+
+  ## Mishards conf
+  debug: true
+  maxworkers: 50
+
+  # discoverypluginpath: "static"
+  # tracerclassname: "jaeger"
+  # tracingservicename: "mishards-demo"
+  # tracingreportinghost: "jaeger"
+  # tracingreportingport: 5775
+
+## Milvus Readonly Server Configuration
+readonly:
+  logs:
+    level: debug
+    path: /var/lib/milvus/logs
+    maxLogFileSize: 1024GB
+    logRotateNum: 0
+
+  cache:
+    insertBufferSize: 1GB
+    cacheSize: 4GB
+
+  gpu:
+    enabled: false
+    cacheSize: 1GB
+    gpuSearchThreshold: 1000
+    searchDevices:
+      - gpu0
+    buildIndexDevices:
+      - gpu0
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+
+## Milvus Admin Configuration
+admin:
+  enabled: false
+  image:
+    repository: milvusdb/milvus-admin
+    tag: v0.3.0
+    pullPolicy: IfNotPresent
+
+  replicas: 1
+  resources:
+    limits:
+      memory: "4Gi"
+      cpu: "2.0"
+    requests:
+      memory: "2Gi"
+      cpu: "1.0"
+
+  ## Expose the Milvus admin service to be accessed from outside the cluster (LoadBalancer service).
+  ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+  ## ref: http://kubernetes.io/docs/user-guide/services/
+  ##
+  service:
+    type: ClusterIP
+    port: 3000
+    annotations: {}
+    labels: {}
+
+    ## List of IP addresses at which the Milvus server service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: []
+    #   - externalIp1
+
+    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+    # set allowed inbound rules on the security group assigned to the master load balancer
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
+
+## use External Backend
+## only support mysql now
+externalMysql:
+  enabled: false
+  ip:
+  port:
+  user:
+  password:
+  database:
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
@@ -184,7 +323,7 @@ podDisruptionBudget: {}
 mysql:
   enabled: true
   name: mysql
-  imageTag: "5.7.14"
+  imageTag: "5.7.30"
   imagePullPolicy: IfNotPresent
   mysqlDatabase: milvus
   mysqlUser: milvus
@@ -195,7 +334,6 @@ mysql:
       [mysqld]
       pid-file        = /var/run/mysqld/mysqld.pid
       socket          = /var/run/mysqld/mysqld.sock
-      datadir         = /data
       log-error       = /var/log/mysql/error.log # mount out to host
       skip-name-resolve
       # By default we only accept connections from localhost
