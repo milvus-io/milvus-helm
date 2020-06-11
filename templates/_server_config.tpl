@@ -26,7 +26,7 @@ cluster:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # General Config       | Description                                                | Type       | Default         |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# time_zone            | Use UTC-x or UTC+x to specify a time zone.                 | Timezone   | UTC+8           |
+# timezone             | Use UTC-x or UTC+x to specify a time zone.                 | Timezone   | UTC+8           |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # meta_uri             | URI for metadata storage, using SQLite (for single server  | URL        | sqlite://:@:/   |
 #                      | Milvus) or MySQL (for distributed cluster Milvus).         |            |                 |
@@ -35,7 +35,7 @@ cluster:
 #                      | 'mysql', replace other texts with real values.             |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 general:
-  time_zone: {{ .Values.timeZone }}
+  timezone: {{ .Values.timeZone }}
 {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
   meta_uri: {{ template "milvus.mysqlURI" . }}
 {{- else }}
@@ -101,7 +101,7 @@ wal:
   enable: {{ .Values.wal.enabled }}
   recovery_error_ignore: {{ .Values.wal.recoveryErrorIgnore }}
   buffer_size: {{ .Values.wal.bufferSize }}
-  wal_path: {{ .Values.wal.path }}
+  path: {{ .Values.wal.path }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Cache Config         | Description                                                | Type       | Default         |
