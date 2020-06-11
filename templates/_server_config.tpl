@@ -154,7 +154,7 @@ gpu:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.gpu.buildIndexDevices }}
-  build_index_device:
+  build_index_devices:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
