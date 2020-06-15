@@ -130,7 +130,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `replicas`                                | Number of nodes                               | `1`                                                     |
 | `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `0.9.1-cpu-d052920-e04ed5`                                            |
+| `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061320-83cc81`                                            |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
 | `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
