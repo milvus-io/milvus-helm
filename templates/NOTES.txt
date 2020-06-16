@@ -16,8 +16,8 @@ Get the Milvus server URL by running these commands in the same shell:
         You can watch the status of by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "milvus.fullname" . }}'
 
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "milvus.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-  {{- if .Values.web.enabled }}
-  echo $SERVICE_IP:{{ .Values.service.port }} $SERVICE_IP:{{ .Values.web.port }}
+  {{- if .Values.network.httpEnabled }}
+  echo $SERVICE_IP:{{ .Values.service.port }} $SERVICE_IP:{{ .Values.network.httpPort }}
   {{- else }}
   echo $SERVICE_IP:{{ .Values.service.port }}
   {{- end }}
@@ -27,7 +27,7 @@ Get the Milvus server URL by running these commands in the same shell:
 {{- else }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=standalone" -o jsonpath="{.items[0].metadata.name}")
 {{- end }}
-{{- if .Values.web.enabled }}
+{{- if .Values.network.httpEnabled }}
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530 19121
 {{- else }}
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530

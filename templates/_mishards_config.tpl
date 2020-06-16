@@ -1,10 +1,10 @@
 {{- define "milvus.mishards.config" -}}
 FROM_EXAMPLE='true'
 
-{{- if .Values.mysql.enabled }}
-SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURL" . }}
+{{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
+SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURI" . }}
 {{- else }}
-SQLALCHEMY_DATABASE_URI={{ template "milvus.sqliteURL" . }}
+SQLALCHEMY_DATABASE_URI={{ template "milvus.sqliteURI" . }}
 {{- end }}
 
 DEBUG={{ .Values.mishards.debug }}

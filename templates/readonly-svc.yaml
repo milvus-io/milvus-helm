@@ -22,9 +22,9 @@ spec:
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
-    {{- if .Values.web.enabled }}
+    {{- if .Values.network.httpEnabled }}
     - name: web
-      port: {{ .Values.web.port }}
+      port: {{ .Values.network.httpPort }}
       protocol: TCP
       targetPort: web
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.webNodePort))) }}
