@@ -4,40 +4,40 @@
 
 # Milvus Server Configuration
 
-version: 0.4
+version: 0.5
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
-useBLASThreshold: 1100
-gpuSearchThreshold: 1100
-autoFlushInterval: 1
-fileCleanupTimeout: 10
 
 logs:
+  level: debug
   path: /var/lib/milvus/logs
-  maxLogFileSize: 1024
+  maxLogFileSize: 1024MB
   logRotateNum: 0
 
 cache:
-  insertBufferSize: 1
-  cpuCacheCapacity: 4
-  cacheInsertData: false
+  insertBufferSize: 1GB
+  cacheSize: 4GB
 
-web:
-  enabled: true
-  port: 19121
+network:
+  httpEnabled: true
+  httpPort: 19121
+
+storage:
+  autoFlushInterval: 1
 
 wal:
   enabled: true
-  ignoreErrorLog: true
-  bufferSize: 256
+  recoveryErrorIgnore: false 
+  bufferSize: 256MB
   path: /var/lib/milvus/db/wal
 
 gpu:
   enabled: false
-  cacheCapacity: 1
-  searchResources:
+  cacheSize: 1GB
+  gpuSearchThreshold: 1000
+  searchDevices:
     - gpu0
-  buildIndexResources:
+  buildIndexDevices:
     - gpu0
 
 metrics:
@@ -48,7 +48,6 @@ metrics:
 ## Cluster control switch
 cluster:
   enabled: false
-
 
 # Common
 initContainerImage: "alpine:3.8"
@@ -171,7 +170,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 0.9.1-cpu-d052920-e04ed5
+  tag: 0.10.0-cpu-d061620-5f3c00
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -214,7 +213,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 0.9.1
+    tag: 0.10.0
     pullPolicy: IfNotPresent
 
   replicas: 1
@@ -238,25 +237,23 @@ mishards:
 
 ## Milvus Readonly Server Configuration
 readonly:
-  useBLASThreshold: 1100
-  gpuSearchThreshold: 1100
-
   logs:
+    level: debug
     path: /var/lib/milvus/logs
-    maxLogFileSize: 1024
+    maxLogFileSize: 1024GB
     logRotateNum: 0
 
   cache:
-    insertBufferSize: 1
-    cpuCacheCapacity: 4
-    cacheInsertData: false
+    insertBufferSize: 1GB
+    cacheSize: 4GB
 
   gpu:
     enabled: false
-    cacheCapacity: 1
-    searchResources:
+    cacheSize: 1GB
+    gpuSearchThreshold: 1000
+    searchDevices:
       - gpu0
-    buildIndexResources:
+    buildIndexDevices:
       - gpu0
 
   replicas: 1
@@ -272,8 +269,8 @@ readonly:
 admin:
   enabled: false
   image:
-    repository: milvusdb/milvus-admin
-    tag: v0.3.0
+    repository: milvusdb/milvus-em
+    tag: v0.4.0
     pullPolicy: IfNotPresent
 
   replicas: 1
