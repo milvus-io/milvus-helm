@@ -130,7 +130,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `replicas`                                | Number of nodes                               | `1`                                                     |
 | `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `0.9.1-cpu-d052920-e04ed5`                                            |
+| `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061620-5f3c00`                                            |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
 | `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
@@ -173,7 +173,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
 | `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
 | `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
-| `mishards.image.tag`                      | Mishards image tag                            | `0.9.1`                                                |
+| `mishards.image.tag`                      | Mishards image tag                            | `0.10.0`                                                |
 | `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
 | `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
