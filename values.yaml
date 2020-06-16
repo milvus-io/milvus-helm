@@ -19,8 +19,6 @@ cache:
   cacheSize: 4GB
 
 network:
-  bindAddress: 0.0.0.0
-  bindPort: 19530
   httpEnabled: true
   httpPort: 19121
 
