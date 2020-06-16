@@ -269,8 +269,8 @@ readonly:
 admin:
   enabled: false
   image:
-    repository: milvusdb/milvus-admin
-    tag: v0.3.0
+    repository: milvusdb/milvus-em
+    tag: v0.4.0
     pullPolicy: IfNotPresent
 
   replicas: 1
