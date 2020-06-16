@@ -84,7 +84,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `version`                                 | Configuration Version                         | `0.4`                                                   |
+| `version`                                 | Configuration Version                         | `0.5`                                                   |
 | `primaryPath`                             | Primary directory used to save meta data, vector data and index data. | `/var/lib/milvus`               |
 | `timeZone`                                | Use UTC-x or UTC+x to specify a time zone.    | `UTC+8`                                                 |
 | `autoFlushInterval`                       | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
