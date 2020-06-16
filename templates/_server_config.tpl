@@ -54,11 +54,11 @@ general:
 # http.port            | Port that Milvus web server monitors.                      | Integer    | 19121           |
 #                      | Port range (1024, 65535)                                   |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-network:
-  bind.address: {{ .Values.network.bindAddress }}
-  bind.port: {{ .Values.network.bindPort }}
+network: 
+  bind.address: 0.0.0.0
+  bind.port: 19530
   http.enable: {{ .Values.network.httpEnabled }}
-  http.port: {{ .Values.network.httpPort }}
+  http.port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Storage Config       | Description                                                | Type       | Default         |
