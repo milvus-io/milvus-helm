@@ -240,7 +240,7 @@ readonly:
   logs:
     level: debug
     path: /var/lib/milvus/logs
-    maxLogFileSize: 1024GB
+    maxLogFileSize: 1024MB
     logRotateNum: 0
 
   cache:
