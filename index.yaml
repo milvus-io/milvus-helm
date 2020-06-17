@@ -3,7 +3,7 @@ entries:
   milvus:
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2020-06-16T23:41:45.27158+08:00"
+    created: "2020-06-17T15:38:49.854615+08:00"
     dependencies:
     - condition: mysql.enabled
       name: mysql
@@ -13,7 +13,7 @@ entries:
       version: 1.6.4
     description: Milvus is an open source similarity search engine for massive-scalefeature
       vectors.
-    digest: 7f9b742c9b3d79a309a451a11f86f286ebd53a4259e5744433c3a36af0cecb7d
+    digest: f927bb4246f5b4b0fb60f5d89cdf68b84616f9be0c1eab8e654e6cf88fa56a7d
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
     keywords:
@@ -72,7 +72,7 @@ entries:
   mysql:
   - apiVersion: v1
     appVersion: 5.7.30
-    created: "2020-06-16T23:41:45.277679+08:00"
+    created: "2020-06-17T15:38:49.857935+08:00"
     description: Fast, reliable, scalable, and easy to use open-source relational
       database system.
     digest: d9a99412fa7f28f8a2443060a40cfed95f5cb5f09fffa1acfe51e114e9c73d18
@@ -94,4 +94,4 @@ entries:
     urls:
     - charts/mysql-1.6.4.tgz
     version: 1.6.4
-generated: "2020-06-16T23:41:45.265823+08:00"
+generated: "2020-06-17T15:38:49.792064+08:00"
