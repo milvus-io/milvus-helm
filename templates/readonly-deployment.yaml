@@ -68,6 +68,7 @@ spec:
         - name: {{ . }}
       {{- end}}
       {{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
       containers:
       - name: milvus
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -117,6 +118,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:
       - name: milvus-configmap
         configMap:

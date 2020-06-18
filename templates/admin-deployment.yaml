@@ -35,6 +35,7 @@ spec:
         - name: {{ . }}
       {{- end}}
       {{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
       containers:
       - name: admin
         image: "{{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}"

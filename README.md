@@ -128,12 +128,14 @@ The following table lists the configurable parameters of the Milvus chart and th
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Create a Milvus cluster                       | `false`                                                 |
 | `replicas`                                | Number of nodes                               | `1`                                                     |
+| `restartPolicy`                           | Restart policy for all containers             | `Always`                                                |
 | `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061620-5f3c00`                                            |
+| `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061620-5f3c00`                             |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
 | `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
+| `terminationGracePeriodSeconds`           | Optional duration in seconds the pod needs to terminate gracefully | `30`                               |
 | `extraInitContainers`                     | Additional init containers                    | `[]`                                                    |
 | `extraContainers`                         | Additional containers                         | `unset`                                                 |
 | `extraVolumes`                            | Additional volumes for use in extraContainers | `unset`                                                 |

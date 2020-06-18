@@ -45,6 +45,7 @@ spec:
         - name: {{ . }}
       {{- end}}
       {{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
       containers:
       - name: mishards
         image: "{{ .Values.mishards.image.repository }}:{{ .Values.mishards.image.tag }}"
