@@ -6,4 +6,4 @@ validate-maintainers: false
 chart-repos:
   - incubator=https://kubernetes-charts-incubator.storage.googleapis.com/
   - stable=https://kubernetes-charts.storage.googleapis.com/
-helm-extra-args: "--timeout 300s -f ci/db_backend/sqlite_cpu_value.yaml"
+helm-extra-args: --help
