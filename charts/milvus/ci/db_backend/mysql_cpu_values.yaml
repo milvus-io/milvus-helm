@@ -1,6 +1,6 @@
 cache:
   insertBufferSize: 1GB
-  cacheSize: 4GB
+  cacheSize: 8GB
 
 gpu:
   enabled: false

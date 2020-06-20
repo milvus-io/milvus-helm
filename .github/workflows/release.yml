@@ -1,0 +1,23 @@
+name: Release Charts
+
+# This workflow is triggered on pushes or pull request to the repository.
+on:
+  release:
+    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
+    types: [prereleased, released]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.0.0-rc.2
+        env:
+          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
