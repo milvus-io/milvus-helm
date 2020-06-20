@@ -6,4 +6,4 @@ validate-maintainers: false
 chart-repos:
   - incubator=https://kubernetes-charts-incubator.storage.googleapis.com/
   - stable=https://kubernetes-charts.storage.googleapis.com/
-helm-extra-args: --timeout 300s --set securityContext.enabled=true
+helm-extra-args: --timeout 300s --set mysql.securityContext.enabled=true
