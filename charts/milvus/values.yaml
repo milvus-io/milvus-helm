@@ -27,7 +27,7 @@ storage:
 
 wal:
   enabled: true
-  recoveryErrorIgnore: false 
+  recoveryErrorIgnore: false
   bufferSize: 256MB
   path: /var/lib/milvus/db/wal
 
