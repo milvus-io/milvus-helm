@@ -5,19 +5,13 @@ on:
   push:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - 'templates/**'
-      - 'Chart.yaml'
-      - 'requirements.yaml'
-      - 'values.yaml'
+      - 'charts/**'
       - '.github/workflows/helm.yml'
       - '!**.txt'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - 'templates/**'
-      - 'Chart.yaml'
-      - 'requirements.yaml'
-      - 'values.yaml'
+      - 'charts/**'
       - '.github/workflows/helm.yml'
       - '!**.txt'
 
