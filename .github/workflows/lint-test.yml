@@ -6,13 +6,13 @@ on:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'charts/**'
-      - '.github/workflows/helm.yml'
+      - '.github/workflows/lint-test.yml'
       - '!**.txt'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'charts/**'
-      - '.github/workflows/helm.yml'
+      - '.github/workflows/lint-test.yml'
       - '!**.txt'
 
 jobs:
