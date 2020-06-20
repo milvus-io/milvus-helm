@@ -2,9 +2,10 @@ name: Release Charts
 
 # This workflow is triggered on pushes or pull request to the repository.
 on:
-  release:
-    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
-    types: [prereleased, released]
+  push:
+    branches:
+      - master
+      - format
 
 jobs:
   release:
