@@ -2,8 +2,8 @@
 remote: origin
 chart-dirs:
   - charts/
-validate-maintainers: false
+# validate-maintainers: false
 chart-repos:
   - incubator=https://kubernetes-charts-incubator.storage.googleapis.com/
   - stable=https://kubernetes-charts.storage.googleapis.com/
-helm-extra-args: --timeout 600s
+helm-extra-args: --timeout 300s --set securityContext.enabled=true
