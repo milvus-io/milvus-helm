@@ -18,6 +18,8 @@ sources:
 maintainers:
   - name: milvus-dev
     email: dev.milvus@zilliz.com
+    url: www.zilliz.com
   - name: community
     email: community@zilliz.com
+    url: www.zilliz.com
 engine: gotpl
