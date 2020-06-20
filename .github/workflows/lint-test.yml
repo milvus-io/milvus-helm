@@ -6,12 +6,14 @@ on:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'charts/**'
+      - 'ct.yaml'
       - '.github/workflows/lint-test.yml'
       - '!**.txt'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'charts/**'
+      - 'ct.yaml'
       - '.github/workflows/lint-test.yml'
       - '!**.txt'
 
