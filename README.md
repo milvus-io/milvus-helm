@@ -215,4 +215,4 @@ The following table lists the configurable parameters of the mysql chart and the
 | `mysql.persistence.annotations`           | Persistent Volume annotations                 | `{}`                                                    |
 | `mysql.persistence.storageClass`          | Type of persistent volume claim               | `unset`                                                 |
 | `mysql.persistence.accessMode`            | ReadWriteOnce or ReadOnly                     | `ReadWriteOnce`                                         |
-| `mysql.persistence.size`                  | Size of persistent volume claim               | `8Gi`                                                   |
+| `mysql.persistence.size`                  | Size of persistent volume claim               | `4Gi`                                                   |

@@ -189,11 +189,11 @@ image:
 replicas: 1
 resources:
   limits:
-    memory: "12Gi"
-    cpu: "4.0"
-  requests:
-    memory: "8Gi"
+    memory: "6Gi"
     cpu: "2.0"
+  requests:
+    memory: "4Gi"
+    cpu: "1.0"
 livenessProbe:
   initialDelaySeconds: 30
   periodSeconds: 15
@@ -365,4 +365,4 @@ mysql:
     #  "helm.sh/resource-policy": keep
     storageClass:
     accessMode: ReadWriteOnce
-    size: 8Gi
+    size: 4Gi
