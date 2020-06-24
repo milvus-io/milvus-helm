@@ -108,16 +108,16 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |
 | `metrics.address`                         | Pushgateway address                           | `127.0.0.1`                                             |
 | `metrics.port`                            | Prometheus monitoring metrics port            | `9091`                                                  |
-| `readonly.logs.path`                               | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
-| `readonly.logs.maxLogFileSize`                     | The maximum size of each log file, size range [512, 4096]. (MB) | `1024`                                |
-| `readonly.logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
-| `readonly.cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
-| `readonly.cache.cacheSize`                         | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
-| `readonly.gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
-| `readonly.gpu.cacheSize`                           | Size of GPU memory per card used for cache (GB) | `1GB`                                                 |
-| `readonly.gpu.gpuSearchThreshold`                  | GPU search threshold                          | `1000`                                                  |
-| `readonly.gpu.searchDevices`                       | Define the GPU devices used for search computation | `[gpu0]`                                           |
-| `readonly.gpu.buildIndexDevices`                   | Define the GPU devices used for index building | `[gpu0]`                                               |
+| `readonly.logs.path`                      | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
+| `readonly.logs.maxLogFileSize`            | The maximum size of each log file, size range [512, 4096]. (MB) | `1024`                                |
+| `readonly.logs.logRotateNum`              | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
+| `readonly.cache.insertBufferSize`         | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
+| `readonly.cache.cacheSize`                | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
+| `readonly.gpu.enabled`                    | Enable GPU resources                          | `false`                                                 |
+| `readonly.gpu.cacheSize`                  | Size of GPU memory per card used for cache (GB) | `1GB`                                                 |
+| `readonly.gpu.gpuSearchThreshold`         | GPU search threshold                          | `1000`                                                  |
+| `readonly.gpu.searchDevices`              | Define the GPU devices used for search computation | `[gpu0]`                                           |
+| `readonly.gpu.buildIndexDevices`          | Define the GPU devices used for index building | `[gpu0]`                                               |
 
 
 ### Milvus Deployment Configuration
@@ -134,7 +134,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061620-5f3c00`                             |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
-| `resources`                               | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
+| `image.resources`                         | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
 | `terminationGracePeriodSeconds`           | Optional duration in seconds the pod needs to terminate gracefully | `30`                               |
 | `extraInitContainers`                     | Additional init containers                    | `[]`                                                    |
 | `extraContainers`                         | Additional containers                         | `unset`                                                 |
@@ -179,10 +179,10 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
 | `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
-| `readonly.replicas`                 | Number of readonly nodes                      | `1`                                                     |
+| `readonly.replicas`                       | Number of readonly nodes                      | `1`                                                     |
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
 | `admin.enabled`                           | Enable deployment of Milvus admin             | `false`                                                 |
-| `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-em`                                 |
+| `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-em`                                    |
 | `admin.image.tag`                         | Milvus Admin image tag                        | `v0.4.0`                                                |
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
