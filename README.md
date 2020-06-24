@@ -36,10 +36,10 @@ and the list of all charts at `index.yaml` on _gh-pages_ branch will be updated 
 ## More information
 
 You can find more information at:
-* [milvus-io.github.io/milvus-helm](https://github.com/milvus-io/milvus-helm)
-* [The Helm package manager](https://helm.sh/)
-* [Chart Releaser](https://github.com/helm/chart-releaser)
-* [Chart Releaser GitHub Action](https://github.com/helm/chart-releaser-action)
+*   [milvus-io.github.io/milvus-helm](https://github.com/milvus-io/milvus-helm)
+*   [The Helm package manager](https://helm.sh/)
+*   [Chart Releaser](https://github.com/helm/chart-releaser)
+*   [Chart Releaser GitHub Action](https://github.com/helm/chart-releaser-action)
 
 ---
 
