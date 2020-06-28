@@ -16,8 +16,7 @@ sources:
   - https://github.com/milvus-io/milvus
   - https://github.com/milvus-io/milvus-helm
 maintainers:
-  - name: milvus-dev
-    email: dev.milvus@zilliz.com
-  - name: community
-    email: community@zilliz.com
+  - email: community@zilliz.com
+    name: community
+    url: www.zilliz.com
 engine: gotpl

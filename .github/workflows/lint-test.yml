@@ -5,20 +5,18 @@ on:
   push:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - 'templates/**'
-      - 'Chart.yaml'
-      - 'requirements.yaml'
-      - 'values.yaml'
-      - '.github/workflows/helm.yml'
+      - 'charts/**'
+      - 'ct.yaml'
+      - '.github/workflows/lint-test.yml'
+      - '!**.md'
       - '!**.txt'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - 'templates/**'
-      - 'Chart.yaml'
-      - 'requirements.yaml'
-      - 'values.yaml'
-      - '.github/workflows/helm.yml'
+      - 'charts/**'
+      - 'ct.yaml'
+      - '.github/workflows/lint-test.yml'
+      - '!**.md'
       - '!**.txt'
 
 jobs:
@@ -34,14 +32,20 @@ jobs:
         run: git fetch --prune --unshallow
       - name: Run chart-testing (lint)
         id: lint
-        uses: helm/chart-testing-action@v1.0.0-rc.1
+        uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: lint
+          config: ct.yaml
       - name: Create kind cluster
         uses: helm/kind-action@v1.0.0-alpha.3
         # Only build a kind cluster if there are chart changes to test.
         if: steps.lint.outputs.changed == 'true'
+      - name: Modify Values Yaml file
+        shell: bash
+        run: |
+          sed -i '/^mysql:/{n;s/true/false/;}' charts/milvus/values.yaml
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v1.0.0-rc.1
+        uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
           command: install
+          config: ct.yaml

@@ -1,22 +1,23 @@
-{{- if .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus.readonly.fullname" . }}
+  name: {{ template "milvus.writable.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-    component: "readonly"
+    component: "writable"
 spec:
-  replicas: {{ .Values.readonly.replicas }}
+  replicas: {{ .Values.replicas }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-      component: "readonly"
+      component: "writable"
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-        component: "readonly"
+        component: "writable"
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
@@ -41,20 +42,20 @@ spec:
           done;
       {{- end }}
       {{- if .Values.cluster.enabled }}
-      - name: "check-for-share-storage"
+      - name: "create-for-share-storage"
         image: {{ .Values.initContainerImage | quote }}
         command:
         - 'sh'
         - '-c'
         - >
-          until test -f {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo read from share storage; do
+          mkdir -p {{ .Values.primaryPath }}/db/test;
+          until touch {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo write to share storage; do
             sleep 2;
           done;
         volumeMounts:
         - name: milvus-data-disk
           mountPath: {{ .Values.persistence.mountPath | quote }}
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
-          readOnly: true
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -89,7 +90,7 @@ spec:
             port: 19530
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
-          {{- toYaml .Values.resources | nindent 10 }}
+          {{- toYaml .Values.image.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-data-disk
           mountPath: {{ .Values.persistence.mountPath | quote }}
@@ -99,7 +100,7 @@ spec:
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-configmap
           mountPath: /var/lib/milvus/conf/server_config.yaml
-          subPath: readonly_server_config.yaml
+          subPath: server_config.yaml
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -140,4 +141,3 @@ spec:
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 6 }}
       {{- end }}
-{{- end }}
