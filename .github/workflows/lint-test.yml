@@ -8,6 +8,7 @@ on:
       - 'charts/**'
       - 'ct.yaml'
       - '.github/workflows/lint-test.yml'
+      - '!**.md'
       - '!**.txt'
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
@@ -15,6 +16,7 @@ on:
       - 'charts/**'
       - 'ct.yaml'
       - '.github/workflows/lint-test.yml'
+      - '!**.md'
       - '!**.txt'
 
 jobs:
