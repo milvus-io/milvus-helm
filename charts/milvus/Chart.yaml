@@ -3,7 +3,7 @@ name: milvus
 appVersion: "0.10.0"
 kubeVersion: "^1.10.0-0"
 description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
-version: 0.10.0
+version: 0.10.1
 keywords:
   - milvus
   - elastic
