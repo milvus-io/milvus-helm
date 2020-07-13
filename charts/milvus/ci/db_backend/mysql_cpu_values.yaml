@@ -5,6 +5,16 @@ cache:
 gpu:
   enabled: false
 
+image:
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+      aliyun.com/gpu-mem: 2 # GiB
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+
 mysql:
   enabled: true
   persistence:

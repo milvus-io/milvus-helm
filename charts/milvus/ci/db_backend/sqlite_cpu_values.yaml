@@ -2,6 +2,16 @@ cache:
   insertBufferSize: 1GB
   cacheSize: 8GB
 
+image:
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+      aliyun.com/gpu-mem: 2 # GiB
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+
 gpu:
   enabled: false
 
