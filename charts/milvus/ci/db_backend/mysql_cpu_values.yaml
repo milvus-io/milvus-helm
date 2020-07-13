@@ -5,6 +5,15 @@ cache:
 gpu:
   enabled: false
 
+image:
+  resources:
+    limits:
+      memory: "12Gi"
+      cpu: "4.0"
+    requests:
+      memory: "8Gi"
+      cpu: "2.0"
+
 mysql:
   enabled: true
   persistence:
