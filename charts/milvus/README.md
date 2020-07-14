@@ -17,28 +17,28 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 1. Add the stable repository
 ```bash
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+$ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 ```
-2. Install Chart dependencies
-```bash
-# in 'milvus-helm/charts/milvus'
-$ helm dep update
+
+2. Update charts repositories
 ```
+$ helm repo update
+```
+
 3. Install Helm package
 
 To install the chart with the release name `my-release`:
 
 ```bash
 # Helm v2.x
-$ cd milvus-helm
-$ helm install --name my-release .
+$ helm install --name my-release milvus/milvus
 ```
 
 or
 
 ```bash
 # Helm v3.x
-$ cd milvus-helm
-$ helm install my-release  .
+$ helm install my-release milvus/milvus
 ```
 
 > **Tip**: To list all releases, using `helm list`.
