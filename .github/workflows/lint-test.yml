@@ -41,11 +41,15 @@ jobs:
         # Only build a kind cluster if there are chart changes to test.
         if: steps.lint.outputs.changed == 'true'
       - name: Modify Values Yaml file
+        # Only build a kind cluster if there are chart changes to test.
+        if: steps.lint.outputs.changed == 'true'
         shell: bash
         run: |
           sed -i '/^mysql:/{n;s/true/false/;}' charts/milvus/values.yaml
       - name: Run chart-testing (install)
         uses: helm/chart-testing-action@v1.0.0-rc.2
+        # Only build a kind cluster if there are chart changes to test.
+        if: steps.lint.outputs.changed == 'true'
         with:
           command: install
           config: ct.yaml
