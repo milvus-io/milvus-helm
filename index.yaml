@@ -13,7 +13,7 @@ entries:
       version: 1.6.4
     description: Milvus is an open source similarity search engine for massive-scalefeature
       vectors.
-    digest: f927bb4246f5b4b0fb60f5d89cdf68b84616f9be0c1eab8e654e6cf88fa56a7d
+    digest: e1199d410c16c1ddf45fea3c4b186ac68ce7744db54c737d58222eab4684a3b6
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
     keywords:
@@ -24,74 +24,14 @@ entries:
     - deploy
     kubeVersion: ^1.10.0-0
     maintainers:
-    - email: dev.milvus@zilliz.com
-      name: milvus-dev
     - email: community@zilliz.com
       name: community
+      url: www.zilliz.com
     name: milvus
     sources:
     - https://github.com/milvus-io/milvus
     - https://github.com/milvus-io/milvus-helm
     urls:
-    - milvus-0.10.0.tgz
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-0.10.0/milvus-0.10.0.tgz
     version: 0.10.0
-  - apiVersion: v1
-    appVersion: 0.9.1
-    created: "2020-06-16T23:41:45.276521+08:00"
-    dependencies:
-    - condition: mysql.enabled
-      name: mysql
-      repository: https://kubernetes-charts.storage.googleapis.com/
-      tags:
-      - mysql-database
-      version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature
-      vectors.
-    digest: d52f17c74dff49b221eaa477200da5829a49d4464addf3532bd04aae592a539c
-    home: https://milvus.io/
-    icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
-    keywords:
-    - milvus
-    - elastic
-    - vector
-    - search
-    - deploy
-    kubeVersion: ^1.10.0-0
-    maintainers:
-    - email: dev.milvus@zilliz.com
-      name: milvus-dev
-    - email: community@zilliz.com
-      name: community
-    name: milvus
-    sources:
-    - https://github.com/milvus-io/milvus
-    - https://github.com/milvus-io/milvus-helm
-    urls:
-    - milvus-0.9.1.tgz
-    version: 0.9.1
-  mysql:
-  - apiVersion: v1
-    appVersion: 5.7.30
-    created: "2020-06-17T15:38:49.857935+08:00"
-    description: Fast, reliable, scalable, and easy to use open-source relational
-      database system.
-    digest: d9a99412fa7f28f8a2443060a40cfed95f5cb5f09fffa1acfe51e114e9c73d18
-    home: https://www.mysql.com/
-    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
-    keywords:
-    - mysql
-    - database
-    - sql
-    maintainers:
-    - email: o.with@sportradar.com
-      name: olemarkus
-    - email: viglesias@google.com
-      name: viglesiasce
-    name: mysql
-    sources:
-    - https://github.com/kubernetes/charts
-    - https://github.com/docker-library/mysql
-    urls:
-    - charts/mysql-1.6.4.tgz
-    version: 1.6.4
 generated: "2020-06-17T15:38:49.792064+08:00"
