@@ -352,6 +352,9 @@ mysql:
       max_connections = 1000
       wait_timeout = 31536000
 
+  testFramework:
+    enabled: false
+
   initializationFiles:
     grant.sql: |-
       GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
