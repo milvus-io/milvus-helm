@@ -1,6 +1,6 @@
 cache:
   insertBufferSize: 1GB
-  cacheSize: 8GB
+  cacheSize: 4GB
 
 gpu:
   enabled: false
@@ -8,11 +8,11 @@ gpu:
 image:
   resources:
     limits:
-      memory: "12Gi"
-      cpu: "4.0"
-    requests:
-      memory: "8Gi"
+      memory: "6Gi"
       cpu: "2.0"
+    requests:
+      memory: "4Gi"
+      cpu: "1.0"
 
 mysql:
   enabled: true
