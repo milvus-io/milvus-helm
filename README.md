@@ -6,7 +6,7 @@ This GitHub repository is the official source for Milvus's Helm charts.
 [![](https://github.com/milvus-io/milvus-helm/workflows/Release%20Charts/badge.svg?branch=master)](https://github.com/milvus-io/milvus-helm/actions)
 
 For instructions about how to install charts from this repository, visit the public website at:
-[milvus-io.github.io/milvus-helm](https://github.com/milvus-io/milvus-helm)
+[milvus-io.github.io/milvus-helm](https://milvus-io.github.io/milvus-helm/)
 
 ## Make changes to an existing chart without publishing
 
@@ -22,7 +22,7 @@ With each commit to _master_, a GitHub action will compare all charts versions a
 
 When it detects that the version in the folder doesn't exist in  `index.yaml`, it will create a release with the packaged chart content on the _GitHub repository_, and update `index.yaml` to include it on the `charts repository`.
 
-`index.yaml` is accesible from [milvus-io.github.io/milvus-helm/index.yaml](https://github.com/milvus-io/milvus-helm/index.yaml) and is the list of all _charts_ and their _versions_ available when you interact with the _charts repository_ using Helm.
+`index.yaml` is accesible from [milvus-io.github.io/milvus-helm/index.yaml](https://github.com/milvus-io/milvus-helm/blob/gh-pages/index.yaml) and is the list of all _charts_ and their _versions_ available when you interact with the _charts repository_ using Helm.
 
 The packaged referenced in `index.yaml`, when it's updated using the GitHub action, will link for download to the URL provided by the _GitHub repository_ release files.
 

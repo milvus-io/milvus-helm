@@ -17,28 +17,28 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 1. Add the stable repository
 ```bash
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+$ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 ```
-2. Install Chart dependencies
-```bash
-# in 'milvus-helm/charts/milvus'
-$ helm dep update
+
+2. Update charts repositories
 ```
+$ helm repo update
+```
+
 3. Install Helm package
 
 To install the chart with the release name `my-release`:
 
 ```bash
 # Helm v2.x
-$ cd milvus-helm
-$ helm install --name my-release .
+$ helm install --name my-release milvus/milvus
 ```
 
 or
 
 ```bash
 # Helm v3.x
-$ cd milvus-helm
-$ helm install my-release  .
+$ helm install my-release milvus/milvus
 ```
 
 > **Tip**: To list all releases, using `helm list`.
@@ -131,7 +131,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `restartPolicy`                           | Restart policy for all containers             | `Always`                                                |
 | `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `0.10.0-cpu-d061620-5f3c00`                             |
+| `image.tag`                               | Image tag                                     | `0.10.1-cpu-d072020-bd02b1`                             |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
 | `image.resources`                         | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
@@ -175,7 +175,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
 | `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
 | `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
-| `mishards.image.tag`                      | Mishards image tag                            | `0.10.0`                                                |
+| `mishards.image.tag`                      | Mishards image tag                            | `0.10.1`                                                |
 | `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
 | `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
