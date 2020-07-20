@@ -146,8 +146,7 @@ persistence:
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
+    ##   set, choosing the default provisioner.
     ##
     storageClass:
     accessModes: ReadWriteMany
@@ -168,8 +167,7 @@ logsPersistence:
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
+    ##   set, choosing the default provisioner.
     ##
     storageClass:
     accessModes: ReadWriteMany
@@ -178,7 +176,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 0.10.0-cpu-d061620-5f3c00
+  tag: 0.10.1-cpu-d072020-bd02b1
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -222,7 +220,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 0.10.0
+    tag: 0.10.1
     pullPolicy: IfNotPresent
 
   replicas: 1
@@ -353,6 +351,9 @@ mysql:
       skip-character-set-client-handshake = true
       max_connections = 1000
       wait_timeout = 31536000
+
+  testFramework:
+    enabled: false
 
   initializationFiles:
     grant.sql: |-
