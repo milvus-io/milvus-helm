@@ -3,11 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ template "milvus.fullname" . }}
 data:
-  server_config.yaml: |
+  milvus.yaml: |
     {{- include "milvus.serverConfig" . | nindent 4 }}
 
   {{- if .Values.cluster.enabled }}
-  readonly_server_config.yaml: |
+  readonly_milvus.yaml: |
     {{- include "milvus.readonly.serverConfig" . | nindent 4 }}
 
   mishards_config.yaml: |
