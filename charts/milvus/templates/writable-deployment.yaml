@@ -99,8 +99,8 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
         - name: milvus-configmap
-          mountPath: /var/lib/milvus/conf/server_config.yaml
-          subPath: server_config.yaml
+          mountPath: /var/lib/milvus/conf/milvus.yaml
+          subPath: milvus.yaml
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
