@@ -45,6 +45,8 @@ metrics:
   address: 127.0.0.1
   port: 9091
 
+extraConfiguration: {}
+
 ## Cluster control switch
 cluster:
   enabled: false
@@ -271,6 +273,8 @@ readonly:
     requests:
       memory: "4Gi"
       cpu: "1.0"
+
+  extraConfiguration: {}
 
 ## Milvus Admin Configuration
 admin:

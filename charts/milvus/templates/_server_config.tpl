@@ -196,4 +196,8 @@ metric:
   address: {{ .Values.metrics.address }}
   port: {{ .Values.metrics.port }}
 
+{{- range $key, $value := .Values.extraConfiguration }}
+{{ $key }}: {{ $value }}
+{{- end }}
+
 {{- end }}
