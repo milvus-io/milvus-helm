@@ -87,8 +87,8 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `version`                                 | Configuration Version                         | `0.5`                                                   |
 | `primaryPath`                             | Primary directory used to save meta data, vector data and index data. | `/var/lib/milvus`               |
 | `timeZone`                                | Use UTC-x or UTC+x to specify a time zone.    | `UTC+8`                                                 |
-| `autoFlushInterval`                       | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
 | `fileCleanupTimeout`                      | The time gap between marking a file as 'deleted' and physically deleting this file from disk, range [0, 3600]. (s) | `10` |
+| `storage.autoFlushInterval`               | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
 | `logs.path`                               | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
 | `logs.maxLogFileSize`                     | The maximum size of each log file, size range [512, 4096]. (MB) | `1024MB`                              |
 | `logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
