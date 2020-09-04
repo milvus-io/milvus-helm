@@ -195,8 +195,12 @@ metric:
   address: {{ .Values.metrics.address }}
   port: {{ .Values.metrics.port }}
 
+<<<<<<< HEAD
 {{- if .Values.readonly.extraConfiguration }}
 {{ toYaml .Values.readonly.extraConfiguration }}
 {{- end }}
+=======
+{{ toYaml .Values.readonly.extraConfiguration }}
+>>>>>>> upstream/0.11.0
 
 {{- end }}
