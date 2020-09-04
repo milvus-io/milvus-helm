@@ -195,8 +195,6 @@ metric:
   address: {{ .Values.metrics.address }}
   port: {{ .Values.metrics.port }}
 
-{{- range $key, $value := .Values.readonly.extraConfiguration }}
-{{ $key }}: {{ $value }}
-{{- end }}
+{{ toYaml .Values.readonly.extraConfiguration }}
 
 {{- end }}
