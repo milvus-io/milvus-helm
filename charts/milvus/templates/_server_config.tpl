@@ -196,4 +196,6 @@ metric:
   address: {{ .Values.metrics.address }}
   port: {{ .Values.metrics.port }}
 
+{{ toYaml .Values.extraConfiguration }}
+
 {{- end }}
