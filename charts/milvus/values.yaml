@@ -234,13 +234,15 @@ mishards:
 
   ## Mishards conf
   debug: true
-  maxworkers: 50
+  maxWorkers: 50
+  discoveryClassName: static
+  trace:
+    enabled: false
+    tracerClassName: jaeger
+    tracingReportingHost: jaeger
+    tracingReportingPort: 5775
 
-  # discoverypluginpath: "static"
-  # tracerclassname: "jaeger"
-  # tracingservicename: "mishards-demo"
-  # tracingreportinghost: "jaeger"
-  # tracingreportingport: 5775
+  
 
 ## Milvus Readonly Server Configuration
 readonly:
