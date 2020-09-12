@@ -242,8 +242,6 @@ mishards:
     tracingReportingHost: jaeger
     tracingReportingPort: 5775
 
-  
-
 ## Milvus Readonly Server Configuration
 readonly:
   logs:
