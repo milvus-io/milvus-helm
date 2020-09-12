@@ -118,6 +118,12 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `readonly.gpu.gpuSearchThreshold`         | GPU search threshold                          | `1000`                                                  |
 | `readonly.gpu.searchDevices`              | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `readonly.gpu.buildIndexDevices`          | Define the GPU devices used for index building | `[gpu0]`                                               |
+| `mishards.debug`                          | Choose if to enable Debug work mode.          | `true`                                                  |
+| `mishards.discoveryClassName`             | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, the system provides 2 classes: static and kubernetes. | `static` |
+| `mishards.trace.enabled`                  | Enable Mishards tracing service.              | `false`                                                 |
+| `mishards.trace.tracerClassName`          | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, only Jaeger is supported. | `Jaeger` |
+| `mishards.trace.tracingReportingHost`     | The host of the tracing service.              | `jaeger`                                                |
+| `mishards.trace.tracingReportingPort`     | The port of the tracing service.              | `5775`                                                  |
 
 
 ### Milvus Deployment Configuration
