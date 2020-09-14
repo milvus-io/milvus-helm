@@ -19,6 +19,7 @@ DISCOVERY_STATIC_PORT={{ .Values.service.port }}
 {{- else if eq .Values.mishards.discoveryClassName "kubernetes" }}
 DISCOVERY_CLASS_NAME=kubernetes
 DISCOVERY_KUBERNETES_NAMESPACE={{ .Release.Namespace }}
+DISCOVERY_KUBERNETES_IN_CLUSTER=True
 DISCOVERY_KUBERNETES_POLL_INTERVAL=10
 DISCOVERY_KUBERNETES_POD_PATT={{ template "milvus.readonly.fullname" . }}-.*
 DISCOVERY_KUBERNETES_LABEL_SELECTOR=component=readonly

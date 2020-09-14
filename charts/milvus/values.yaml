@@ -235,7 +235,7 @@ mishards:
   ## Mishards conf
   debug: true
   maxWorkers: 50
-  discoveryClassName: static
+  discoveryClassName: kubernetes
   trace:
     enabled: false
     tracerClassName: jaeger
