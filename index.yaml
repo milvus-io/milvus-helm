@@ -2,6 +2,39 @@ apiVersion: v1
 entries:
   milvus:
   - apiVersion: v1
+    appVersion: 0.10.3
+    created: "2020-09-17T16:11:34.228106814Z"
+    dependencies:
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      tags:
+      - mysql-database
+      version: 1.6.4
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
+    digest: c4809dd1bfdfa7b247a8650fc6fdd0eac30c2ca5e06a84ac286b497b56dc0ff4
+    home: https://milvus.io/
+    icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
+    keywords:
+    - milvus
+    - elastic
+    - vector
+    - search
+    - deploy
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: community@zilliz.com
+      name: community
+      url: www.zilliz.com
+    name: milvus
+    sources:
+    - https://github.com/milvus-io/milvus
+    - https://github.com/milvus-io/milvus-helm
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-0.10.3/milvus-0.10.3.tgz
+    version: 0.10.3
+  - apiVersion: v1
     appVersion: 0.10.2
     created: "2020-08-15T08:05:11.663398469Z"
     dependencies:
