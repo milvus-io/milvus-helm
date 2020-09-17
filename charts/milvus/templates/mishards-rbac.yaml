@@ -1,4 +1,4 @@
-{{- if eq .Values.mishards.discoveryClassName "kubernetes" }}
+{{- if and .Values.cluster.enabled (eq .Values.mishards.discoveryClassName "kubernetes") }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
