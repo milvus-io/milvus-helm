@@ -176,7 +176,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 0.10.2-cpu-d081520-8a2393
+  tag: 0.10.3-cpu-d091720-f962e8
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -220,7 +220,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 0.10.2
+    tag: 0.10.3
     pullPolicy: IfNotPresent
 
   replicas: 1
@@ -234,13 +234,13 @@ mishards:
 
   ## Mishards conf
   debug: true
-  maxworkers: 50
-
-  # discoverypluginpath: "static"
-  # tracerclassname: "jaeger"
-  # tracingservicename: "mishards-demo"
-  # tracingreportinghost: "jaeger"
-  # tracingreportingport: 5775
+  maxWorkers: 50
+  discoveryClassName: kubernetes
+  trace:
+    enabled: false
+    tracerClassName: jaeger
+    tracingReportingHost: jaeger
+    tracingReportingPort: 5775
 
 ## Milvus Readonly Server Configuration
 readonly:

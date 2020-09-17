@@ -118,6 +118,12 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `readonly.gpu.gpuSearchThreshold`         | GPU search threshold                          | `1000`                                                  |
 | `readonly.gpu.searchDevices`              | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `readonly.gpu.buildIndexDevices`          | Define the GPU devices used for index building | `[gpu0]`                                               |
+| `mishards.debug`                          | Choose if to enable Debug work mode.          | `true`                                                  |
+| `mishards.discoveryClassName`             | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, the system provides 2 classes: static and kubernetes. | `kubernetes` |
+| `mishards.trace.enabled`                  | Enable Mishards tracing service.              | `false`                                                 |
+| `mishards.trace.tracerClassName`          | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, only Jaeger is supported. | `Jaeger` |
+| `mishards.trace.tracingReportingHost`     | The host of the tracing service.              | `jaeger`                                                |
+| `mishards.trace.tracingReportingPort`     | The port of the tracing service.              | `5775`                                                  |
 
 
 ### Milvus Deployment Configuration
@@ -131,7 +137,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `restartPolicy`                           | Restart policy for all containers             | `Always`                                                |
 | `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
 | `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `0.10.2-cpu-d081520-8a2393`                             |
+| `image.tag`                               | Image tag                                     | `0.10.3-cpu-d091720-f962e8`                             |
 | `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
 | `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
 | `image.resources`                         | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
@@ -175,7 +181,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
 | `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
 | `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
-| `mishards.image.tag`                      | Mishards image tag                            | `0.10.2`                                                |
+| `mishards.image.tag`                      | Mishards image tag                            | `0.10.3`                                                |
 | `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
 | `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
 | `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
