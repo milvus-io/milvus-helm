@@ -27,7 +27,7 @@ DISCOVERY_KUBERNETES_LABEL_SELECTOR=component=readonly
 DISCOVERY_CLASS_NAME={{ .Values.mishards.discoveryClassName }}
 {{- end -}}
 
-{{- if .Values.mishards.enabled }}
+{{- if .Values.mishards.trace.enabled }}
 TRACER_CLASS_NAME={{ .Values.mishards.trace.tracerClassName }}
 TRACING_SERVICE_NAME={{ template "milvus.fullname" . }}
 TRACING_REPORTING_HOST={{ .Values.mishards.trace.tracingReportingHost }}
