@@ -22,9 +22,10 @@ spec:
 {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
+{{- if or .Values.mysql.enabled .Values.externalMysql.enabled .Values.cluster.enabled }}
     spec:
-      {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
       initContainers:
+      {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
       - name: "wait-for-mysql"
         image: {{ .Values.initContainerImage | quote }}
         command:
@@ -59,6 +60,7 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- end }}
+{{- end }}
 {{- if .Values.extraInitContainers }}
 {{ toYaml .Values.extraInitContainers | indent 6 }}
 {{- end }}
