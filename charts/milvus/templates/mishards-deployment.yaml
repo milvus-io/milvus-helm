@@ -20,9 +20,8 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
     spec:
-      {{- if or .Values.mysql.enabled .Values.externalMysql.enabled}}
       initContainers:
-      - name: "wait-for-mysql"
+      - name: "wait-for-milvus"
         image: {{ .Values.initContainerImage | quote }}
         command:
         - 'sh'
@@ -38,7 +37,6 @@ spec:
           && echo ready to go; do
             sleep 2;
           done;
-      {{- end }}
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.image.pullSecrets }}
