@@ -20,6 +20,6 @@ subjects:
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: pods-list
+  name: {{ template "milvus.fullname" . }}-pods-list
   apiGroup: rbac.authorization.k8s.io
 {{- end -}}
