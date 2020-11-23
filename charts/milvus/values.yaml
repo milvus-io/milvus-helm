@@ -40,11 +40,6 @@ gpu:
   buildIndexDevices:
     - gpu0
 
-metrics:
-  enabled: false
-  address: 127.0.0.1
-  port: 9091
-
 extraConfiguration: {}
 
 ## Cluster control switch

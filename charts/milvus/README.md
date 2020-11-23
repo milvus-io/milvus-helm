@@ -105,9 +105,6 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `gpu.gpuSearchThreshold`                  | GPU search threshold                          | `1000`                                                  |
 | `gpu.searchDevices`                       | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `gpu.buildIndexDevices`                   | Define the GPU devices used for index building | `[gpu0]`                                               |
-| `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |
-| `metrics.address`                         | Pushgateway address                           | `127.0.0.1`                                             |
-| `metrics.port`                            | Prometheus monitoring metrics port            | `9091`                                                  |
 | `readonly.logs.path`                      | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
 | `readonly.logs.maxLogFileSize`            | The maximum size of each log file, size range [512, 4096]. (MB) | `1024`                                |
 | `readonly.logs.logRotateNum`              | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
