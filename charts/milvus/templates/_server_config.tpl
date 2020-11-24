@@ -181,21 +181,6 @@ logs:
   max_log_file_size: {{ .Values.logs.maxLogFileSize }}
   log_rotate_num: {{ .Values.logs.logRotateNum }}
 
-
-#----------------------+------------------------------------------------------------+------------+-----------------+
-# Metric Config        | Description                                                | Type       | Default         |
-#----------------------+------------------------------------------------------------+------------+-----------------+
-# enable               | Enable monitoring function or not.                         | Boolean    | false           |
-#----------------------+------------------------------------------------------------+------------+-----------------+
-# address              | Pushgateway address                                        | IP         | 127.0.0.1       +
-#----------------------+------------------------------------------------------------+------------+-----------------+
-# port                 | Pushgateway port, port range (1024, 65535)                 | Integer    | 9091            |
-#----------------------+------------------------------------------------------------+------------+-----------------+
-metric:
-  enable: {{ .Values.metrics.enabled }}
-  address: {{ .Values.metrics.address }}
-  port: {{ .Values.metrics.port }}
-
 {{- if .Values.extraConfiguration }}
 {{ toYaml .Values.extraConfiguration }}
 {{- end }}
