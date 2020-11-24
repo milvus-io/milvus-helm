@@ -4,7 +4,7 @@
 
 # Milvus Server Configuration
 
-version: 0.5
+version: 0.6
 primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 
