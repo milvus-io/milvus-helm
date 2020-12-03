@@ -9,10 +9,12 @@ primaryPath: "/var/lib/milvus"
 timeZone: "UTC+8"
 
 logs:
-  level: debug
   path: /var/lib/milvus/logs
   maxLogFileSize: 1024MB
   logRotateNum: 0
+  
+log:
+  minMessages: warning 
 
 cache:
   insertBufferSize: 1GB

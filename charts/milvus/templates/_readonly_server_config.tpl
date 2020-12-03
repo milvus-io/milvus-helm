@@ -161,9 +161,6 @@ gpu:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Logs Config          | Description                                                | Type       | Default         |
 #----------------------+------------------------------------------------------------+------------+-----------------+
-# level                | Log level in Milvus. Must be one of debug, info, warning,  | String     | debug           |
-#                      | error, fatal                                               |            |                 |
-#----------------------+------------------------------------------------------------+------------+-----------------+
 # trace.enable         | Whether to enable trace level logging in Milvus.           | Boolean    | true            |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # path                 | Absolute path to the folder holding the log files.         | String     |                 |
@@ -175,11 +172,19 @@ gpu:
 #                      | logging level, num range [0, 1024], 0 means unlimited.     |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 logs:
-  level: {{ .Values.readonly.logs.level }}
   trace.enable: true
-  path: {{ .Values.readonly.logs.path }}
-  max_log_file_size: {{ .Values.readonly.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.readonly.logs.logRotateNum }}
+  path: {{ .Values.logs.path }}
+  max_log_file_size: {{ .Values.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.logs.logRotateNum }}
+
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# Log Config           | Description                                                | Type       | Default         |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# min_messages         | Log level in Milvus. Must be one of debug, info, warning,  | String     | warning         |
+#                      | error, fatal                                               |            |                 |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+log:
+  min_messages: {{ .Values.log.minMessages }}
 
 {{- if .Values.readonly.extraConfiguration }}
 {{ toYaml .Values.readonly.extraConfiguration }}
