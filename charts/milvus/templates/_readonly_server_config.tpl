@@ -173,9 +173,9 @@ gpu:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 logs:
   trace.enable: true
-  path: {{ .Values.logs.path }}
-  max_log_file_size: {{ .Values.logs.maxLogFileSize }}
-  log_rotate_num: {{ .Values.logs.logRotateNum }}
+  path: {{ .Values.readonly.logs.path }}
+  max_log_file_size: {{ .Values.readonly.logs.maxLogFileSize }}
+  log_rotate_num: {{ .Values.readonly.logs.logRotateNum }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # Log Config           | Description                                                | Type       | Default         |
@@ -184,7 +184,7 @@ logs:
 #                      | error, fatal                                               |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
 log:
-  min_messages: {{ .Values.log.minMessages }}
+  min_messages: {{ .Values.readonly.log.minMessages }}
 
 {{- if .Values.readonly.extraConfiguration }}
 {{ toYaml .Values.readonly.extraConfiguration }}
