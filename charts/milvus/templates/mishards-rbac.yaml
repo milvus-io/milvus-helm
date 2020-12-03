@@ -1,5 +1,5 @@
 {{- if and .Values.cluster.enabled (eq .Values.mishards.discoveryClassName "kubernetes") }}
-kind: ClusterRole
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ template "milvus.fullname" . }}-pods-list
@@ -10,16 +10,15 @@ rules:
 
 ---
 
-kind: ClusterRoleBinding
+kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ template "milvus.fullname" . }}-pods-list
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: {{ .Release.Namespace }}
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: {{ template "milvus.fullname" . }}-pods-list
   apiGroup: rbac.authorization.k8s.io
 {{- end -}}
