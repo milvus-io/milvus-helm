@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus.mishards.fullname" . }}
+  name: {{ template "milvus.nginx.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
-    component: "mishards"
+    component: "nginx"
 spec:
-  replicas: {{ .Values.mishards.replicas }}
+  replicas: {{ .Values.nginx.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
-      component: "mishards"
+      component: "nginx"
   template:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
-        component: "mishards"
+        component: "nginx"
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/nginx-config.yaml") . | sha256sum }}
     spec:
       initContainers:
       - name: "wait-for-milvus"
@@ -45,18 +45,12 @@ spec:
       {{- end }}
       restartPolicy: {{ .Values.restartPolicy }}
       containers:
-      - name: mishards
-        image: "{{ .Values.mishards.image.repository }}:{{ .Values.mishards.image.tag }}"
-        imagePullPolicy: {{ .Values.mishards.image.pullPolicy }}
-        command:
-        - 'sh'
-        - '-c'
-        - >
-            pip install mysqlclient && python mishards/main.py
+      - name: nginx
+        image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+        imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
         ports:
-          - name: mishards
-            containerPort: 19530
-            protocol: TCP
+          - containerPort: 19530
+          - containerPort: 19121
         livenessProbe:
           tcpSocket:
             port: 19530
@@ -66,11 +60,11 @@ spec:
             port: 19530
 {{ toYaml .Values.readinessProbe | indent 10 }}
         resources:
-          {{- toYaml .Values.mishards.resources | nindent 10 }}
+          {{- toYaml .Values.nginx.resources | nindent 10 }}
         volumeMounts:
-          - name: milvus-configmap
-            mountPath: /source/mishards/.env
-            subPath: mishards_config.yaml
+          - name: nginx-configmap
+            mountPath: /etc/nginx
+            subPath: nginx.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -84,7 +78,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-      - name: milvus-configmap
+      - name: nginx-configmap
         configMap:
-          name: {{ template "milvus.fullname" . }}
+          name: {{ template "milvus.nginx.fullname" . }}
 {{- end }}

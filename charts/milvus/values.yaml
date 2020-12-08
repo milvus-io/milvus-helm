@@ -212,17 +212,11 @@ affinity: {}
 ## Additional deployment annotations
 podAnnotations: {}
 
-## Define serviceAccount names for Mishards
-serviceAccounts:
-  mishards:
-    create: false
-    name:
-
-## Mishards Configuration
-mishards:
+## Nginx Configuration
+nginx:
   image:
-    repository: milvusdb/mishards
-    tag: 0.10.3
+    repository: nginx
+    tag: 1.19.5
     pullPolicy: IfNotPresent
 
   replicas: 1
@@ -233,16 +227,6 @@ mishards:
     requests:
       memory: "1Gi"
       cpu: "0.5"
-
-  ## Mishards conf
-  debug: true
-  maxWorkers: 50
-  discoveryClassName: kubernetes
-  trace:
-    enabled: false
-    tracerClassName: jaeger
-    tracingReportingHost: jaeger
-    tracingReportingPort: 5775
 
 ## Milvus Readonly Server Configuration
 readonly:

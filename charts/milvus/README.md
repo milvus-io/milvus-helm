@@ -118,12 +118,6 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `readonly.gpu.gpuSearchThreshold`         | GPU search threshold                          | `1000`                                                  |
 | `readonly.gpu.searchDevices`              | Define the GPU devices used for search computation | `[gpu0]`                                           |
 | `readonly.gpu.buildIndexDevices`          | Define the GPU devices used for index building | `[gpu0]`                                               |
-| `mishards.debug`                          | Choose if to enable Debug work mode.          | `true`                                                  |
-| `mishards.discoveryClassName`             | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, the system provides 2 classes: static and kubernetes. | `kubernetes` |
-| `mishards.trace.enabled`                  | Enable Mishards tracing service.              | `false`                                                 |
-| `mishards.trace.tracerClassName`          | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, only Jaeger is supported. | `Jaeger` |
-| `mishards.trace.tracingReportingHost`     | The host of the tracing service.              | `jaeger`                                                |
-| `mishards.trace.tracingReportingPort`     | The port of the tracing service.              | `5775`                                                  |
 
 
 ### Milvus Deployment Configuration
@@ -180,13 +174,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `podAnnotations`                          | Additional pod annotations                    | `{}`                                                    |
 | `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
 | `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
-| `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
-| `mishards.image.tag`                      | Mishards image tag                            | `0.10.3`                                                |
-| `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
-| `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
-| `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
 | `readonly.replicas`                       | Number of readonly nodes                      | `1`                                                     |
-| `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
 | `admin.enabled`                           | Enable deployment of Milvus admin             | `false`                                                 |
 | `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-em`                                    |
 | `admin.image.tag`                         | Milvus Admin image tag                        | `v0.4.0`                                                |

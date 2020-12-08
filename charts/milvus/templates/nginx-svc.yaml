@@ -8,7 +8,7 @@ metadata:
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
-    component: "mishards"
+    component: "nginx"
 {{- with .Values.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
@@ -36,14 +36,14 @@ spec:
 {{ toYaml .Values.service.externalIPs | indent 4 }}
 {{- end }}
   ports:
-    - name: shards
+    - name: nginx
       port: {{ .Values.service.port }}
       protocol: TCP
-      targetPort: mishards
+      targetPort: 19530
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
-    component: "mishards"
+    component: "nginx"
 {{- end }}
