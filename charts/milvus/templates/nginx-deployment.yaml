@@ -63,7 +63,7 @@ spec:
           {{- toYaml .Values.nginx.resources | nindent 10 }}
         volumeMounts:
           - name: nginx-configmap
-            mountPath: /etc/nginx
+            mountPath: /etc/nginx/nginx.conf
             subPath: nginx.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:

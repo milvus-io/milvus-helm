@@ -4,6 +4,6 @@ kind: ConfigMap
 metadata:
   name: {{ template "milvus.nginx.fullname" . }}
 data:
-  nginx.config: |
+  nginx.conf: |
     {{- include "milvus.nginx.config" . | nindent 4 }}
 {{- end }}
