@@ -24,7 +24,7 @@ version: {{ .Values.version }}
 cluster:
   enable: {{ .Values.cluster.enabled }}
   role: ro
-  node_id: master
+  node_id: {{ .Values.cluster.nodeId }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # General Config       | Description                                                | Type       | Default         |
