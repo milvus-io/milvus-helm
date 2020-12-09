@@ -47,6 +47,7 @@ extraConfiguration: {}
 ## Cluster control switch
 cluster:
   enabled: false
+  nodeId: master
 
 # Common
 initContainerImage: "alpine:3.8"
