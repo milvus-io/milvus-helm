@@ -1,0 +1,9 @@
+{{- if .Values.cluster.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "milvus.nginx.fullname" . }}
+data:
+  nginx.conf: |
+    {{- include "milvus.nginx.config" . | nindent 4 }}
+{{- end }}

@@ -25,11 +25,11 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
-Create a default fully qualified mishards name.
+Create a default fully qualified nginx name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.mishards.fullname" -}}
-{{ template "milvus.fullname" . }}-mishards
+{{- define "milvus.nginx.fullname" -}}
+{{ template "milvus.fullname" . }}-nginx
 {{- end -}}
 
 {{/*
@@ -77,17 +77,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- define "milvus.matchLabels" -}}
 app.kubernetes.io/name: {{ include "milvus.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the mishards component
-*/}}
-{{- define "milvus.serviceAccountName.mishards" -}}
-{{- if .Values.serviceAccounts.mishards.create -}}
-    {{ default (include "milvus.mishards.fullname" .) .Values.serviceAccounts.mishards.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccounts.mishards.name }}
-{{- end -}}
 {{- end -}}
 
 {{/* Milvus backend URL */}}

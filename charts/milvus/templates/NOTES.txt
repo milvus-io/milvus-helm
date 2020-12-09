@@ -23,7 +23,7 @@ Get the Milvus server URL by running these commands in the same shell:
   {{- end }}
 {{- else if contains "ClusterIP"  .Values.service.type }}
 {{- if .Values.cluster.enabled }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=mishards" -o jsonpath="{.items[0].metadata.name}")
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=nginx" -o jsonpath="{.items[0].metadata.name}")
 {{- else }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=writable" -o jsonpath="{.items[0].metadata.name}")
 {{- end }}

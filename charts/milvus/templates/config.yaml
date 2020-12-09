@@ -9,9 +9,6 @@ data:
   {{- if .Values.cluster.enabled }}
   readonly_milvus.yaml: |
     {{- include "milvus.readonly.serverConfig" . | nindent 4 }}
-
-  mishards_config.yaml: |
-    {{- include "milvus.mishards.config" . | nindent 4 }}
   {{- end }}
 
 {{- range $key, $value := .Values.extraConfigFiles }}
