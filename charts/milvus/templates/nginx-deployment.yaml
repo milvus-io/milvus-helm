@@ -32,7 +32,9 @@ spec:
           {{- else }}
           until nc -z -w 2 {{ .Release.Name }}-mysql 3306
           {{- end }}
+          {{- if not (eq 0 (int .Values.readonly.replicas)) }}
           && nc -z -w 2 {{ template "milvus.readonly.fullname" . }} {{ .Values.service.port }}
+          {{- else }}
           && nc -z -w 2 {{ template "milvus.writable.fullname" . }} {{ .Values.service.port }}
           && echo ready to go; do
             sleep 2;
