@@ -186,8 +186,11 @@ logs:
 # min_messages         | Log level in Milvus. Must be one of debug, info, warning,  | String     | warning         |
 #                      | error, fatal                                               |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
+# rotation_age         | When to generate new logfile.                              | Time       | 24 hours        |
+#----------------------+------------------------------------------------------------+------------+-----------------+
 log:
   min_messages: {{ .Values.log.minMessages }}
+  rotation_age: {{ .Values.log.rotationAge }}
 
 {{- if .Values.extraConfiguration }}
 {{ toYaml .Values.extraConfiguration }}
