@@ -188,9 +188,12 @@ logs:
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # rotation_age         | When to generate new logfile.                              | Time       | 24 hours        |
 #----------------------+------------------------------------------------------------+------------+-----------------+
+# rotation_size        | When to generate new logfile.                              | Size       | 1GB             |
+#----------------------+------------------------------------------------------------+------------+-----------------+
 log:
   min_messages: {{ .Values.log.minMessages }}
   rotation_age: {{ .Values.log.rotationAge }}
+  rotation_size: {{ .Values.log.rotationSize }}
 
 {{- if .Values.extraConfiguration }}
 {{ toYaml .Values.extraConfiguration }}
