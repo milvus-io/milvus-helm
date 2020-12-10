@@ -251,7 +251,8 @@ readonly:
     logRotateNum: 0
 
   log:
-    min_messages: warning
+    minMessages: warning
+    rotationAge: 24 hours
 
   cache:
     insertBufferSize: 1GB
