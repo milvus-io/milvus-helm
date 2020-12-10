@@ -193,7 +193,7 @@ logs:
 log:
   min_messages: {{ .Values.log.minMessages }}
   rotation_age: {{ .Values.log.rotationAge }}
-  rotation_age: {{ .Values.log.rotationSize }}
+  rotation_size: {{ .Values.log.rotationSize }}
 
 {{- if .Values.extraConfiguration }}
 {{ toYaml .Values.extraConfiguration }}
