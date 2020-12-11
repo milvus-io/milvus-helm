@@ -2,6 +2,9 @@
 events {}
 http {
     client_max_body_size 1024M;
+    keepalive_timeout 180;
+    send_timeout 120;
+
     upstream rwserver {
         server {{ template "milvus.writable.fullname" . }}:{{ .Values.service.port }};
     }
