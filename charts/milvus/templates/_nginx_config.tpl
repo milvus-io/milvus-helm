@@ -23,10 +23,12 @@ http {
         location ~* ^/milvus.grpc.MilvusService/.+ {
             grpc_pass grpc://rwserver;
         }
+
+        {{- if not (eq 0 (int .Values.readonly.replicas)) }}
         location = /milvus.grpc.MilvusService/Search {
             grpc_pass grpc://roserver;
         }
-
+        {{- end }}
     }
 }
 {{- end -}}
