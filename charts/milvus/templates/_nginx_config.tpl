@@ -15,7 +15,7 @@ http {
     }
     {{- end }}
 
-    access_log  /var/log/nginx/access.log;
+    # access_log  /var/log/nginx/access.log;
 
     server {
         listen {{ .Values.service.port }} http2;
