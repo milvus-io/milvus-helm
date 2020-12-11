@@ -9,9 +9,11 @@ http {
         server {{ template "milvus.writable.fullname" . }}:{{ .Values.service.port }};
     }
 
+    {{- if not (eq 0 (int .Values.readonly.replicas)) }}
     upstream roserver {
         server {{ template "milvus.readonly.fullname" . }}:{{ .Values.service.port }};
     }
+    {{- end }}
 
     access_log  /var/log/nginx/access.log;
 
