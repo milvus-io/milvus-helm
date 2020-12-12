@@ -227,8 +227,9 @@ nginx:
     requests:
       memory: "1Gi"
       cpu: "0.5"
-  delay: false
-  delayTime: 200ms
+  delay:
+    enabled: false
+    time: 200ms
 
 ## Milvus Readonly Server Configuration
 readonly:

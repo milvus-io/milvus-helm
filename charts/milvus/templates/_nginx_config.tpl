@@ -26,8 +26,8 @@ http {
 
         {{- if not (eq 0 (int .Values.readonly.replicas)) }}
         location = /milvus.grpc.MilvusService/Search {
-            {{- if or .Values.nginx.delay }}
-            delay {{ .Values.nginx.delayTime }}
+            {{- if or .Values.nginx.delay.enabled }}
+            delay {{ .Values.nginx.delay.time }}
             {{- end }}
             grpc_pass grpc://roserver;
         }
