@@ -36,6 +36,10 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Add dependency chart repos
+        run: |
+          helm repo add stable https://charts.helm.sh/stable
+
       - uses: actions/setup-python@v2
         with:
           python-version: 3.7
