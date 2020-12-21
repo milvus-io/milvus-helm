@@ -64,10 +64,6 @@ jobs:
         shell: bash
         run: |
           sed -i '/^mysql:/{n;s/true/false/;}' charts/milvus/values.yaml
+
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v2.0.1
-        # Only build a kind cluster if there are chart changes to test.
-        if: steps.lint.outputs.changed == 'true'
-        with:
-          command: install
-          config: ct.yaml
+        run: ct install
