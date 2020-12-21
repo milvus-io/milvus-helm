@@ -181,6 +181,11 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
+| `nginx.image.repository`                  | Nginx image repository                 | `nginx`                                    |
+| `nginx.image.tag`                         | Nginx image tag                        | `1.19.5`                                                |
+| `nginx.image.pullPolicy`                  | Nginx image pull policy                | `IfNotPresent`                                          |
+| `nginx.replicas`                          | Number of Nginx nodes                  | `1`                                                     |
+| `nginx.resources`                         | Nginx CPU/GPU/Memory resource requests/limits | `{}`                                             |
 | `externalMysql.enabled`                   | Use exist mysql database                      | `false`                                                 |
 | `externalMysql.ip`                        | IP address                                    | `{}`                                                    |
 | `externalMysql.port`                      | Port                                          | `{}`                                                    |

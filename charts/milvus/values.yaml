@@ -186,13 +186,14 @@ image:
   ##
   # pullSecrets:
   #   - myRegistryKeySecretName
-  resources:
-    limits:
-      memory: "6Gi"
-      cpu: "2.0"
-    requests:
-      memory: "4Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "6Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "4Gi"
+  #     cpu: "1.0"
 
 replicas: 1
 livenessProbe:
@@ -220,13 +221,14 @@ nginx:
     pullPolicy: IfNotPresent
 
   replicas: 1
-  resources:
-    limits:
-      memory: "2Gi"
-      cpu: "2.0"
-    requests:
-      memory: "1Gi"
-      cpu: "0.5"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "2Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "1Gi"
+  #     cpu: "0.5"
   delay:
     enabled: false
     time: 200ms
@@ -253,13 +255,14 @@ readonly:
       - gpu0
 
   replicas: 1
-  resources:
-    limits:
-      memory: "6Gi"
-      cpu: "2.0"
-    requests:
-      memory: "4Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "6Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "4Gi"
+  #     cpu: "1.0"
 
   extraConfiguration: {}
 
@@ -272,13 +275,14 @@ admin:
     pullPolicy: IfNotPresent
 
   replicas: 1
-  resources:
-    limits:
-      memory: "4Gi"
-      cpu: "2.0"
-    requests:
-      memory: "2Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "4Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "2Gi"
+  #     cpu: "1.0"
 
   ## Expose the Milvus admin service to be accessed from outside the cluster (LoadBalancer service).
   ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
