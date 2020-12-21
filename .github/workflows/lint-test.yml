@@ -64,7 +64,7 @@ jobs:
 
       - name: Modify Values Yaml file
         # Only build a kind cluster if there are chart changes to test.
-        if: steps.lint.outputs.changed == 'true'
+        if: steps.list-changed.outputs.changed == 'true'
         shell: bash
         run: |
           sed -i '/^mysql:/{n;s/true/false/;}' charts/milvus/values.yaml
