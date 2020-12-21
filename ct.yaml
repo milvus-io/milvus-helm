@@ -2,7 +2,6 @@
 remote: origin
 chart-dirs:
   - charts
-validate-maintainers: false
 chart-repos:
   - stable=https://charts.helm.sh/stable
 helm-extra-args: --timeout 300s
