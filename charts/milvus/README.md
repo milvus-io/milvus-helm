@@ -16,7 +16,7 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 
 1. Add the stable repository
 ```bash
-$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+$ helm repo add stable https://charts.helm.sh/stable
 $ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 ```
 
@@ -181,6 +181,11 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
 | `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
 | `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
+| `nginx.image.repository`                  | Nginx image repository                 | `nginx`                                    |
+| `nginx.image.tag`                         | Nginx image tag                        | `1.19.5`                                                |
+| `nginx.image.pullPolicy`                  | Nginx image pull policy                | `IfNotPresent`                                          |
+| `nginx.replicas`                          | Number of Nginx nodes                  | `1`                                                     |
+| `nginx.resources`                         | Nginx CPU/GPU/Memory resource requests/limits | `{}`                                             |
 | `externalMysql.enabled`                   | Use exist mysql database                      | `false`                                                 |
 | `externalMysql.ip`                        | IP address                                    | `{}`                                                    |
 | `externalMysql.port`                      | Port                                          | `{}`                                                    |

@@ -23,9 +23,10 @@ spec:
   resources:
     requests:
       storage: {{ $pvc.size }}
-{{- end }}
 
 ---
+
+{{- end }}
 
 {{- $pvc := .Values.logsPersistence.persistentVolumeClaim -}}
 {{- if and .Values.logsPersistence.enabled (not $pvc.existingClaim) }}
