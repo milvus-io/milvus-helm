@@ -16,7 +16,7 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 
 1. Add the stable repository
 ```bash
-$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+$ helm repo add stable https://charts.helm.sh/stable
 $ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 ```
 
