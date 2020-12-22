@@ -57,7 +57,7 @@ general:
 network: 
   bind.address: 0.0.0.0
   bind.port: 19530
-  http.enable: false
+  http.enable: true
   http.port: 19121
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
