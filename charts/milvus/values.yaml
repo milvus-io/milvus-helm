@@ -19,7 +19,6 @@ cache:
   cacheSize: 4GB
 
 network:
-  httpEnabled: true
   httpPort: 19121
 
 storage:
