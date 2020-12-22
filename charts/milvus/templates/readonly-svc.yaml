@@ -22,7 +22,6 @@ spec:
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
-    {{- if .Values.network.httpEnabled }}
     - name: web
       port: {{ .Values.network.httpPort }}
       protocol: TCP
@@ -30,7 +29,6 @@ spec:
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.webNodePort))) }}
       nodePort: {{.Values.service.webNodePort}}
 {{ end }}
-    {{- end }}
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
     component: "readonly"

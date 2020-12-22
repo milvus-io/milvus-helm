@@ -5,33 +5,22 @@ Get the Milvus server URL by running these commands in the same shell:
 {{- if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "milvus.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-{{- if .Values.network.httpEnabled }}
   export WEB_NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "milvus.fullname" . }})
   echo $NODE_IP:$NODE_PORT $NODE_IP:$WEB_NODE_PORT
-{{- else }}
-  echo $NODE_IP:$NODE_PORT
-{{- end }}
 {{- else if contains "LoadBalancer" .Values.service.type }}
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
         You can watch the status of by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "milvus.fullname" . }}'
 
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "milvus.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-  {{- if .Values.network.httpEnabled }}
   echo $SERVICE_IP:{{ .Values.service.port }} $SERVICE_IP:{{ .Values.network.httpPort }}
-  {{- else }}
-  echo $SERVICE_IP:{{ .Values.service.port }}
-  {{- end }}
+
 {{- else if contains "ClusterIP"  .Values.service.type }}
 {{- if .Values.cluster.enabled }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=nginx" -o jsonpath="{.items[0].metadata.name}")
 {{- else }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ template "milvus.name" . }},app.kubernetes.io/instance={{ .Release.Name }},component=writable" -o jsonpath="{.items[0].metadata.name}")
 {{- end }}
-{{- if .Values.network.httpEnabled }}
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530 19121
-{{- else }}
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 19530
-{{- end }}
 {{- end }}
 
 {{- if .Values.admin.enabled }}

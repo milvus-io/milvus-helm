@@ -94,7 +94,6 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
 | `cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
 | `cache.cacheSize`                         | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
-| `network.httpEnabled`                     | Enable web server or not.                     | `true`                                                  |
 | `network.httpPort`                        | Port that Milvus web server monitors.         | `19121`                                                 |
 | `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
 | `wal.recoveryErrorIgnore`                 | Whether to ignore logs with errors that happens during WAL | `true`                                     |
