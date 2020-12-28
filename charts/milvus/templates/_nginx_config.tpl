@@ -3,7 +3,6 @@ events {}
 http {
     client_max_body_size 1024M;
     keepalive_timeout 180;
-    send_timeout 120;
 
     upstream rwserver {
         server {{ template "milvus.writable.fullname" . }}:{{ .Values.service.port }};
@@ -22,6 +21,9 @@ http {
 
         location ~* ^/milvus.grpc.MilvusService/.+ {
             grpc_pass grpc://rwserver;
+            grpc_send_timeout 120;
+            grpc_read_timeout 120;
+            grpc_connect_timeout 120;
         }
 
         {{- if not (eq 0 (int .Values.readonly.replicas)) }}
@@ -30,6 +32,9 @@ http {
             delay {{ .Values.nginx.delay.time }};
             {{- end }}
             grpc_pass grpc://roserver;
+            grpc_send_timeout 120;
+            grpc_read_timeout 120;
+            grpc_connect_timeout 120;
         }
         {{- end }}
     }
