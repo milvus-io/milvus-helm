@@ -25,10 +25,11 @@ spec:
       storage: {{ $pvc.size }}
 {{- end }}
 
----
-
 {{- $pvc := .Values.logsPersistence.persistentVolumeClaim -}}
 {{- if and .Values.logsPersistence.enabled (not $pvc.existingClaim) }}
+
+---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

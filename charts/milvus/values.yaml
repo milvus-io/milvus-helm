@@ -19,7 +19,6 @@ cache:
   cacheSize: 4GB
 
 network:
-  httpEnabled: true
   httpPort: 19121
 
 storage:
@@ -176,7 +175,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 0.10.4-cpu-d120220-e72454
+  tag: 0.10.5-cpu-d010621-4eda95
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -184,13 +183,14 @@ image:
   ##
   # pullSecrets:
   #   - myRegistryKeySecretName
-  resources:
-    limits:
-      memory: "6Gi"
-      cpu: "2.0"
-    requests:
-      memory: "4Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "6Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "4Gi"
+  #     cpu: "1.0"
 
 replicas: 1
 livenessProbe:
@@ -220,17 +220,18 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 0.10.4
+    tag: 0.10.5
     pullPolicy: IfNotPresent
 
   replicas: 1
-  resources:
-    limits:
-      memory: "2Gi"
-      cpu: "2.0"
-    requests:
-      memory: "1Gi"
-      cpu: "0.5"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "2Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "1Gi"
+  #     cpu: "0.5"
 
   ## Mishards conf
   debug: true
@@ -264,13 +265,14 @@ readonly:
       - gpu0
 
   replicas: 1
-  resources:
-    limits:
-      memory: "6Gi"
-      cpu: "2.0"
-    requests:
-      memory: "4Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "6Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "4Gi"
+  #     cpu: "1.0"
 
 ## Milvus Admin Configuration
 admin:
@@ -281,13 +283,14 @@ admin:
     pullPolicy: IfNotPresent
 
   replicas: 1
-  resources:
-    limits:
-      memory: "4Gi"
-      cpu: "2.0"
-    requests:
-      memory: "2Gi"
-      cpu: "1.0"
+  resources: {}
+  # resources:
+  #   limits:
+  #     memory: "4Gi"
+  #     cpu: "2.0"
+  #   requests:
+  #     memory: "2Gi"
+  #     cpu: "1.0"
 
   ## Expose the Milvus admin service to be accessed from outside the cluster (LoadBalancer service).
   ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
