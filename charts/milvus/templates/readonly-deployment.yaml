@@ -17,6 +17,9 @@ spec:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
         component: "readonly"
+        {{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
+        {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
