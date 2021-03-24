@@ -207,7 +207,9 @@ readinessProbe:
 nodeSelector: {}
 tolerations: []
 affinity: {}
-## Additional deployment annotations
+## Optional extra labels for pod
+podLabels: []
+## Optional extra annotations for pod
 podAnnotations: {}
 
 ## Define serviceAccount names for Mishards
