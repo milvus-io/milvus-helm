@@ -176,7 +176,8 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
 | `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
 | `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
-| `podAnnotations`                          | Additional pod annotations                    | `{}`                                                    |
+| `podLabels`                               | Optional extra labels for pod                 | `{}`                                                    |
+| `podAnnotations`                          | Optional extra annotations for pod            | `{}`                                                    |
 | `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
 | `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
 | `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
