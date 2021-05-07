@@ -107,6 +107,10 @@ extraContainers: |
 #      mountPath: /var/lib/milvus/logs
 #      readOnly: true
 
+extraEnv: []
+  # - name: SOME_VAR
+  #   value: 'some value'
+
 extraVolumes: []
   # - name: extras
   #   emptyDir: {}
@@ -175,7 +179,7 @@ logsPersistence:
 
 image:
   repository: milvusdb/milvus
-  tag: 1.0.0-cpu-d030521-1ea92e
+  tag: 1.1.0-cpu-d050721-5e559c
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -222,7 +226,7 @@ serviceAccounts:
 mishards:
   image:
     repository: milvusdb/mishards
-    tag: 1.0.0
+    tag: 1.1.0
     pullPolicy: IfNotPresent
 
   replicas: 1
