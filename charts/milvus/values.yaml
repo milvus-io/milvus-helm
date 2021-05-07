@@ -107,6 +107,10 @@ extraContainers: |
 #      mountPath: /var/lib/milvus/logs
 #      readOnly: true
 
+extraEnv: []
+  # - name: SOME_VAR
+  #   value: 'some value'
+
 extraVolumes: []
   # - name: extras
   #   emptyDir: {}
