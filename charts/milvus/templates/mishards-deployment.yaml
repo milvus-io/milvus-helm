@@ -52,7 +52,7 @@ spec:
         - 'sh'
         - '-c'
         - >
-            pip install mysqlclient && python mishards/main.py
+          python mishards/main.py
         ports:
           - name: mishards
             containerPort: 19530

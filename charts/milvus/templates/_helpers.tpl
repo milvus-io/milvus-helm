@@ -90,12 +90,21 @@ Create the name of the service account to use for the mishards component
 {{- end -}}
 {{- end -}}
 
+
 {{/* Milvus backend URL */}}
 {{- define "milvus.mysqlURI" -}}
 {{- if .Values.externalMysql.enabled -}}
 mysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.ip }}:{{ .Values.externalMysql.port }}/{{ .Values.externalMysql.database }}
 {{- else -}}
 mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
+{{- end -}}
+{{- end -}}
+
+{{- define "milvus.mysqlURISqlalchemy" -}}
+{{- if .Values.externalMysql.enabled -}}
+mysql+pymysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.ip }}:{{ .Values.externalMysql.port }}/{{ .Values.externalMysql.database }}
+{{- else -}}
+mysql+pymysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
 {{- end -}}
 {{- end -}}
 

@@ -3,7 +3,7 @@
 MAX_WORKERS={{ .Values.mishards.maxWorkers }}
 
 {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
-SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURI" . }}
+SQLALCHEMY_DATABASE_URI={{ template "milvus.mysqlURISqlalchemy" . }}
 {{- else }}
 SQLALCHEMY_DATABASE_URI={{ template "milvus.sqliteURI" . }}
 {{- end }}
