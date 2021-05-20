@@ -46,15 +46,22 @@ spec:
         command:
         - 'sh'
         - '-c'
+        {{- if .Values.storage.s3.enabled }}
+        - >
+          echo "TODO: introduce s3 client and put a text file to s3 storage"
+        {{- else }}
         - >
           until test -f {{ .Values.primaryPath }}/db/test/{{ template "milvus.fullname" . }}.txt && echo read from share storage; do
             sleep 2;
           done;
+        {{- end }}
         volumeMounts:
+        {{- if not .Values.storage.s3.enabled }}
         - name: milvus-data-disk
           mountPath: {{ .Values.persistence.mountPath | quote }}
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
           readOnly: true
+        {{- end }}
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -98,9 +105,11 @@ spec:
 {{ toYaml .Values.extraEnv | indent 8 }}
         {{- end }}
         volumeMounts:
+        {{- if not .Values.storage.s3.enabled }}
         - name: milvus-data-disk
           mountPath: {{ .Values.persistence.mountPath | quote }}
           subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
+        {{- end }}
         - name: milvus-logs-disk
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}

@@ -58,6 +58,27 @@ PVC are shared properly between your pods:
 
 To share a PV with multiple Pods, the PV needs to have accessMode 'ReadOnlyMany' or 'ReadWriteMany'.
 
+#### Deploying cluster with s3 storage support
+```bash
+$ helm install --set cluster.enabled=true \
+               --set persistence.enabled=false \
+               --set storage.s3.enabled=true \
+               --set storage.s3.address=ip_or_hostname \
+               --set storage.s3.port=port_number \
+               --set storage.s3.access_key=access_key \
+               --set storage.s3.secret_key=secret_key \
+               --set storage.s3.bucket=bucket \
+               --set mysql.persistence.storageClass=storage_class_for_mysql \
+               my-release .
+```
+
+Notes:
+- When s3 storage is enabled, persistent segment data will using s3, you don't need to setup shared PC/PVC for
+  readonly/writable instances.
+- For mysql database instance, you should still prepare PV/PVC(ReadWriteOnce) for it.
+- Currently by Milvus's 1.1.1 implementation, only with http is supported. https based s3 currently not supported.
+
+
 ## Uninstall the Chart
 
 To uninstall/delete the my-release deployment:
@@ -95,6 +116,12 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
 | `cache.cacheSize`                         | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
 | `network.httpPort`                        | Port that Milvus web server monitors.         | `19121`                                                 |
+| `storage.s3.enabled`                      | Enable s3 storage as persistent storage.      | `false`                                                 |
+| `storage.s3.address`                      | S3 service's address, IP or hostname.         | `unset`                                                 |
+| `storage.s3.port`                         | S3 service's port.                            | `unset`                                                 |
+| `storage.s3.access_key`                   | S3 service's access key.                      | `unset`                                                 |
+| `storage.s3.secret_key`                   | S3 service's secret key.                      | `unset`                                                 |
+| `storage.s3.bucket                        | S3 service's bucket name.                     | `unset`                                                 |
 | `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
 | `wal.recoveryErrorIgnore`                 | Whether to ignore logs with errors that happens during WAL | `true`                                     |
 | `wal.bufferSize`                          | Sum total of the read buffer and the write buffer. (MB) | `256MB`                                       |

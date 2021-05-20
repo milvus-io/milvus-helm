@@ -23,6 +23,13 @@ network:
 
 storage:
   autoFlushInterval: 1
+  s3:
+    enabled: false
+    address: 127.0.0.1
+    port: 9000
+    access_key: replace_with_your_access_key
+    secret_key: replace_with_your_secret_key
+    bucket: milvus
 
 wal:
   enabled: true
