@@ -27,8 +27,8 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
-      {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
       initContainers:
+      {{- if or .Values.mysql.enabled .Values.externalMysql.enabled }}
       - name: "wait-for-mysql"
         image: {{ .Values.initContainerImage | quote }}
         command:
