@@ -285,7 +285,7 @@ admin:
   enabled: false
   image:
     repository: milvusdb/milvus-em
-    tag: v0.4.0
+    tag: v0.4.3
     pullPolicy: IfNotPresent
 
   replicas: 1
