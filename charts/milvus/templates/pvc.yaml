@@ -1,5 +1,6 @@
 {{- $pvc := .Values.persistence.persistentVolumeClaim -}}
 {{- if and .Values.persistence.enabled (not $pvc.existingClaim) }}
+{{- if not .Values.storage.s3.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -23,6 +24,7 @@ spec:
   resources:
     requests:
       storage: {{ $pvc.size }}
+{{- end }}
 {{- end }}
 
 {{- $pvc := .Values.logsPersistence.persistentVolumeClaim -}}

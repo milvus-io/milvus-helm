@@ -72,6 +72,14 @@ network:
 storage:
   path: {{ .Values.primaryPath }}
   auto_flush_interval: {{ .Values.storage.autoFlushInterval }}
+  {{- if .Values.storage.s3.enabled }}
+  s3_enabled: true
+  s3_address: {{ .Values.storage.s3.address }}
+  s3_port: {{ .Values.storage.s3.port }}
+  s3_access_key: {{ .Values.storage.s3.access_key }}
+  s3_secret_key: {{ .Values.storage.s3.secret_key }}
+  s3_bucket: {{ .Values.storage.s3.bucket }}
+  {{- end }}
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
 # WAL Config           | Description                                                | Type       | Default         |
