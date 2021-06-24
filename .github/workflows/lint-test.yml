@@ -38,7 +38,9 @@ jobs:
 
       - name: Add dependency chart repos
         run: |
-          helm repo add stable https://charts.helm.sh/stable
+          helm repo add kafkaesque https://helm.kafkaesque.io
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add minio https://helm.min.io/
 
       - uses: actions/setup-python@v2
         with:

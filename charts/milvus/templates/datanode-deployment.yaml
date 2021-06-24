@@ -1,0 +1,82 @@
+{{- if and .Values.datanode.enabled .Values.cluster.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "milvus.datanode.fullname" . }}
+  labels:
+{{ include "milvus.labels" . | indent 4 }}
+    component: "datanode"
+spec:
+  replicas: {{ .Values.datanode.replicas }}
+  selector:
+    matchLabels:
+{{ include "milvus.matchLabels" . | indent 6 }}
+      component: "datanode"
+  template:
+    metadata:
+      labels:
+{{ include "milvus.matchLabels" . | indent 8 }}
+        component: "datanode"
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      {{- if .Values.image.all.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.all.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: datanode
+        image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
+        imagePullPolicy: {{ .Values.image.all.pullPolicy }}
+        args: [ "milvus", "run", "datanode" ]
+        {{- if .Values.datanode.extraEnv }}
+        env:
+          {{- toYaml .Values.datanode.extraEnv | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: datanode
+            containerPort: 21124
+            protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
+        resources:
+          {{- toYaml .Values.datanode.resources | nindent 10 }}
+        volumeMounts:
+        - name: milvus-config
+          mountPath: /milvus/configs/milvus.yaml
+          subPath: milvus.yaml
+          readOnly: true
+        - name: milvus-logs-disk
+          mountPath: {{ .Values.logsPersistence.mountPath | quote }}
+          subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
+
+      {{- with .Values.datanode.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.datanode.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.datanode.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      volumes:
+      - name: milvus-config
+        configMap:
+          name: {{ template "milvus.fullname" . }}
+      - name: milvus-logs-disk
+        {{- if .Values.logsPersistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+{{- end }}

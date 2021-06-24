@@ -9,14 +9,15 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 
 ## Prerequisites
 
-- Kubernetes 1.10+
-- Helm >= 2.12.0
+- Kubernetes 1.14+
+- Helm >= 3.0.0
+
+> **IMPORTANT** The master branch is for the development of Milvus v2.0. On March 9th, 2021, we released Milvus v1.0, the first stable version of Milvus with long-term support. To use Milvus v1.x, switch to [branch 1.1](https://github.com/milvus-io/milvus-helm/tree/1.1).
 
 ## Installing the Chart
 
 1. Add the stable repository
 ```bash
-$ helm repo add stable https://charts.helm.sh/stable
 $ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 ```
 
@@ -30,15 +31,8 @@ $ helm repo update
 To install the chart with the release name `my-release`:
 
 ```bash
-# Helm v2.x
-$ helm install --name my-release milvus/milvus
-```
-
-or
-
-```bash
 # Helm v3.x
-$ helm install my-release milvus/milvus
+$ helm upgrade --install my-release milvus/milvus
 ```
 
 > **Tip**: To list all releases, using `helm list`.
@@ -46,49 +40,10 @@ $ helm install my-release milvus/milvus
 ### Deploying Milvus with cluster enabled
 
 ```bash
-$ helm install --set cluster.enabled=true --set persistence.enabled=true my-release  .
+# Helm v3.x
+$ helm upgrade --install --set cluster.enabled=true my-release milvus/milvus
 ```
-
-> **NOTE:** Since all Pods should have the same collection of Milvus files, it is recommended to create just one PV
-that is shared. This is controlled by setting `persistence.enabled=true`. You will have to ensure yourself the
-PVC are shared properly between your pods:
-- If you are on AWS, you can use [Elastic File System (EFS)](https://aws.amazon.com/efs/).
-- If you are on Azure, you can use
-[Azure File Storage (AFS)](https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv).
-
-To share a PV with multiple Pods, the PV needs to have accessMode 'ReadOnlyMany' or 'ReadWriteMany'.
-
-#### Deploying cluster with s3 storage support
-```bash
-$ helm install --set cluster.enabled=true \
-               --set persistence.enabled=false \
-               --set storage.s3.enabled=true \
-               --set storage.s3.address=ip_or_hostname \
-               --set storage.s3.port=port_number \
-               --set storage.s3.access_key=access_key \
-               --set storage.s3.secret_key=secret_key \
-               --set storage.s3.bucket=bucket \
-               --set mysql.persistence.storageClass=storage_class_for_mysql \
-               my-release .
-```
-
-Notes:
-- When s3 storage is enabled, persistent segment data will using s3, you don't need to setup shared PC/PVC for
-  readonly/writable instances.
-- For mysql database instance, you should still prepare PV/PVC(ReadWriteOnce) for it.
-- Currently by Milvus's 1.1.1 implementation, only with http is supported. https based s3 currently not supported.
-
-
 ## Uninstall the Chart
-
-To uninstall/delete the my-release deployment:
-
-```bash
-# Helm v2.x
-$ helm delete my-release
-```
-
-or
 
 ```bash
 # Helm v3.x
@@ -99,153 +54,242 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-### Milvus server Configuration
+### Milvus Service Configuration
 
-The following table lists the configurable parameters of the Milvus chart and their default values.
-
-| Parameter                                 | Description                                   | Default                                                 |
-|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `version`                                 | Configuration Version                         | `0.5`                                                   |
-| `primaryPath`                             | Primary directory used to save meta data, vector data and index data. | `/var/lib/milvus`               |
-| `timeZone`                                | Use UTC-x or UTC+x to specify a time zone.    | `UTC+8`                                                 |
-| `autoFlushInterval`                       | The interval, in seconds, at which Milvus automatically flushes data to disk. 0 means disable the regular flush. (s) | `1` |
-| `fileCleanupTimeout`                      | The time gap between marking a file as 'deleted' and physically deleting this file from disk, range [0, 3600]. (s) | `10` |
-| `logs.path`                               | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
-| `logs.maxLogFileSize`                     | The maximum size of each log file, size range [512, 4096]. (MB) | `1024MB`                              |
-| `logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
-| `cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
-| `cache.cacheSize`                         | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
-| `network.httpPort`                        | Port that Milvus web server monitors.         | `19121`                                                 |
-| `storage.s3.enabled`                      | Enable s3 storage as persistent storage.      | `false`                                                 |
-| `storage.s3.address`                      | S3 service's address, IP or hostname.         | `unset`                                                 |
-| `storage.s3.port`                         | S3 service's port.                            | `unset`                                                 |
-| `storage.s3.access_key`                   | S3 service's access key.                      | `unset`                                                 |
-| `storage.s3.secret_key`                   | S3 service's secret key.                      | `unset`                                                 |
-| `storage.s3.bucket                        | S3 service's bucket name.                     | `unset`                                                 |
-| `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
-| `wal.recoveryErrorIgnore`                 | Whether to ignore logs with errors that happens during WAL | `true`                                     |
-| `wal.bufferSize`                          | Sum total of the read buffer and the write buffer. (MB) | `256MB`                                       |
-| `wal.path`                                | Location of WAL log files.                    | `/var/lib/milvus/db/wal`                                |
-| `gpu.enabled`                             | Enable GPU resources                          | `false`                                                 |
-| `gpu.cacheSize`                           | Size of GPU memory per card used for cache (GB) | `1GB`                                                 |
-| `gpu.gpuSearchThreshold`                  | GPU search threshold                          | `1000`                                                  |
-| `gpu.searchDevices`                       | Define the GPU devices used for search computation | `[gpu0]`                                           |
-| `gpu.buildIndexDevices`                   | Define the GPU devices used for index building | `[gpu0]`                                               |
-| `metrics.enabled`                         | Set this to `true` to enable exporting Prometheus monitoring metrics | `false`                          |
-| `metrics.address`                         | Pushgateway address                           | `127.0.0.1`                                             |
-| `metrics.port`                            | Prometheus monitoring metrics port            | `9091`                                                  |
-| `readonly.logs.path`                      | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
-| `readonly.logs.maxLogFileSize`            | The maximum size of each log file, size range [512, 4096]. (MB) | `1024`                                |
-| `readonly.logs.logRotateNum`              | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
-| `readonly.cache.insertBufferSize`         | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
-| `readonly.cache.cacheSize`                | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
-| `readonly.gpu.enabled`                    | Enable GPU resources                          | `false`                                                 |
-| `readonly.gpu.cacheSize`                  | Size of GPU memory per card used for cache (GB) | `1GB`                                                 |
-| `readonly.gpu.gpuSearchThreshold`         | GPU search threshold                          | `1000`                                                  |
-| `readonly.gpu.searchDevices`              | Define the GPU devices used for search computation | `[gpu0]`                                           |
-| `readonly.gpu.buildIndexDevices`          | Define the GPU devices used for index building | `[gpu0]`                                               |
-| `mishards.debug`                          | Choose if to enable Debug work mode.          | `true`                                                  |
-| `mishards.discoveryClassName`             | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, the system provides 2 classes: static and kubernetes. | `kubernetes` |
-| `mishards.trace.enabled`                  | Enable Mishards tracing service.              | `false`                                                 |
-| `mishards.trace.tracerClassName`          | Under the plug-in search path, search the class based on the class name, and instantiate it. Currently, only Jaeger is supported. | `Jaeger` |
-| `mishards.trace.tracingReportingHost`     | The host of the tracing service.              | `jaeger`                                                |
-| `mishards.trace.tracingReportingPort`     | The port of the tracing service.              | `5775`                                                  |
-
-
-### Milvus Deployment Configuration
-
-The following table lists the configurable parameters of the Milvus chart and their default values.
+The following table lists the configurable parameters of the Milvus Service and their default values.
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `cluster.enabled`                         | Create a Milvus cluster                       | `false`                                                 |
-| `replicas`                                | Number of nodes                               | `1`                                                     |
-| `restartPolicy`                           | Restart policy for all containers             | `Always`                                                |
-| `initContainerImage`                      | Init container image                          | `alpine:3.8`                                            |
-| `image.repository`                        | Image repository                              | `milvusdb/milvus`                                       |
-| `image.tag`                               | Image tag                                     | `1.1.1-cpu-d061621-330cc6`                             |
-| `image.pullPolicy`                        | Image pull policy                             | `IfNotPresent`                                          |
-| `image.pullSecrets`                       | Image pull secrets                            | `{}`                                                    |
-| `image.resources`                         | CPU/GPU/Memory resource requests/limits       | `{}`                                                    |
-| `terminationGracePeriodSeconds`           | Optional duration in seconds the pod needs to terminate gracefully | `30`                               |
-| `extraInitContainers`                     | Additional init containers                    | `[]`                                                    |
-| `extraContainers`                         | Additional containers                         | `unset`                                                 |
-| `extraVolumes`                            | Additional volumes for use in extraContainers | `unset`                                                 |
-| `extraVolumeMounts`                       | Additional volume mounts to add to the pods   | `unset`                                                 |
-| `extraConfigFiles`                        | Content of additional configuration files.    | `{}`                                                    |
-| `livenessProbe`                           | Liveness Probe settings                       | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 5 }` |
-| `readinessProbe`                          | Readiness Probe settings                      | `{ "tcpSocket": { "port": 19530 } "initialDelaySeconds": 15, "periodSeconds": 15, "timeoutSeconds": 10, "failureThreshold": 3 }` |
-| `service.type`                            | Kubernetes service type                       | `ClusterIP`                                             |
-| `service.port`                            | Kubernetes port where service is exposed      | `19530`                                                 |
-| `service.nodePort`                        | Kubernetes service nodePort                   | `unset`                                                 |
-| `service.webNodePort`                     | Kubernetes web server nodePort                | `unset`                                                 |
-| `service.metricsNodePort`                 | Kubernetes metrics server nodePort            | `unset`                                                 |
+| `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `false`                                                 |
+| `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
+| `image.all.tag`                           | Image tag                                     | `v2.0.0-rc1-20210628-b87baa1`                                                |
+| `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
+| `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
+| `service.type`                            | Service type                                  | `ClusterIP`                                             |
+| `service.port`                            | Port where service is exposed                 | `19530`                                                 |
+| `service.nodePort`                        | Service nodePort                              | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
-| `service.labels`                          | Custom labels                                 | `{}`                                                    |
+| `service.labels`                          | Service custom labels                         | `{}`                                                    |
 | `service.clusterIP`                       | Internal cluster service IP                   | `unset`                                                 |
 | `service.loadBalancerIP`                  | IP address to assign to load balancer (if supported) | `unset`                                          |
-| `service.loadBalancerSourceRanges`        | list of IP CIDRs allowed access to lb (if supported) | `[]`                                             |
-| `serivce.externalIPs`                     | service external IP addresses                 | `[]`                                                    |
-| `persistence.enabled`                     | Use persistent volume to store data           | `false`                                                 |
-| `persistence.annotations`                 | PersistentVolumeClaim annotations             | `{}`                                                    |
-| `persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                               |
-| `persistence.persistentVolumeClaim.storageClass` | The Milvus data Persistent Volume Storage Class | `unset`                                        |
-| `persistence.persistentVolumeClaim.accessModes` | The Milvus data Persistence access modes | `ReadWriteMany`                                        |
-| `persistence.persistentVolumeClaim.size` | The size of Milvus data Persistent Volume Storage Class | `50Gi`                                         |
-| `persistence.persistentVolumeClaim.subPath` | SubPath for Milvus data mount               | `unset`                                                 |
-| `logsPersistence.enabled`                 | Use persistent volume to store logs           | `false`                                                 |
-| `logsPersistence.annotations`             | PersistentVolumeClaim annotations             | `{}`                                                    |
-| `logsPersistence.persistentVolumeClaim.existingClaim` | Use your own logs Persistent Volume existing claim name | `unset`                           |
-| `logsPersistence.persistentVolumeClaim.storageClass` | The Milvus logs Persistent Volume Storage Class | `unset`                                    |
-| `logsPersistence.persistentVolumeClaim.accessModes` | The Milvus logs Persistence access modes | `ReadWriteMany`                                    |
-| `logsPersistence.persistentVolumeClaim.size` | The size of Milvus logs Persistent Volume Storage Class | `5Gi`                                      |
-| `logsPersistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs mount               | `unset`                                             |
-| `nodeSelector`                            | Node labels for pod assignment                | `{}`                                                    |
-| `tolerations`                             | Toleration labels for pod assignment          | `[]`                                                    |
-| `affinity`                                | Affinity settings for pod assignment          | `{}`                                                    |
-| `podLabels`                               | Optional extra labels for pod                 | `{}`                                                    |
-| `podAnnotations`                          | Optional extra annotations for pod            | `{}`                                                    |
-| `podDisruptionBudget.minAvailable`        | Pod disruption minimum available              | `unset`                                                 |
-| `podDisruptionBudget.maxUnavailable`      | Pod disruption maximum unavailable            | `unset`                                                 |
-| `mishards.image.repository`               | Mishards image repository                     | `milvusdb/mishards`                                     |
-| `mishards.image.tag`                      | Mishards image tag                            | `1.1.1`                                                |
-| `mishards.image.pullPolicy`               | Mishards image pull policy                    | `IfNotPresent`                                          |
-| `mishards.replicas`                       | Number of mishards nodes                      | `1`                                                     |
-| `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
-| `readonly.replicas`                       | Number of readonly nodes                      | `1`                                                     |
-| `mishards.resources`                      | Mishards CPU/GPU/Memory resource requests/limits | `{}`                                                 |
-| `admin.enabled`                           | Enable deployment of Milvus admin             | `false`                                                 |
-| `admin.image.repository`                  | Milvus Admin image repository                 | `milvusdb/milvus-em`                                    |
-| `admin.image.tag`                         | Milvus Admin image tag                        | `v0.4.0`                                                |
-| `admin.image.pullPolicy`                  | Milvus Admin image pull policy                | `IfNotPresent`                                          |
-| `admin.replicas`                          | Number of Milvus Admin nodes                  | `1`                                                     |
-| `admin.resources`                         | Milvus Admin CPU/GPU/Memory resource requests/limits | `{}`                                             |
-| `externalMysql.enabled`                   | Use exist mysql database                      | `false`                                                 |
-| `externalMysql.ip`                        | IP address                                    | `{}`                                                    |
-| `externalMysql.port`                      | Port                                          | `{}`                                                    |
-| `externalMysql.user`                      | Username                                      | `{}`                                                    |
-| `externalMysql.password`                  | Password for the user                         | `{}`                                                    |
-| `externalMysql.database`                  | Database name                                 | `{}`                                                    |
+| `service.loadBalancerSourceRanges`        | List of IP CIDRs allowed access to lb (if supported) | `[]`                                             |
+| `service.externalIPs`                     | Service external IP addresses                 | `[]`                                                    |
+| `ingress.enabled`                         | If true, Ingress will be created              | `false`                                                 |
+| `ingress.annotations`                     | Ingress annotations                           | `{}`                                                    |
+| `ingress.labels`                          | Ingress labels                                | `{}`                                                    |
+| `ingress.hosts`                           | Ingress hostnames                             | `[]`                                                    |
+| `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
+| `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
+| `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
+| `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
+| `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
+| `log.format`                              | Format used for the logs. Valid formats are `text` and `json` | `text`                                  |
+| `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
+| `externalS3.host`                         | The host of the external S3                   | `localhost`                                             |
+| `externalS3.port`                         | The port of the external S3                   | `9000`                                                  |
+| `externalS3.accessKey`                    | The Access Key of the external S3             | `minioadmin`                                            |
+| `externalS3.secretKey`                    | The Secret Key of the external S3             | `minioadmin`                                            |
+| `externalEtcd.enabled`                    | Enable or disable external Etcd               | `false`                                                 |
+| `externalEtcd.endpoints`                  | The endpoints of the external etcd            | `{}`                                                    |
+| `externalPulsar.enabled`                  | Enable or disable external Pulsar             | `false`                                                 |
+| `externalPulsar.host`                     | The host of the external Pulsar               | `localhost`                                             |
+| `externalPulsar.port`                     | The port of the external Pulsar               | `6650`                                                  |
 
+### Milvus Standalone Deployment Configuration
 
-### MySQL Configuration
-
-The following table lists the configurable parameters of the mysql chart and their default values.
+The following table lists the configurable parameters of the Milvus Standalone component and their default values.
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `mysql.enabled`                           | Enable deployment of MySQL                    | `true`                                                  |
-| `mysql.mysqlDatabase`                     | Database name                                 | `milvus`                                                |
-| `mysql.imageTag`                          | Image targe                                   | `5.7.14`                                                |
-| `mysql.imagePullPolicy`                   | Image pull policy                             | `IfNotPresent`                                          |
-| `mysql.mysqlUser`                         | Username of new user to create.               | `milvus`                                                |
-| `mysql.mysqlPassword`                     | Password for the new user. Ignored if existing secret is provided | `milvus`                            |
-| `mysql.mysqlRootPassword`                 | Password for the root user. Ignored if existing secret is provided | `milvusroot`                       |
-| `mysql.configurationFiles`                | List of mysql configuration files             | `...`                                                   |
-| `mysql.initializationFiles`               | List of SQL files which are run after the container started | `...`                                     |
-| `mysql.persistence.enabled`               | Create a volume to store data                 | `true`                                                  |
-| `mysql.persistence.existingClaim`         | Name of existing persistent volume            | `unset`                                                 |
-| `mysql.persistence.annotations`           | Persistent Volume annotations                 | `{}`                                                    |
-| `mysql.persistence.storageClass`          | Type of persistent volume claim               | `unset`                                                 |
-| `mysql.persistence.accessMode`            | ReadWriteOnce or ReadOnly                     | `ReadWriteOnce`                                         |
-| `mysql.persistence.size`                  | Size of persistent volume claim               | `4Gi`                                                   |
+| `standalone.resources`                    | Resource requests/limits for the Milvus Standalone pods | `{}`                                          |
+| `standalone.nodeSelector`                 | Node labels for Milvus Standalone pods assignment | `{}`                                                |
+| `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
+| `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
+| `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
+
+### Milvus Proxy Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Proxy component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `proxy.enabled`                           | Enable or disable Milvus Proxy Deployment     | `true`                                                  |
+| `proxy.replicas`                          | Desired number of Milvus Proxy pods            | `1`                                                    |
+| `proxy.resources`                         | Resource requests/limits for the Milvus Proxy pods | `{}`                                               |
+| `proxy.nodeSelector`                      | Node labels for Milvus Proxy pods assignment | `{}`                                                     |
+| `proxy.affinity`                          | Affinity settings for Milvus Proxy pods assignment | `{}`                                               |
+| `proxy.tolerations`                       | Toleration labels for Milvus Proxy pods assignment | `[]`                                               |
+| `proxy.extraEnv`                          | Additional Milvus Proxy container environment variables | `[]`                                          |
+
+### Milvus Root Coordinator Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Root Coordinator component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `rootCoordinator.enabled`                 | Enable or disable Milvus Root Coordinator component  | `true`                                           |
+| `rootCoordinator.resources`               | Resource requests/limits for the Milvus Root Coordinator pods | `{}`                                    |
+| `rootCoordinator.nodeSelector`            | Node labels for Milvus Root Coordinator pods assignment | `{}`                                          |
+| `rootCoordinator.affinity`                | Affinity settings for Milvus Root Coordinator pods assignment | `{}`                                    |
+| `rootCoordinator.tolerations`             | Toleration labels for Milvus Root Coordinator pods assignment | `[]`                                    |
+| `rootCoordinator.extraEnv`                | Additional Milvus Root Coordinator container environment variables | `[]`                               |
+| `rootCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                  |
+| `rootCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                      |
+| `rootCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                      |
+| `rootCoordinator.service.annotations`                | Service annotations                           | `{}`                                         |
+| `rootCoordinator.service.labels`                     | Service custom labels                         | `{}`                                         |
+| `rootCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                      |
+| `rootCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                               |
+| `rootCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                  |
+| `rootCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                         |
+
+### Milvus Query Coordinator Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Query Coordinator component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `queryCoordinator.enabled`                | Enable or disable Query Coordinator component | `true`                                                  |
+| `queryCoordinator.resources`              | Resource requests/limits for the Milvus Query Coordinator pods | `{}`                                   |
+| `queryCoordinator.nodeSelector`           | Node labels for Milvus Query Coordinator pods assignment | `{}`                                         |
+| `queryCoordinator.affinity`               | Affinity settings for Milvus Query Coordinator pods assignment | `{}`                                   |
+| `queryCoordinator.tolerations`            | Toleration labels for Milvus Query Coordinator pods assignment | `[]`                                   |
+| `queryCoordinator.extraEnv`               | Additional Milvus Query Coordinator container environment variables | `[]`                              |
+| `queryCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
+| `queryCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
+| `queryCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                     |
+| `queryCoordinator.service.annotations`                | Service annotations                           | `{}`                                        |
+| `queryCoordinator.service.labels`                     | Service custom labels                         | `{}`                                        |
+| `queryCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                     |
+| `queryCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                              |
+| `queryCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
+| `queryCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                        |
+
+### Milvus Query Node Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Query Node component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `queryNode.enabled`                       | Enable or disable Milvus Query Node component | `true`                                                  |
+| `queryNode.replicas`                      | Desired number of Milvus Query Node pods | `1`                                                          |
+| `queryNode.resources`                     | Resource requests/limits for the Milvus Query Node pods | `{}`                                          |
+| `queryNode.nodeSelector`                  | Node labels for Milvus Query Node pods assignment | `{}`                                                |
+| `queryNode.affinity`                      | Affinity settings for Milvus Query Node pods assignment | `{}`                                          |
+| `queryNode.tolerations`                   | Toleration labels for Milvus Query Node pods assignment | `[]`                                          |
+| `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
+
+### Milvus Index Coordinator Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Index Coordinator component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `indexCoordinator.enabled`                | Enable or disable Index Coordinator component | `true`                                                  |
+| `indexCoordinator.resources`              | Resource requests/limits for the Milvus Index Coordinator pods | `{}`                                   |
+| `indexCoordinator.nodeSelector`           | Node labels for Milvus Index Coordinator pods assignment | `{}`                                         |
+| `indexCoordinator.affinity`               | Affinity settings for Milvus Index Coordinator pods assignment | `{}`                                   |
+| `indexCoordinator.tolerations`            | Toleration labels for Milvus Index Coordinator pods assignment | `[]`                                   |
+| `indexCoordinator.extraEnv`               | Additional Milvus Index Coordinator container environment variables | `[]`                              |
+| `indexCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
+| `indexCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
+| `indexCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                     |
+| `indexCoordinator.service.annotations`                | Service annotations                           | `{}`                                        |
+| `indexCoordinator.service.labels`                     | Service custom labels                         | `{}`                                        |
+| `indexCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                     |
+| `indexCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                              |
+| `indexCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
+| `indexCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                        |
+
+### Milvus Index Node Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Index Node component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `indexNode.enabled`                       | Enable or disable Index Node component        | `true`                                                  |
+| `indexNode.replicas`                      | Desired number of Index Node pods             | `1`                                                     |
+| `indexNode.resources`                     | Resource requests/limits for the Milvus Index Node pods | `{}`                                          |
+| `indexNode.nodeSelector`                  | Node labels for Milvus Index Node pods assignment | `{}`                                                |
+| `indexNode.affinity`                      | Affinity settings for Milvus Index Node pods assignment | `{}`                                          |
+| `indexNode.tolerations`                   | Toleration labels for Milvus Index Node pods assignment | `[]`                                          |
+| `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
+
+### Milvus Data Coordinator Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Data Coordinator component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `dataCoordinator.enabled`                 | Enable or disable Data Coordinator component  | `true`                                                  |
+| `dataCoordinator.resources`               | Resource requests/limits for the Milvus Data Coordinator pods | `{}`                                    |
+| `dataCoordinator.nodeSelector`            | Node labels for Milvus Data Coordinator pods assignment | `{}`                                          |
+| `dataCoordinator.affinity`                | Affinity settings for Milvus Data Coordinator pods assignment  | `{}`                                   |
+| `dataCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
+| `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
+| `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
+| `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
+| `dataCoordinator.service.nodePort`                    | Service nodePort                              | `unset`                                     |
+| `dataCoordinator.service.annotations`                 | Service annotations                           | `{}`                                        |
+| `dataCoordinator.service.labels`                      | Service custom labels                         | `{}`                                        |
+| `dataCoordinator.service.clusterIP`                   | Internal cluster service IP                   | `unset`                                     |
+| `dataCoordinator.service.loadBalancerIP`              | IP address to assign to load balancer (if supported) | `unset`                              |
+| `dataCoordinator.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
+| `dataCoordinator.service.externalIPs`                 | Service external IP addresses                 | `[]`                                        |
+
+### Milvus Data Node Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Data Node component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `dataNode.enabled`                        | Enable or disable Data Node component         | `true`                                                  |
+| `dataNode.replicas`                       | Desired number of Data Node pods               | `1`                                                    |
+| `dataNode.resources`                      | Resource requests/limits for the Milvus Data Node pods | `{}`                                           |
+| `dataNode.nodeSelector`                   | Node labels for Milvus Data Node pods assignment | `{}`                                                 |
+| `dataNode.affinity`                       | Affinity settings for Milvus Data Node pods assignment | `{}`                                           |
+| `dataNode.tolerations`                    | Toleration labels for Milvus Data Node pods assignment | `[]`                                           |
+| `dataNode.extraEnv`                       | Additional Milvus Data Node container environment variables | `[]`                                      |
+
+### Pulsar Standalone Deployment Configuration
+
+The following table lists the configurable parameters of the Pulsar Standalone component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `pulsarStandalone.enabled`                | Enable or disable Pulsar Standalone mode      | `true`                                                  |
+| `pulsarStandalone.resources`              | Resource requests/limits for the Pulsar Standalone pods | `{}`                                          |
+| `pulsarStandalone.nodeSelector`           | Node labels for Pulsar Standalone pods assignment | `{}`                                                |
+| `pulsarStandalone.affinity`               | Affinity settings for Pulsar Standalone pods assignment | `{}`                                          |
+| `pulsarStandalone.tolerations`            | Toleration labels for Pulsar Standalone pods assignment | `[]`                                          |
+| `pulsarStandalone.extraEnv`               | Additional Pulsar Standalone container environment variables | `[]`                                     |
+| `pulsarStandalone.service.type`                        | Service type                                  | `ClusterIP`                                |
+| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `19530`                                    |
+| `pulsarStandalone.service.nodePort`                    | Service nodePort                              | `unset`                                    |
+| `pulsarStandalone.service.annotations`                 | Service annotations                           | `{}`                                       |
+| `pulsarStandalone.service.labels`                      | Service custom labels                         | `{}`                                       |
+| `pulsarStandalone.service.clusterIP`                   | Internal cluster service IP                   | `unset`                                    |
+| `pulsarStandalone.service.loadBalancerIP`              | IP address to assign to load balancer (if supported) | `unset`                             |
+| `pulsarStandalone.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                |
+| `pulsarStandalone.service.externalIPs`                 | Service external IP addresses                 | `[]`                                       |
+
+### Pulsar Configuration
+
+This version of the chart includes the dependent Pulsar chart in the charts/ directory.
+
+You can find more information at:
+* [https://github.com/kafkaesque-io/pulsar-helm-chart](https://github.com/kafkaesque-io/pulsar-helm-chart)
+
+### Etcd Configuration
+
+This version of the chart includes the dependent Etcd chart in the charts/ directory.
+
+You can find more information at:
+* [https://artifacthub.io/packages/helm/bitnami/etcd](https://artifacthub.io/packages/helm/bitnami/etcd)
+
+### Minio Configuration
+
+This version of the chart includes the dependent Minio chart in the charts/ directory.
+
+You can find more information at:
+* [https://github.com/minio/charts/blob/master/README.md](https://github.com/minio/charts/blob/master/README.md)

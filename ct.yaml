@@ -3,5 +3,7 @@ remote: origin
 chart-dirs:
   - charts
 chart-repos:
-  - stable=https://charts.helm.sh/stable
+  - kafkaesque=https://helm.kafkaesque.io
+  - bitnami=https://charts.bitnami.com/bitnami
+  - minio=https://helm.min.io/
 helm-extra-args: --timeout 300s
