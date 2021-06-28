@@ -25,35 +25,83 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
-Create a default fully qualified mishards name.
+Create a default fully qualified standalone name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.mishards.fullname" -}}
-{{ template "milvus.fullname" . }}-mishards
+{{- define "milvus.standalone.fullname" -}}
+{{ template "milvus.fullname" . }}-standalone
 {{- end -}}
 
 {{/*
-Create a default fully qualified ro-milvus name.
+Create a default fully qualified Root Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.readonly.fullname" -}}
-{{ template "milvus.fullname" . }}-readonly
+{{- define "milvus.rootcoord.fullname" -}}
+{{ template "milvus.fullname" . }}-rootcoord
 {{- end -}}
 
 {{/*
-Create a default fully qualified writable-milvus name.
+Create a default fully qualified Proxy name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.writable.fullname" -}}
-{{ template "milvus.fullname" . }}-writable
+{{- define "milvus.proxy.fullname" -}}
+{{ template "milvus.fullname" . }}-proxy
 {{- end -}}
 
 {{/*
-Create a default fully qualified admin-milvus name.
+Create a default fully qualified Query Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.admin.fullname" -}}
-{{ template "milvus.fullname" . }}-admin
+{{- define "milvus.querycoord.fullname" -}}
+{{ template "milvus.fullname" . }}-querycoord
+{{- end -}}
+
+{{/*
+Create a default fully qualified querynode name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.querynode.fullname" -}}
+{{ template "milvus.fullname" . }}-querynode
+{{- end -}}
+
+{{/*
+Create a default fully qualified Index Coordinator name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.indexcoord.fullname" -}}
+{{ template "milvus.fullname" . }}-indexcoord
+{{- end -}}
+
+{{/*
+Create a default fully qualified indexnode name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.indexnode.fullname" -}}
+{{ template "milvus.fullname" . }}-indexnode
+{{- end -}}
+
+{{/*
+Create a default fully qualified Data Coordinator name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.datacoord.fullname" -}}
+{{ template "milvus.fullname" . }}-datacoord
+{{- end -}}
+
+{{/*
+Create a default fully qualified datanode name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.datanode.fullname" -}}
+{{ template "milvus.fullname" . }}-datanode
+{{- end -}}
+
+{{/*
+Create a default fully qualified pulsar name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.pulsar.fullname" -}}
+{{ template "milvus.fullname" . }}-pulsar
 {{- end -}}
 
 {{/*
@@ -67,8 +115,8 @@ Create chart name and version as used by the chart label.
 {{- define "milvus.labels" -}}
 helm.sh/chart: {{ include "milvus.chart" . }}
 {{ include "milvus.matchLabels" . }}
-{{- if or .Chart.AppVersion .Values.image.tag }}
-app.kubernetes.io/version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
@@ -77,37 +125,4 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- define "milvus.matchLabels" -}}
 app.kubernetes.io/name: {{ include "milvus.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use for the mishards component
-*/}}
-{{- define "milvus.serviceAccountName.mishards" -}}
-{{- if .Values.serviceAccounts.mishards.create -}}
-    {{ default (include "milvus.mishards.fullname" .) .Values.serviceAccounts.mishards.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccounts.mishards.name }}
-{{- end -}}
-{{- end -}}
-
-
-{{/* Milvus backend URL */}}
-{{- define "milvus.mysqlURI" -}}
-{{- if .Values.externalMysql.enabled -}}
-mysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.ip }}:{{ .Values.externalMysql.port }}/{{ .Values.externalMysql.database }}
-{{- else -}}
-mysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
-{{- end -}}
-{{- end -}}
-
-{{- define "milvus.mysqlURISqlalchemy" -}}
-{{- if .Values.externalMysql.enabled -}}
-mysql+pymysql://{{ .Values.externalMysql.user }}:{{ .Values.externalMysql.password }}@{{ .Values.externalMysql.ip }}:{{ .Values.externalMysql.port }}/{{ .Values.externalMysql.database }}
-{{- else -}}
-mysql+pymysql://root:{{ .Values.mysql.mysqlRootPassword }}@{{ .Release.Name }}-mysql:3306/{{ .Values.mysql.mysqlDatabase }}
-{{- end -}}
-{{- end -}}
-
-{{- define "milvus.sqliteURI" -}}
-sqlite://:@:/
 {{- end -}}

@@ -1,6 +1,12 @@
 dependencies:
-- name: mysql
-  repository: https://charts.helm.sh/stable
-  version: 1.6.4
-digest: sha256:d450654c7b160118da8d9a4d58e23cfee468cf9af378302250a7399907572afd
-generated: "2021-01-07T10:12:41.079825+08:00"
+- name: etcd
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.5.0
+- name: minio
+  repository: https://helm.min.io
+  version: 8.0.9
+- name: pulsar
+  repository: https://helm.kafkaesque.io
+  version: 1.0.31
+digest: sha256:cc727a4b0780617262014ca23f088610cbf62902353cbd0eaf549741e2b11f11
+generated: "2021-03-25T19:06:02.887479+08:00"

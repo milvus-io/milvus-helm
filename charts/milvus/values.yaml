@@ -1,72 +1,18 @@
-# Default values for milvus.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-# Milvus Server Configuration
-
-version: 0.5
-primaryPath: "/var/lib/milvus"
-timeZone: "UTC+8"
-
-logs:
-  level: debug
-  path: /var/lib/milvus/logs
-  maxLogFileSize: 1024MB
-  logRotateNum: 0
-
-cache:
-  insertBufferSize: 1GB
-  cacheSize: 4GB
-
-network:
-  httpPort: 19121
-
-storage:
-  autoFlushInterval: 1
-  s3:
-    enabled: false
-    address: 127.0.0.1
-    port: 9000
-    access_key: replace_with_your_access_key
-    secret_key: replace_with_your_secret_key
-    bucket: milvus
-
-wal:
-  enabled: true
-  recoveryErrorIgnore: false
-  bufferSize: 256MB
-  path: /var/lib/milvus/db/wal
-
-gpu:
-  enabled: false
-  cacheSize: 1GB
-  gpuSearchThreshold: 1000
-  searchDevices:
-    - gpu0
-  buildIndexDevices:
-    - gpu0
-
-metrics:
-  enabled: false
-  address: 127.0.0.1
-  port: 9091
-
-## Cluster control switch
+## Enable or disable Milvus Cluster mode
 cluster:
   enabled: false
 
-# Common
-initContainerImage: "alpine:3.8"
-
-extraInitContainers: []
-
-## restart policy for all containers
-##
-restartPolicy: Always
-
-## Milvus server pod termination grace period
-##
-terminationGracePeriodSeconds: 30
+image:
+  all:
+    repository: milvusdb/milvus
+    tag: v2.0.0-rc1-20210628-b87baa1
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistryKeySecretName
 
 ## Expose the Milvus service to be accessed from outside the cluster (LoadBalancer service).
 ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
@@ -75,10 +21,11 @@ terminationGracePeriodSeconds: 30
 service:
   type: ClusterIP
   port: 19530
+  nodePort: ""
   annotations: {}
   labels: {}
 
-  ## List of IP addresses at which the Milvus server service is available
+  ## List of IP addresses at which the Milvus service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
   ##
   externalIPs: []
@@ -91,80 +38,184 @@ service:
   # Optionally assign a known public LB IP
   # loadBalancerIP: 1.2.3.4
 
-extraContainers: |
-#  - name: filebeat
-#    image: docker.elastic.co/beats/filebeat:7.0.1
-#    args: [
-#      "-c", "/etc/filebeat.yml",
-#      "-e",
-#    ]
-#    resources:
-#      limits:
-#        memory: 500Mi
-#      requests:
-#        cpu: 100m
-#        memory: 100Mi
-#    securityContext:
-#      runAsUser: 0
-#    volumeMounts:
-#    - name: milvus-configmap
-#      mountPath: /etc/filebeat.yml
-#      subPath: filebeat.yml
-#    - name: milvus-logs-disk
-#      mountPath: /var/lib/milvus/logs
-#      readOnly: true
+ingress:
+  enabled: false
+  annotations: {}
+    # Annotation example: set nginx ingress type
+    # kubernetes.io/ingress.class: nginx
+  labels: {}
+  hosts:
+    - milvus-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - milvus-example.local
 
-extraEnv: []
-  # - name: SOME_VAR
-  #   value: 'some value'
-
-extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
-
-extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
-
-extraConfigFiles: {}
-  # filebeat.yml: |-
-  #   filebeat.inputs:
-  #   - type: log
-  #     paths:
-  #       - /var/lib/milvus/logs/*.log
-  #     tags: ["milvus"]
-  #     fields_under_root: true
-  #     fields:
-  #       app: milvus
-  #       type: log
-
-  #   output.logstash:
-  #     hosts: ['ls-logstash.default.svc.cluster.local:5044']
+standalone:
+  replicas: 1  # Run standalone mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
 
 persistence:
-  mountPath: "/var/lib/milvus/db"
+  mountPath: "/var/lib/milvus"
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
-  enabled: false
+  enabled: true
   annotations: {}
   #  helm.sh/resource-policy: keep
   persistentVolumeClaim:
     existingClaim: ""
-    ## milvus data Persistent Volume Storage Class
+    ## milvus logs Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
     ##   set, choosing the default provisioner.
     ##
     storageClass:
-    accessModes: ReadWriteMany
-    size: 50Gi
+    accessModes: ReadWriteOnce
+    size: 5Gi
     subPath: ""
 
+proxy:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+rootCoordinator:
+  enabled: true
+  replicas: 1  # Run Root Coordinator mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+  service:
+    port: 53100
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+queryCoordinator:
+  enabled: true
+  replicas: 1  # Run Query Coordinator mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+  service:
+    port: 19531
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+querynode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+indexCoordinator:
+  enabled: true
+  replicas: 1   # Run Index Coordinator mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+  service:
+    port: 31000
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+indexnode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+dataCoordinator:
+  enabled: true
+  replicas: 1           # Run Data Coordinator mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+  service:
+    port: 13333
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+datanode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+
+pulsarStandalone:
+  image:
+    repository: apachepulsar/pulsar
+    tag: 2.6.1
+    pullPolicy: IfNotPresent
+    # pullSecrets:
+    #   - myRegistryKeySecretName
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 6650
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+metrics:
+  enabled: true
+
+  serviceMonitor:
+    # Set this to `true` to create ServiceMonitor for Prometheus operator
+    enabled: false
+
+    # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
+    additionalLabels: {}
+
+log:
+  level: "debug"
+  file:
+    maxSize: 300    # MB
+    maxAge: 10    # day
+    maxBackups: 20
+  dev: true
+  format: "text"    # text/json
+
 logsPersistence:
-  mountPath: "/var/lib/milvus/logs"
+  mountPath: "/var/logs/milvus"
   ## If true, alertmanager will create/use a Persistent Volume Claim
   ## If false, use emptyDir
   ##
@@ -184,203 +235,151 @@ logsPersistence:
     size: 5Gi
     subPath: ""
 
-image:
-  repository: milvusdb/milvus
-  tag: 1.1.1-cpu-d061621-330cc6
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  # pullSecrets:
-  #   - myRegistryKeySecretName
-  resources: {}
-  # resources:
-  #   limits:
-  #     memory: "6Gi"
-  #     cpu: "2.0"
-  #   requests:
-  #     memory: "4Gi"
-  #     cpu: "1.0"
+## Configuration values for the minio dependency
+## ref: https://github.com/minio/charts/blob/master/README.md
+##
 
-replicas: 1
-livenessProbe:
-  initialDelaySeconds: 30
-  periodSeconds: 15
-  timeoutSeconds: 10
-  failureThreshold: 5
-readinessProbe:
-  initialDelaySeconds: 15
-  periodSeconds: 15
-  timeoutSeconds: 10
-  failureThreshold: 3
-
-nodeSelector: {}
-tolerations: []
-affinity: {}
-## Optional extra labels for pod
-podLabels: []
-## Optional extra annotations for pod
-podAnnotations: {}
-
-## Define serviceAccount names for Mishards
-serviceAccounts:
-  mishards:
-    create: false
-    name:
-
-## Mishards Configuration
-mishards:
+minio:
+  enabled: true
+  name: minio
   image:
-    repository: milvusdb/mishards
-    tag: 1.1.1
+    tag: "RELEASE.2020-11-06T23-17-07Z"
     pullPolicy: IfNotPresent
+  accessKey: minioadmin
+  secretKey: minioadmin
 
-  replicas: 1
-  resources: {}
-  # resources:
-  #   limits:
-  #     memory: "2Gi"
-  #     cpu: "2.0"
-  #   requests:
-  #     memory: "1Gi"
-  #     cpu: "0.5"
-
-  ## Mishards conf
-  debug: true
-  maxWorkers: 50
-  discoveryClassName: kubernetes
-  trace:
-    enabled: false
-    tracerClassName: jaeger
-    tracingReportingHost: jaeger
-    tracingReportingPort: 5775
-
-## Milvus Readonly Server Configuration
-readonly:
-  logs:
-    level: debug
-    path: /var/lib/milvus/logs
-    maxLogFileSize: 1024MB
-    logRotateNum: 0
-
-  cache:
-    insertBufferSize: 1GB
-    cacheSize: 4GB
-
-  gpu:
-    enabled: false
-    cacheSize: 1GB
-    gpuSearchThreshold: 1000
-    searchDevices:
-      - gpu0
-    buildIndexDevices:
-      - gpu0
-
-  replicas: 1
-  resources: {}
-  # resources:
-  #   limits:
-  #     memory: "6Gi"
-  #     cpu: "2.0"
-  #   requests:
-  #     memory: "4Gi"
-  #     cpu: "1.0"
-
-## Milvus Admin Configuration
-admin:
-  enabled: false
-  image:
-    repository: milvusdb/milvus-em
-    tag: v0.4.3
-    pullPolicy: IfNotPresent
-
-  replicas: 1
-  resources: {}
-  # resources:
-  #   limits:
-  #     memory: "4Gi"
-  #     cpu: "2.0"
-  #   requests:
-  #     memory: "2Gi"
-  #     cpu: "1.0"
-
-  ## Expose the Milvus admin service to be accessed from outside the cluster (LoadBalancer service).
-  ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
-  ## ref: http://kubernetes.io/docs/user-guide/services/
-  ##
   service:
     type: ClusterIP
-    port: 3000
-    annotations: {}
-    labels: {}
-
-    ## List of IP addresses at which the Milvus server service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
-    ##
-    externalIPs: []
-    #   - externalIp1
-
-    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-    # set allowed inbound rules on the security group assigned to the master load balancer
-    loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    # Optionally assign a known public LB IP
-    # loadBalancerIP: 1.2.3.4
-
-## use External Backend
-## only support mysql now
-externalMysql:
-  enabled: false
-  ip:
-  port:
-  user:
-  password:
-  database:
-
-## Configuration values for the mysql dependency
-## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
-##
-mysql:
-  enabled: true
-  name: mysql
-  imageTag: "5.7.30"
-  imagePullPolicy: IfNotPresent
-  mysqlDatabase: milvus
-  mysqlUser: milvus
-  mysqlPassword: milvus
-  mysqlRootPassword: milvusroot
-  configurationFiles:
-    mysql.cnf: |-
-      [mysqld]
-      pid-file        = /var/run/mysqld/mysqld.pid
-      socket          = /var/run/mysqld/mysqld.sock
-      log-error       = /var/log/mysql/error.log # mount out to host
-      skip-name-resolve
-      # By default we only accept connections from localhost
-      bind-address   = 0.0.0.0
-      # Disabling symbolic-links is recommended to prevent assorted security risks
-      symbolic-links=0
-      character-set-server = utf8mb4
-      collation-server = utf8mb4_unicode_ci
-      init_connect='SET NAMES utf8mb4'
-      skip-character-set-client-handshake = true
-      max_connections = 1000
-      wait_timeout = 31536000
-
-  testFramework:
-    enabled: false
-
-  initializationFiles:
-    grant.sql: |-
-      GRANT ALL PRIVILEGES ON milvus.* TO 'root'@'%';
-      FLUSH PRIVILEGES;
+    port: 2379
 
   persistence:
     enabled: true
     existingClaim: ""
-    annotations: {}
-    #  "helm.sh/resource-policy": keep
     storageClass:
     accessMode: ReadWriteOnce
-    size: 4Gi
+    size: 500Gi
+
+## Configuration values for the etcd dependency
+## ref: https://artifacthub.io/packages/helm/bitnami/etcd
+##
+
+etcd:
+  enabled: true
+  name: etcd
+  image:
+    tag: "3.4.14-debian-10-r44"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 2379
+    peerPort: 2380
+
+  auth:
+    rbac:
+      enabled: false
+
+  persistence:
+    enabled: true
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+## Configuration values for the pulsar dependency
+## ref: https://github.com/kafkaesque-io/pulsar-helm-chart
+##
+
+pulsar:
+  enabled: false
+  name: pulsar
+
+  fullnameOverride: ""
+  persistence: no
+  enableAntiAffinity: no
+
+  zookeeper:
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    configData:
+      PULSAR_MEM: "\"-Xms512m -Xmx512m -Dcom.sun.management.jmxremote -Djute.maxbuffer=10485760 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:+DisableExplicitGC -XX:+PerfDisableSharedMem -Dzookeeper.forceSync=no\""
+
+  bookkeeper:
+    replicaCount: 2
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    configData:
+      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+UseG1GC -XX:MaxGCPauseMillis=10 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -verbosegc -XX:G1LogLevel=finest\""
+
+  broker:
+    component: broker
+    replicaCount: 1
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    configData:
+      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
+
+  autoRecovery:
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 1
+
+  function:
+    replicaCount: 1
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    configData:
+      BOOKIE_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
+
+  proxy:
+    replicaCount: 1
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    wsResources:
+      requests:
+        memory: 512Mi
+        cpu: 0.3
+    configData:
+      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
+
+
+###################################
+# External S3
+# - these configs are only used when `externalS3.enabled` is true
+###################################
+externalS3:
+  enabled: false
+  host: localhost
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+###################################
+# External etcd
+# - these configs are only used when `externalEtcd.enabled` is true
+###################################
+externalEtcd:
+  enabled: false
+  ## the endpoints of the external etcd
+  ##
+  endpoints:
+    - localhost:2379
+
+###################################
+# External pulsar
+# - these configs are only used when `externalPulsar.enabled` is true
+###################################
+externalPulsar:
+  enabled: false
+  host: localhost
+  port: 6650
