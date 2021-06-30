@@ -119,7 +119,7 @@ queryCoordinator:
     labels: {}
     clusterIP: ""
 
-querynode:
+queryNode:
   enabled: true
   replicas: 1
   resources: {}
@@ -143,7 +143,7 @@ indexCoordinator:
     labels: {}
     clusterIP: ""
 
-indexnode:
+indexNode:
   enabled: true
   replicas: 1
   resources: {}
@@ -167,7 +167,7 @@ dataCoordinator:
     labels: {}
     clusterIP: ""
 
-datanode:
+dataNode:
   enabled: true
   replicas: 1
   resources: {}
