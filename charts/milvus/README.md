@@ -26,9 +26,9 @@ $ helm repo add milvus https://milvus-io.github.io/milvus-helm/
 $ helm repo update
 ```
 
-3. Install Helm package
+### Deploy Milvus with standalone mode
 
-To install the chart with the release name `my-release`:
+Assume the release name is `my-release`:
 
 ```bash
 # Helm v3.x
@@ -37,12 +37,22 @@ $ helm upgrade --install my-release milvus/milvus
 
 > **Tip**: To list all releases, using `helm list`.
 
-### Deploying Milvus with cluster enabled
+### Deploy Milvus with cluster mode
+
+Assume the release name is `my-release`:
 
 ```bash
 # Helm v3.x
 $ helm upgrade --install --set cluster.enabled=true my-release milvus/milvus
 ```
+
+### Upgrade an existing Milvus cluster
+E.g. to expand query node from 1(default) to 2:
+```bash
+# Helm v3.x
+$ helm upgrade --install --set cluster.enabled=true my-release milvus/milvus --set queryNode.replicas=2
+```
+
 ## Uninstall the Chart
 
 ```bash
