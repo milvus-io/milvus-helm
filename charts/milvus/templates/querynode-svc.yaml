@@ -1,5 +1,5 @@
 {{- if .Values.metrics.enabled }}
-{{- if and .Values.querynode.enabled .Values.cluster.enabled }}
+{{- if and .Values.queryNode.enabled .Values.cluster.enabled }}
 apiVersion: v1
 kind: Service
 metadata:

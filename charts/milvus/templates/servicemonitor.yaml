@@ -31,7 +31,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.datanode.enabled .Values.cluster.enabled }}
+{{- if and .Values.dataNode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -93,7 +93,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.indexnode.enabled .Values.cluster.enabled }}
+{{- if and .Values.indexNode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -217,7 +217,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.querynode.enabled .Values.cluster.enabled }}
+{{- if and .Values.queryNode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:

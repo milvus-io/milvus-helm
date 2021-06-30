@@ -1,4 +1,4 @@
-{{- if and .Values.indexnode.enabled .Values.cluster.enabled }}
+{{- if and .Values.indexNode.enabled .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +7,7 @@ metadata:
 {{ include "milvus.labels" . | indent 4 }}
     component: "indexnode"
 spec:
-  replicas: {{ .Values.indexnode.replicas }}
+  replicas: {{ .Values.indexNode.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
@@ -31,9 +31,9 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "milvus", "run", "indexnode" ]
-        {{- if .Values.indexnode.extraEnv }}
+        {{- if .Values.indexNode.extraEnv }}
         env:
-          {{- toYaml .Values.indexnode.extraEnv | nindent 10 }}
+          {{- toYaml .Values.indexNode.extraEnv | nindent 10 }}
         {{- end }}
         ports:
           - name: indexnode
@@ -45,7 +45,7 @@ spec:
             protocol: TCP
           {{- end }}
         resources:
-          {{- toYaml .Values.indexnode.resources | nindent 10 }}
+          {{- toYaml .Values.indexNode.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-config
           mountPath: /milvus/configs/milvus.yaml
@@ -55,15 +55,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.indexnode.nodeSelector }}
+      {{- with .Values.indexNode.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.indexnode.affinity }}
+      {{- with .Values.indexNode.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.indexnode.tolerations }}
+      {{- with .Values.indexNode.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -1,4 +1,4 @@
-{{- if and .Values.datanode.enabled .Values.cluster.enabled }}
+{{- if and .Values.dataNode.enabled .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +7,7 @@ metadata:
 {{ include "milvus.labels" . | indent 4 }}
     component: "datanode"
 spec:
-  replicas: {{ .Values.datanode.replicas }}
+  replicas: {{ .Values.dataNode.replicas }}
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
@@ -31,9 +31,9 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "milvus", "run", "datanode" ]
-        {{- if .Values.datanode.extraEnv }}
+        {{- if .Values.dataNode.extraEnv }}
         env:
-          {{- toYaml .Values.datanode.extraEnv | nindent 10 }}
+          {{- toYaml .Values.dataNode.extraEnv | nindent 10 }}
         {{- end }}
         ports:
           - name: datanode
@@ -45,7 +45,7 @@ spec:
             protocol: TCP
           {{- end }}
         resources:
-          {{- toYaml .Values.datanode.resources | nindent 10 }}
+          {{- toYaml .Values.dataNode.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-config
           mountPath: /milvus/configs/milvus.yaml
@@ -55,15 +55,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.datanode.nodeSelector }}
+      {{- with .Values.dataNode.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.datanode.affinity }}
+      {{- with .Values.dataNode.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.datanode.tolerations }}
+      {{- with .Values.dataNode.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
