@@ -1,4 +1,8 @@
-approvers:
-- ZhifengZhang-CN
-reviewers:
-- ZhifengZhang-CN
+filters:
+  ".*":
+    approvers:
+      - jeffoverflow
+      - zwd1208
+    reviewers:
+      - jeffoverflow
+      - zwd1208
