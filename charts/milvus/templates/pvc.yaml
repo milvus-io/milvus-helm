@@ -1,10 +1,11 @@
-{{- $pvc := .Values.logsPersistence.persistentVolumeClaim -}}
-{{- if and .Values.logsPersistence.enabled (not $pvc.existingClaim) }}
+{{- if not .Values.cluster.enabled }}
+{{- $pvc := .Values.standalone.persistence.persistentVolumeClaim -}}
+{{- if and .Values.standalone.persistence.enabled (not $pvc.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ printf "%s-logs" (include "milvus.fullname" . | trunc 58)}}
-{{- with .Values.logsPersistence.annotations  }}
+  name: {{ printf "%s" (include "milvus.fullname" . | trunc 58)}}
+{{- with .Values.standalone.persistence.annotations  }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
@@ -24,17 +25,14 @@ spec:
     requests:
       storage: {{ $pvc.size }}
 {{- end }}
-
-{{- if not .Values.cluster.enabled }}
-{{- $pvc := .Values.persistence.persistentVolumeClaim -}}
-{{- if and .Values.persistence.enabled (not $pvc.existingClaim) }}
----
-
+{{- else }}
+{{- $pvc := .Values.pulsarStandalone.persistence.persistentVolumeClaim -}}
+{{- if and .Values.pulsarStandalone.persistence.enabled (not $pvc.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ printf "%s" (include "milvus.fullname" . | trunc 58)}}
-{{- with .Values.persistence.annotations  }}
+  name: {{ printf "%s-pulsar" (include "milvus.fullname" . | trunc 58)}}
+{{- with .Values.pulsarStandalone.persistence.annotations  }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}

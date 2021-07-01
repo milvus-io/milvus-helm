@@ -52,11 +52,8 @@ spec:
           subPath: milvus.yaml
           readOnly: true
         - name: milvus-data-disk
-          mountPath: {{ .Values.persistence.mountPath | quote }}
-          subPath: {{ .Values.persistence.persistentVolumeClaim.subPath | default "" }}
-        - name: milvus-logs-disk
-          mountPath: {{ .Values.logsPersistence.mountPath | quote }}
-          subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
+          mountPath: {{ .Values.standalone.persistence.mountPath | quote }}
+          subPath: {{ .Values.standalone.persistence.persistentVolumeClaim.subPath | default "" }}
 
       {{- with .Values.standalone.nodeSelector }}
       nodeSelector:
@@ -76,16 +73,9 @@ spec:
         configMap:
           name: {{ template "milvus.fullname" . }}
       - name: milvus-data-disk
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.standalone.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.persistentVolumeClaim.existingClaim | default (printf "%s" (include "milvus.fullname" . | trunc 58)) }}
-        {{- else }}
-        emptyDir: {}
-        {{- end }}
-      - name: milvus-logs-disk
-        {{- if .Values.logsPersistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
+          claimName: {{ .Values.standalone.persistence.persistentVolumeClaim.existingClaim | default (printf "%s" (include "milvus.fullname" . | trunc 58)) }}
         {{- else }}
         emptyDir: {}
         {{- end }}
