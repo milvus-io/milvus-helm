@@ -62,6 +62,15 @@ $ helm uninstall my-release
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
+- Completely uninstall Milvus
+
+> **IMPORTANT** Please run this command with care. Maybe you want to keep ETCD data
+```bash
+MILVUS_LABELS="app.kubernetes.io/instance=my-release"
+kubectl delete pvc $(kubectl get pvc -l "${MILVUS_LABELS}" -o jsonpath='{range.items[*]}{.metadata.name} ')
+```
+
+
 ## Configuration
 
 ### Milvus Service Configuration
