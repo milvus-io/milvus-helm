@@ -51,6 +51,25 @@ ingress:
   #    hosts:
   #      - milvus-example.local
 
+metrics:
+  enabled: true
+
+  serviceMonitor:
+    # Set this to `true` to create ServiceMonitor for Prometheus operator
+    enabled: false
+
+    # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
+    additionalLabels: {}
+
+log:
+  level: "debug"
+  file:
+    maxSize: 300    # MB
+    maxAge: 10    # day
+    maxBackups: 20
+  dev: true
+  format: "text"    # text/json
+
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
@@ -59,26 +78,26 @@ standalone:
   tolerations: []
   extraEnv: []
 
-persistence:
-  mountPath: "/var/lib/milvus"
-  ## If true, alertmanager will create/use a Persistent Volume Claim
-  ## If false, use emptyDir
-  ##
-  enabled: true
-  annotations: {}
-  #  helm.sh/resource-policy: keep
-  persistentVolumeClaim:
-    existingClaim: ""
-    ## milvus logs Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.
+  persistence:
+    mountPath: "/var/lib/milvus"
+    ## If true, alertmanager will create/use a Persistent Volume Claim
+    ## If false, use emptyDir
     ##
-    storageClass:
-    accessModes: ReadWriteOnce
-    size: 5Gi
-    subPath: ""
+    enabled: true
+    annotations: {}
+    #  helm.sh/resource-policy: keep
+    persistentVolumeClaim:
+      existingClaim: ""
+      ## milvus logs Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.
+      ##
+      storageClass:
+      accessModes: ReadWriteOnce
+      size: 5Gi
+      subPath: ""
 
 proxy:
   enabled: true
@@ -195,45 +214,26 @@ pulsarStandalone:
     labels: {}
     clusterIP: ""
 
-metrics:
-  enabled: true
-
-  serviceMonitor:
-    # Set this to `true` to create ServiceMonitor for Prometheus operator
-    enabled: false
-
-    # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
-    additionalLabels: {}
-
-log:
-  level: "debug"
-  file:
-    maxSize: 300    # MB
-    maxAge: 10    # day
-    maxBackups: 20
-  dev: true
-  format: "text"    # text/json
-
-logsPersistence:
-  mountPath: "/var/logs/milvus"
-  ## If true, alertmanager will create/use a Persistent Volume Claim
-  ## If false, use emptyDir
-  ##
-  enabled: false
-  annotations: {}
-  #  helm.sh/resource-policy: keep
-  persistentVolumeClaim:
-    existingClaim: ""
-    ## milvus logs Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.
+  persistence:
+    mountPath: "/pulsar/data"
+    ## If true, alertmanager will create/use a Persistent Volume Claim
+    ## If false, use emptyDir
     ##
-    storageClass:
-    accessModes: ReadWriteMany
-    size: 5Gi
-    subPath: ""
+    enabled: true
+    annotations: {}
+    #  helm.sh/resource-policy: keep
+    persistentVolumeClaim:
+      existingClaim: ""
+      ## milvus logs Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.
+      ##
+      storageClass:
+      accessModes: ReadWriteOnce
+      size: 5Gi
+      subPath: ""
 
 ## Configuration values for the minio dependency
 ## ref: https://github.com/minio/charts/blob/master/README.md
@@ -257,7 +257,7 @@ minio:
     existingClaim: ""
     storageClass:
     accessMode: ReadWriteOnce
-    size: 500Gi
+    size: 50Gi
 
 ## Configuration values for the etcd dependency
 ## ref: https://artifacthub.io/packages/helm/bitnami/etcd

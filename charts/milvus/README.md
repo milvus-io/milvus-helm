@@ -125,6 +125,14 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
+| `standalone.persistence.enabled`          | Use persistent volume to store Milvus standalone data | `true`                                          |
+| `standalone.persistence.mountPath` | Milvus standalone data persistence volume mount path | `/var/lib/milvus`                                       |
+| `standalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                                    |
+| `standalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                    |
+| `standalone.persistence.persistentVolumeClaim.storageClass` | The Milvus standalone data Persistent Volume Storage Class | `unset`                  |
+| `standalone.persistence.persistentVolumeClaim.accessModes` | The Milvus standalone data Persistence access modes | `ReadWriteOnec`                  |
+| `standalone.persistence.persistentVolumeClaim.size` | The size of Milvus standalone data Persistent Volume Storage Class | `5Gi`                    |
+| `standalone.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus standalone data mount | `unset`                                         |
 
 ### Milvus Proxy Deployment Configuration
 
@@ -291,6 +299,14 @@ The following table lists the configurable parameters of the Pulsar Standalone c
 | `pulsarStandalone.service.loadBalancerIP`              | IP address to assign to load balancer (if supported) | `unset`                             |
 | `pulsarStandalone.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                |
 | `pulsarStandalone.service.externalIPs`                 | Service external IP addresses                 | `[]`                                       |
+| `pulsarStandalone.persistence.enabled`          | Use persistent volume to store Pulsar standalone data | `true`                                    |
+| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/var/lib/milvus`                                 |
+| `pulsarStandalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                              |
+| `pulsarStandalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`              |
+| `pulsarStandalone.persistence.persistentVolumeClaim.storageClass` | The Pulsar standalone data Persistent Volume Storage Class | `unset`            |
+| `pulsarStandalone.persistence.persistentVolumeClaim.accessModes` | The Pulsar standalone data Persistence access modes | `ReadWriteOnec`            |
+| `pulsarStandalone.persistence.persistentVolumeClaim.size` | The size of Pulsar standalone data Persistent Volume Storage Class | `5Gi`              |
+| `pulsarStandalone.persistence.persistentVolumeClaim.subPath` | SubPath for Pulsar standalone data mount | `unset`                                   |
 
 ### Pulsar Configuration
 

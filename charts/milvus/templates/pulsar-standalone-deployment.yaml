@@ -47,6 +47,10 @@ spec:
             protocol: TCP
         resources:
           {{- toYaml .Values.pulsarStandalone.resources | nindent 10 }}
+        volumeMounts:
+        - name: milvus-pulsar-disk
+          mountPath: {{ .Values.pulsarStandalone.persistence.mountPath | quote }}
+          subPath: {{ .Values.pulsarStandalone.persistence.persistentVolumeClaim.subPath | default "" }}
 
       {{- with .Values.pulsarStandalone.nodeSelector }}
       nodeSelector:
@@ -60,4 +64,13 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+      volumes:
+      - name: milvus-pulsar-disk
+        {{- if .Values.pulsarStandalone.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.pulsarStandalone.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-pulsar" (include "milvus.fullname" . | trunc 58)) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
 {{- end }}
