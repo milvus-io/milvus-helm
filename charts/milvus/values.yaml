@@ -257,7 +257,7 @@ minio:
     existingClaim: ""
     storageClass:
     accessMode: ReadWriteOnce
-    size: 50Gi
+    size: 500Gi
 
 ## Configuration values for the etcd dependency
 ## ref: https://artifacthub.io/packages/helm/bitnami/etcd
@@ -359,10 +359,12 @@ pulsar:
 ###################################
 externalS3:
   enabled: false
-  host: localhost
-  port: 9000
-  accessKey: minioadmin
-  secretKey: minioadmin
+  host: ""
+  port: ""
+  accessKey: ""
+  secretKey: ""
+  useSSL: false
+  bucketName: ""
 
 ###################################
 # External etcd

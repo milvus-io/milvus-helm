@@ -104,10 +104,12 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
 | `log.format`                              | Format used for the logs. Valid formats are `text` and `json` | `text`                                  |
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
-| `externalS3.host`                         | The host of the external S3                   | `localhost`                                             |
-| `externalS3.port`                         | The port of the external S3                   | `9000`                                                  |
-| `externalS3.accessKey`                    | The Access Key of the external S3             | `minioadmin`                                            |
-| `externalS3.secretKey`                    | The Secret Key of the external S3             | `minioadmin`                                            |
+| `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
+| `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
+| `externalS3.accessKey`                    | The Access Key of the external S3             | `unset`                                                 |
+| `externalS3.secretKey`                    | The Secret Key of the external S3             | `unset`                                                 |
+| `externalS3.bucketName`                   | The Bucket Name of the external S3            | `unset`                                                 |
+| `externalS3.useSSL`                       | If true, use SSL to connect to the external S3 | `false`                                                |
 | `externalEtcd.enabled`                    | Enable or disable external Etcd               | `false`                                                 |
 | `externalEtcd.endpoints`                  | The endpoints of the external etcd            | `{}`                                                    |
 | `externalPulsar.enabled`                  | Enable or disable external Pulsar             | `false`                                                 |
