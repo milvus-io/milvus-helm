@@ -149,6 +149,7 @@ The following table lists the configurable parameters of the Milvus Proxy compon
 | `proxy.affinity`                          | Affinity settings for Milvus Proxy pods assignment | `{}`                                               |
 | `proxy.tolerations`                       | Toleration labels for Milvus Proxy pods assignment | `[]`                                               |
 | `proxy.extraEnv`                          | Additional Milvus Proxy container environment variables | `[]`                                          |
+| `proxy.autoscaling.*`                     | Configs for the HorizontalPodAutoscaler of the Proxy Pods | `<see values.yaml>`                         |
 
 ### Milvus Root Coordinator Deployment Configuration
 
@@ -207,6 +208,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.affinity`                      | Affinity settings for Milvus Query Node pods assignment | `{}`                                          |
 | `queryNode.tolerations`                   | Toleration labels for Milvus Query Node pods assignment | `[]`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
+| `queryNode.autoscaling.*`                 | Configs for the HorizontalPodAutoscaler of the Query Node Pods | `<see values.yaml>`                    |
 
 ### Milvus Index Coordinator Deployment Configuration
 
@@ -243,6 +245,7 @@ The following table lists the configurable parameters of the Milvus Index Node c
 | `indexNode.affinity`                      | Affinity settings for Milvus Index Node pods assignment | `{}`                                          |
 | `indexNode.tolerations`                   | Toleration labels for Milvus Index Node pods assignment | `[]`                                          |
 | `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
+| `indexNode.autoscaling.*`                 | Configs for the HorizontalPodAutoscaler of the Index Node Pods | `<see values.yaml>`                    |
 
 ### Milvus Data Coordinator Deployment Configuration
 
@@ -279,6 +282,7 @@ The following table lists the configurable parameters of the Milvus Data Node co
 | `dataNode.affinity`                       | Affinity settings for Milvus Data Node pods assignment | `{}`                                           |
 | `dataNode.tolerations`                    | Toleration labels for Milvus Data Node pods assignment | `[]`                                           |
 | `dataNode.extraEnv`                       | Additional Milvus Data Node container environment variables | `[]`                                      |
+| `dataNode.autoscaling.*`                  | Configs for the HorizontalPodAutoscaler of the Data Node Pods | `<see values.yaml>`                     |
 
 ### Pulsar Standalone Deployment Configuration
 
