@@ -108,6 +108,25 @@ proxy:
   tolerations: []
   extraEnv: []
 
+  # Enable autoscaling using HorizontalPodAutoscaler
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 60
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 60
+
 rootCoordinator:
   enabled: true
   replicas: 1  # Run Root Coordinator mode with replication disabled
@@ -147,6 +166,25 @@ queryNode:
   tolerations: []
   extraEnv: []
 
+  # Enable autoscaling using HorizontalPodAutoscaler
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 60
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 60
+
 indexCoordinator:
   enabled: true
   replicas: 1   # Run Index Coordinator mode with replication disabled
@@ -171,6 +209,25 @@ indexNode:
   tolerations: []
   extraEnv: []
 
+  # Enable autoscaling using HorizontalPodAutoscaler
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 60
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 60
+
 dataCoordinator:
   enabled: true
   replicas: 1           # Run Data Coordinator mode with replication disabled
@@ -194,6 +251,25 @@ dataNode:
   affinity: {}
   tolerations: []
   extraEnv: []
+
+  # Enable autoscaling using HorizontalPodAutoscaler
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 60
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: Utilization
+            averageUtilization: 60
 
 pulsarStandalone:
   image:
