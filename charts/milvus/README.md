@@ -2,7 +2,7 @@
 
 For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
 
-To install Milvus, refer to [Milvus installation](https://milvus.io/docs/guides/get_started/install_milvus/install_milvus.md).
+To install Milvus, refer to [Milvus installation](https://milvus.io/docs/v2.0.0/install_standalone-docker.md).
 
 ## Introduction
 This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm package manager.
@@ -98,6 +98,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `ingress.labels`                          | Ingress labels                                | `{}`                                                    |
 | `ingress.hosts`                           | Ingress hostnames                             | `[]`                                                    |
 | `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
+| `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
 | `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |

@@ -70,6 +70,9 @@ log:
   dev: true
   format: "text"    # text/json
 
+metadata:
+  rootPath: "by-dev"
+
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
