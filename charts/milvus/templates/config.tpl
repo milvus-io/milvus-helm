@@ -20,7 +20,7 @@ etcd:
   endpoints:
     - {{ .Release.Name }}-{{ .Values.etcd.name }}:{{ .Values.etcd.service.port }}
 {{- end }}
-  rootPath: by-dev
+  rootPath: {{ .Values.metadata.rootPath }}
   metaSubPath: meta # metaRootPath = rootPath + '/' + metaSubPath
   kvSubPath: kv # kvRootPath = rootPath + '/' + kvSubPath
 
