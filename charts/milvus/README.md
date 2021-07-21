@@ -128,6 +128,8 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
+| `standalone.rocksmq.retentionTimeInMinutes` | Set the retention time of rocksmq           | `10080`                                                 |
+| `standalone.rocksmq.retentionSizeInMB`    | Set the retention size of rocksmq             | `0`                                                     |
 | `standalone.persistence.enabled`          | Use persistent volume to store Milvus standalone data | `true`                                          |
 | `standalone.persistence.mountPath` | Milvus standalone data persistence volume mount path | `/var/lib/milvus`                                       |
 | `standalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                                    |
@@ -298,7 +300,7 @@ The following table lists the configurable parameters of the Pulsar Standalone c
 | `pulsarStandalone.tolerations`            | Toleration labels for Pulsar Standalone pods assignment | `[]`                                          |
 | `pulsarStandalone.extraEnv`               | Additional Pulsar Standalone container environment variables | `[]`                                     |
 | `pulsarStandalone.service.type`                        | Service type                                  | `ClusterIP`                                |
-| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `19530`                                    |
+| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `6650`                                    |
 | `pulsarStandalone.service.nodePort`                    | Service nodePort                              | `unset`                                    |
 | `pulsarStandalone.service.annotations`                 | Service annotations                           | `{}`                                       |
 | `pulsarStandalone.service.labels`                      | Service custom labels                         | `{}`                                       |
@@ -307,7 +309,7 @@ The following table lists the configurable parameters of the Pulsar Standalone c
 | `pulsarStandalone.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                |
 | `pulsarStandalone.service.externalIPs`                 | Service external IP addresses                 | `[]`                                       |
 | `pulsarStandalone.persistence.enabled`          | Use persistent volume to store Pulsar standalone data | `true`                                    |
-| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/var/lib/milvus`                                 |
+| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/pulsar/data`                                 |
 | `pulsarStandalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                              |
 | `pulsarStandalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`              |
 | `pulsarStandalone.persistence.persistentVolumeClaim.storageClass` | The Pulsar standalone data Persistent Volume Storage Class | `unset`            |

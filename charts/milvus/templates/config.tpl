@@ -63,7 +63,9 @@ pulsar:
 {{- end }}
 
 rocksmq:
-  path: "/var/lib/milvus/rdb_data"
+  path: "{{ .Values.standalone.persistence.mountPath }}/rdb_data"
+  retentionTimeInMinutes: {{ .Values.standalone.rocksmq.retentionTimeInMinutes }}
+  retentionSizeInMB: {{ .Values.standalone.rocksmq.retentionSizeInMB }}
 
 rootCoord:
 {{- if .Values.cluster.enabled }}
