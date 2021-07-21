@@ -81,6 +81,10 @@ standalone:
   tolerations: []
   extraEnv: []
 
+  rocksmq:
+    retentionTimeInMinutes: 10080
+    retentionSizeInMB: 0
+
   persistence:
     mountPath: "/var/lib/milvus"
     ## If true, alertmanager will create/use a Persistent Volume Claim
