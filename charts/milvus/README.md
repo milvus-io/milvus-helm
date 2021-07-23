@@ -98,6 +98,9 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `ingress.labels`                          | Ingress labels                                | `{}`                                                    |
 | `ingress.hosts`                           | Ingress hostnames                             | `[]`                                                    |
 | `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
+| `metrics.enabled`                         | Export Prometheus monitoring metrics          | `true`                                                  |
+| `metrics.serviceMonitor.enabled`          | Create ServiceMonitor for Prometheus operator | `false`                                                 |
+| `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | ``              |
 | `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
 | `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
