@@ -100,13 +100,21 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
 | `metrics.enabled`                         | Export Prometheus monitoring metrics          | `true`                                                  |
 | `metrics.serviceMonitor.enabled`          | Create ServiceMonitor for Prometheus operator | `false`                                                 |
-| `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | ``              |
+| `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`         |
 | `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
 | `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
 | `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
 | `log.format`                              | Format used for the logs. Valid formats are `text` and `json` | `text`                                  |
+| `log.persistence.enabled`                 | Use persistent volume to store Milvus logs data | `true`                                                |
+| `log.persistence.mountPath`               | Milvus logs data persistence volume mount path | `/var/lib/milvus`                                      |
+| `log.persistence.annotations`             | PersistentVolumeClaim annotations             | `{}`                                                    |
+| `log.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                           |
+| `log.persistence.persistentVolumeClaim.storageClass` | The Milvus logs data Persistent Volume Storage Class | `unset`                               |
+| `log.persistence.persistentVolumeClaim.accessModes` | The Milvus logs data Persistence access modes | `ReadWriteOnce`                               |
+| `log.persistence.persistentVolumeClaim.size` | The size of Milvus logs data Persistent Volume Storage Class | `5Gi`                                 |
+| `log.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs data mount | `unset`                                                      |
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
 | `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
 | `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
@@ -138,7 +146,7 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                                    |
 | `standalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                    |
 | `standalone.persistence.persistentVolumeClaim.storageClass` | The Milvus standalone data Persistent Volume Storage Class | `unset`                  |
-| `standalone.persistence.persistentVolumeClaim.accessModes` | The Milvus standalone data Persistence access modes | `ReadWriteOnec`                  |
+| `standalone.persistence.persistentVolumeClaim.accessModes` | The Milvus standalone data Persistence access modes | `ReadWriteOnce`                  |
 | `standalone.persistence.persistentVolumeClaim.size` | The size of Milvus standalone data Persistent Volume Storage Class | `5Gi`                    |
 | `standalone.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus standalone data mount | `unset`                                         |
 
