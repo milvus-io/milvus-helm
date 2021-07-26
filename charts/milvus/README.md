@@ -108,7 +108,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
 | `log.format`                              | Format used for the logs. Valid formats are `text` and `json` | `text`                                  |
 | `log.persistence.enabled`                 | Use persistent volume to store Milvus logs data | `true`                                                |
-| `log.persistence.mountPath`               | Milvus logs data persistence volume mount path | `/var/lib/milvus`                                      |
+| `log.persistence.mountPath`               | Milvus logs data persistence volume mount path | `/milvus/logs`                                         |
 | `log.persistence.annotations`             | PersistentVolumeClaim annotations             | `{}`                                                    |
 | `log.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                           |
 | `log.persistence.persistentVolumeClaim.storageClass` | The Milvus logs data Persistent Volume Storage Class | `unset`                               |
