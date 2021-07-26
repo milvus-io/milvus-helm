@@ -115,11 +115,14 @@ dataNode:
 log:
   level: {{ .Values.log.level }}
   file:
+{{- if .Values.log.persistence.enabled }}
+    rootPath: "{{ .Values.log.persistence.mountPath }}"
+{{- else }}
     rootPath: ""
+{{- end }}
     maxSize: {{ .Values.log.file.maxSize }}
     maxAge: {{ .Values.log.file.maxAge }}
     maxBackups: {{ .Values.log.file.maxBackups }}
-  dev: {{ .Values.log.dev }}
   format: {{ .Values.log.format }}
 
 {{- end }}

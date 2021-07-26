@@ -51,6 +51,11 @@ spec:
           mountPath: /milvus/configs/milvus.yaml
           subPath: milvus.yaml
           readOnly: true
+        {{- if .Values.log.persistence.enabled }}
+        - name: milvus-logs-disk
+          mountPath: {{ .Values.log.persistence.mountPath | quote }}
+          subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
+        {{- end }}
 
       {{- with .Values.indexCoordinator.nodeSelector }}
       nodeSelector:
@@ -69,4 +74,9 @@ spec:
       - name: milvus-config
         configMap:
           name: {{ template "milvus.fullname" . }}
+      {{- if .Values.log.persistence.enabled }}
+      - name: milvus-logs-disk
+        persistentVolumeClaim:
+          claimName: {{ .Values.log.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
+      {{- end }}
 {{- end }}
