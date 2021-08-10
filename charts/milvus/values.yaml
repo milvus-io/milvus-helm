@@ -353,7 +353,7 @@ minio:
 
   service:
     type: ClusterIP
-    port: 2379
+    port: 9000
 
   persistence:
     enabled: true
@@ -370,7 +370,7 @@ etcd:
   enabled: true
   name: etcd
   image:
-    tag: "3.4.14-debian-10-r44"
+    tag: "3.5.0-debian-10-r24"
     pullPolicy: IfNotPresent
 
   service:

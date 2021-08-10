@@ -1,12 +1,12 @@
 dependencies:
 - name: etcd
   repository: https://charts.bitnami.com/bitnami
-  version: 5.5.0
+  version: 6.3.3
 - name: minio
   repository: https://helm.min.io
   version: 8.0.9
 - name: pulsar
   repository: https://helm.kafkaesque.io
   version: 1.0.31
-digest: sha256:cc727a4b0780617262014ca23f088610cbf62902353cbd0eaf549741e2b11f11
-generated: "2021-03-25T19:06:02.887479+08:00"
+digest: sha256:36e0039db582297034d81aa36b6d9ea38ea100f33a026a50bfabe37335ea0093
+generated: "2021-08-10T17:35:07.301495+08:00"
