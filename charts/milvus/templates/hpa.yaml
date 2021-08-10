@@ -1,12 +1,9 @@
 {{- if and (.Values.proxy.enabled) (.Values.proxy.autoscaling.enabled) }}
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "milvus.proxy.fullname" . }}
-  labels:
-    {{ include "milvus.labels" . | indent 4 }}
-    component: "proxy"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -20,13 +17,10 @@ spec:
 
 {{- if and (.Values.queryNode.enabled) (.Values.queryNode.autoscaling.enabled) }}
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "milvus.querynode.fullname" . }}
-  labels:
-    {{ include "milvus.labels" . | indent 4 }}
-    component: "querynode"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -40,13 +34,10 @@ spec:
 
 {{- if and (.Values.indexNode.enabled) (.Values.indexNode.autoscaling.enabled) }}
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "milvus.indexnode.fullname" . }}
-  labels:
-    {{ include "milvus.labels" . | indent 4 }}
-    component: "indexnode"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -60,13 +51,10 @@ spec:
 
 {{- if and (.Values.dataNode.enabled) (.Values.dataNode.autoscaling.enabled) }}
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "milvus.datanode.fullname" . }}
-  labels:
-    {{ include "milvus.labels" . | indent 4 }}
-    component: "datanode"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
