@@ -10,7 +10,7 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 ## Prerequisites
 
 - Kubernetes 1.14+
-- Helm >= 3.0.0
+- Helm >= 3.2.0
 
 > **IMPORTANT** The master branch is for the development of Milvus v2.0. On March 9th, 2021, we released Milvus v1.0, the first stable version of Milvus with long-term support. To use Milvus v1.x, switch to [branch 1.1](https://github.com/milvus-io/milvus-helm/tree/1.1).
 
@@ -81,7 +81,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `false`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
-| `image.all.tag`                           | Image tag                                     | `v2.0.0-rc2-20210712-a8e5fd2`                                                |
+| `image.all.tag`                           | Image tag                                     | `v2.0.0-rc3-20210810-bdb8396`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
@@ -107,7 +107,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
 | `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
 | `log.format`                              | Format used for the logs. Valid formats are `text` and `json` | `text`                                  |
-| `log.persistence.enabled`                 | Use persistent volume to store Milvus logs data | `false`                                                |
+| `log.persistence.enabled`                 | Use persistent volume to store Milvus logs data | `false`                                               |
 | `log.persistence.mountPath`               | Milvus logs data persistence volume mount path | `/milvus/logs`                                         |
 | `log.persistence.annotations`             | PersistentVolumeClaim annotations             | `{}`                                                    |
 | `log.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`                           |
@@ -311,7 +311,7 @@ The following table lists the configurable parameters of the Pulsar Standalone c
 | `pulsarStandalone.tolerations`            | Toleration labels for Pulsar Standalone pods assignment | `[]`                                          |
 | `pulsarStandalone.extraEnv`               | Additional Pulsar Standalone container environment variables | `[]`                                     |
 | `pulsarStandalone.service.type`                        | Service type                                  | `ClusterIP`                                |
-| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `6650`                                    |
+| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `6650`                                     |
 | `pulsarStandalone.service.nodePort`                    | Service nodePort                              | `unset`                                    |
 | `pulsarStandalone.service.annotations`                 | Service annotations                           | `{}`                                       |
 | `pulsarStandalone.service.labels`                      | Service custom labels                         | `{}`                                       |
@@ -320,7 +320,7 @@ The following table lists the configurable parameters of the Pulsar Standalone c
 | `pulsarStandalone.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                |
 | `pulsarStandalone.service.externalIPs`                 | Service external IP addresses                 | `[]`                                       |
 | `pulsarStandalone.persistence.enabled`          | Use persistent volume to store Pulsar standalone data | `true`                                    |
-| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/pulsar/data`                                 |
+| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/pulsar/data`                                    |
 | `pulsarStandalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                              |
 | `pulsarStandalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`              |
 | `pulsarStandalone.persistence.persistentVolumeClaim.storageClass` | The Pulsar standalone data Persistent Volume Storage Class | `unset`            |
