@@ -113,6 +113,8 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `logs.path`                               | Absolute path to the folder holding the log files. | `/var/lib/milvus/logs`                             |
 | `logs.maxLogFileSize`                     | The maximum size of each log file, size range [512, 4096]. (MB) | `1024MB`                              |
 | `logs.logRotateNum`                       | The maximum number of log files that Milvus keeps for each logging level, num range [0, 1024], 0 means unlimited. | `0` |
+| `logs.logToStdOut`                        | Whether to output milvus logs on standarad output. | `false` |
+| `logs.logToFile`                          | Whether to output milvus logs on disk. | `true` |
 | `cache.insertBufferSize`                  | Maximum insert buffer size allowed (GB)       | `1GB`                                                   |
 | `cache.cacheSize`                         | Size of CPU memory used for cache  (GB)       | `4GB`                                                   |
 | `network.httpPort`                        | Port that Milvus web server monitors.         | `19121`                                                 |

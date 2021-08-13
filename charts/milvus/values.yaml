@@ -13,6 +13,8 @@ logs:
   path: /var/lib/milvus/logs
   maxLogFileSize: 1024MB
   logRotateNum: 0
+  logToStdOut: "false"
+  logToFile: "true"
 
 cache:
   insertBufferSize: 1GB
