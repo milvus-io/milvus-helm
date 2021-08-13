@@ -182,12 +182,18 @@ gpu:
 # log_rotate_num       | The maximum number of log files that Milvus keeps for each | Integer    | 0               |
 #                      | logging level, num range [0, 1024], 0 means unlimited.     |            |                 |
 #----------------------+------------------------------------------------------------+------------+-----------------+
+# log_to_stdout        | Whether to output milvus logs on standarad output          | Boolean    | false           |
+#----------------------+------------------------------------------------------------+------------+-----------------+
+# log_to_file          | Whether to output milvus logs on disk                      | Boolean    | true            |
+#----------------------+------------------------------------------------------------+------------+-----------------+
 logs:
   level: {{ .Values.logs.level }}
   trace.enable: true
   path: {{ .Values.logs.path }}
   max_log_file_size: {{ .Values.logs.maxLogFileSize }}
   log_rotate_num: {{ .Values.logs.logRotateNum }}
+  log_to_stdout: {{ .Values.logs.logToStdOut }}
+  log_to_file: {{ .Values.logs.logToFile }}
 
 
 #----------------------+------------------------------------------------------------+------------+-----------------+
