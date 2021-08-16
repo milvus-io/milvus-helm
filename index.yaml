@@ -3,6 +3,49 @@ entries:
   milvus:
   - apiVersion: v1
     appVersion: 2.0.0-rc.4
+    created: "2021-08-16T15:42:41.292800644Z"
+    dependencies:
+    - condition: etcd.enabled
+      name: etcd
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - etcd
+      version: 6.3.3
+    - condition: minio.enabled
+      name: minio
+      repository: https://helm.min.io
+      tags:
+      - minio
+      version: 8.0.9
+    - condition: pulsar.enabled
+      name: pulsar
+      repository: https://helm.kafkaesque.io
+      tags:
+      - pulsar
+      version: 1.0.31
+    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    digest: c39c9ac17b7fbd8bd3aef9a846fb9dd155894770a90a903737467e943c92bbe1
+    home: https://milvus.io/
+    icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
+    keywords:
+    - milvus
+    - elastic
+    - vector
+    - search
+    - deploy
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: zhifeng.zhang@zilliz.com
+      name: jeffoverflow
+      url: www.zilliz.com
+    name: milvus
+    sources:
+    - https://github.com/milvus-io/milvus
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-2.1.5/milvus-2.1.5.tgz
+    version: 2.1.5
+  - apiVersion: v1
+    appVersion: 2.0.0-rc.4
     created: "2021-08-11T12:20:35.724654627Z"
     dependencies:
     - condition: etcd.enabled
@@ -656,8 +699,7 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature
-      vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
     digest: ae1914b1b66ddcbc50d4d7de54424e0f3976e43c31995d4a22be9036fae029d8
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
