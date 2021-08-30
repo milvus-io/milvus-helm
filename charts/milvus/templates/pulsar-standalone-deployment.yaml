@@ -36,7 +36,7 @@ spec:
             echo "" >> $pulsar_conf_path;
             echo "nettyMaxFrameSizeBytes=104857600" >> $pulsar_conf_path;
             sed -i 's/^defaultRetentionTimeInMinutes=.*/defaultRetentionTimeInMinutes=10080/' /pulsar/conf/broker.conf;
-            bin/pulsar standalone;
+            bin/pulsar standalone --no-functions-worker --no-stream-storage;
 
         {{- if .Values.pulsarStandalone.extraEnv }}
         env:
