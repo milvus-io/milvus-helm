@@ -301,7 +301,7 @@ dataNode:
 pulsarStandalone:
   image:
     repository: apachepulsar/pulsar
-    tag: 2.6.1
+    tag: 2.7.3
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - myRegistryKeySecretName
