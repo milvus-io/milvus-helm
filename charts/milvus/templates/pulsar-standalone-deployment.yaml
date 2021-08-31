@@ -28,18 +28,22 @@ spec:
       - name: pulsar
         image: "{{ .Values.pulsarStandalone.image.repository }}:{{ .Values.pulsarStandalone.image.tag }}"
         imagePullPolicy: {{ .Values.pulsarStandalone.image.pullPolicy }}
-        command: ["/bin/sh", "-c"]
+        command: ["/bin/bash", "-c"]
         args:
-          - pulsar_conf_path=/pulsar/conf/standalone.conf;
-            echo "" >> $pulsar_conf_path;
-            echo "maxMessageSize=104857600" >> $pulsar_conf_path;
-            echo "" >> $pulsar_conf_path;
-            echo "nettyMaxFrameSizeBytes=104857600" >> $pulsar_conf_path;
-            sed -i 's/^defaultRetentionTimeInMinutes=.*/defaultRetentionTimeInMinutes=10080/' /pulsar/conf/broker.conf;
+          - bin/apply-config-from-env.py conf/standalone.conf;
             bin/pulsar standalone --no-functions-worker --no-stream-storage;
-
-        {{- if .Values.pulsarStandalone.extraEnv }}
         env:
+          - name: nettyMaxFrameSizeBytes
+            value: "104867840"
+          - name: defaultRetentionTimeInMinutes
+            value: "10080"
+          - name: defaultRetentionSizeInMB
+            value: "-1"
+          - name: PULSAR_PREFIX_maxMessageSize
+            value: "104857600"
+          - name: PULSAR_GC
+            value: "-XX:+UseG1GC"
+        {{- if .Values.pulsarStandalone.extraEnv }}
           {{- toYaml .Values.pulsarStandalone.extraEnv | nindent 10 }}
         {{- end }}
         ports:
