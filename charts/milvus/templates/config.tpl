@@ -32,6 +32,13 @@ minio:
   secretAccessKey: {{ .Values.externalS3.secretKey }}
   useSSL: {{ .Values.externalS3.useSSL }}
   bucketName: {{ .Values.externalS3.bucketName }}
+{{- else if .Values.minio.gcsgateway.enabled }}
+  address: {{ .Release.Name }}-{{ .Values.minio.name }}
+  port: {{ .Values.minio.service.port }}
+  accessKeyID: {{ .Values.minio.accessKey }}
+  secretAccessKey: {{ .Values.minio.secretKey }}
+  useSSL: {{ .Values.minio.tls.enabled }}
+  bucketName: {{ .Values.externalGcs.bucketName }}
 {{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
   port: {{ .Values.minio.service.port }}
