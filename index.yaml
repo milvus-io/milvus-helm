@@ -23,7 +23,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: c420b2e9584c7990b84aaf41b7ca10b49176173a192681069fd3655902e517ef
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -66,7 +67,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: a6fd71554383b4a0366b1d617e68e681d1707b93a98ada439fbfab1f080de151
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -109,7 +111,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 27d83db6a08174d75db780bcbabf20b330c0640dd90dbdb2f2d24e0c42ee6364
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -152,7 +155,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: c39c9ac17b7fbd8bd3aef9a846fb9dd155894770a90a903737467e943c92bbe1
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -195,7 +199,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 2f9a5a214fe7c0c6d389cc18af78a8d908a62423e1c97c3ee78d0160d8c96766
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -238,7 +243,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 34f3de9eb4ca296203633deaabe37ccb6135da65043f6cd2a2437ffa7eb0c76f
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -281,7 +287,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: a962f6cfed193fd5ba9b4c0a56330137714ff7bd68388bddb809b170aa52dbad
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -324,7 +331,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 3e9af5e08c4c708ec212fcdfbf812a3a8e69b2a6a6e8b6332dc703fc4fee7b5c
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -367,7 +375,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: bd01323ceccf5b2d4bee89c5e5e52b5655c80e6b7bb19a6dec072e50713d1e9b
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -410,7 +419,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 0d6428f8d7b6b44b6c85c0a098dff88702ab36326f4be645f937c72ed8a94e8e
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -453,7 +463,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: a44209f0097b2fcca77d6907fd4fde7e756d1ac94f2e1dce3c0b86c65137c793
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -496,7 +507,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 738f2c0b89b0f0176ae58e466831d28384a594eaa01aff7f7641bb8537b6e811
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -539,7 +551,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: c27670371395e99b127558e77c8db854ec7ac3e28e2d4c107da18b7b462bc808
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -582,7 +595,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 0e34e34fec4c4cf9a86cdd4910fe3ecbdab0c1b9df6cebfc9ee63d6d6af42df6
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -625,7 +639,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 674213ccfbde383bd1b185fafa91bb7405f7f53a3f83a0a1a9dfe96fad444159
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -668,7 +683,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 983b1d02d2f1e84aef8571b31fd93e6bd31d18476195afc7b876985b14cac2b6
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -711,7 +727,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open-source vector database built to power AI applications and vector similarity search.
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
     digest: 5d4f5a303119d81025072b038067e4b309eac9721dd03ed915fba8373f09e394
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -754,7 +771,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: c2f6c652db1325e6acf09e90ae16ae601e0799841216b9ea01b3bdf4ddfb8f40
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -797,7 +815,8 @@ entries:
       tags:
       - pulsar
       version: 1.0.31
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: a12ebfef3e9404b32cb8c5db8e1cc2f4a697db18b4679d38f94b9b5672e0ad2c
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -828,7 +847,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: ae1914b1b66ddcbc50d4d7de54424e0f3976e43c31995d4a22be9036fae029d8
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -860,7 +880,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: bc6c56a192cb5a932bcd8da21acb4226ad763971fe944c248679ad9e0de30002
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -892,7 +913,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 8af7ab010141dccb8c118f1c9c5361fd742c3417f85ad759198a246af04765fd
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
@@ -924,7 +946,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: b829d99ff5124595d382f6a3bf38204fb76fc5da2366af5b0170646e47430cc3
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -956,7 +979,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: a73d7b7f264e69570a91e33c05fef7e87a3f779ad988218eb40b8c6587b22a68
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -988,7 +1012,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: c8ce4a4eff4c7f630edeeaa2ca1780353ddb41c8cf70df8c896949a00e7a3d77
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1020,7 +1045,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 893fa9d65709b084fe91abf7262bf469eccb515d63736f63b4a95dfb68def7f7
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1052,7 +1078,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: b087ffdd286e4f95288a6ab3fd54f858af3d183073160b64b1ba3c7bfb302355
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1084,7 +1111,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 997ba66743d53b931751b7064c5202f4e24a65f37bf8c51647aed920962c6073
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1116,7 +1144,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 42dbf8222382ace455a10ff3524fa8288e3d9cd710b516b07328eac3a2b252d6
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1148,7 +1177,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 277e0bdc4e6fff4567e79c75848d863efa3d169dc52b06a0ec47bab88f04e10e
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1180,7 +1210,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: c4809dd1bfdfa7b247a8650fc6fdd0eac30c2ca5e06a84ac286b497b56dc0ff4
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1212,7 +1243,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 5924d699c57d763d6b989a0dc3d75646054a98e3858c8d43c03d81571d6fb5b3
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1244,7 +1276,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: 99b40dcb36c00509a7d4262c328e756ee4d94ad363040a4a9e7ee408408ad7b9
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1276,7 +1309,8 @@ entries:
       tags:
       - mysql-database
       version: 1.6.4
-    description: Milvus is an open source similarity search engine for massive-scalefeature vectors.
+    description: Milvus is an open source similarity search engine for massive-scalefeature
+      vectors.
     digest: e1199d410c16c1ddf45fea3c4b186ac68ce7744db54c737d58222eab4684a3b6
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
@@ -1298,4 +1332,25 @@ entries:
     urls:
     - https://github.com/milvus-io/milvus-helm/releases/download/milvus-0.10.0/milvus-0.10.0.tgz
     version: 0.10.0
-generated: "2020-06-17T15:38:49.792064+08:00"
+  minio:
+  - apiVersion: v1
+    appVersion: master
+    created: "2021-09-01T08:01:15.191483105Z"
+    description: High Performance, Kubernetes Native Object Storage
+    digest: 8a317e25b9a4ee4fcbd3d22cf85f48c997ede043624ed56071b06c40b8684303
+    home: https://min.io
+    icon: https://min.io/resources/img/logo/MINIO_wordmark.png
+    keywords:
+    - storage
+    - object-storage
+    - S3
+    maintainers:
+    - email: dev@minio.io
+      name: jeffoverflow
+    name: minio
+    sources:
+    - https://github.com/minio/minio
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.10/minio-8.0.10.tgz
+    version: 8.0.10
+generated: "2021-09-01T08:01:15.191831409Z"
