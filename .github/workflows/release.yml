@@ -12,9 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Fetch history
-        run: git fetch --prune --unshallow
+        with:
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -30,9 +29,9 @@ jobs:
         run: |
           helm repo add kafkaesque https://helm.kafkaesque.io
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add minio https://helm.min.io/
+          helm repo add milvus https://milvus-io.github.io/milvus-helm
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.1.0
+        uses: helm/chart-releaser-action@v1.2.1
         env:
           CR_TOKEN: "${{ secrets.CR_TOKEN }}"

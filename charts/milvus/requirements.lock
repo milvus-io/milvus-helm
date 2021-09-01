@@ -3,10 +3,10 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 6.3.3
 - name: minio
-  repository: https://helm.min.io
+  repository: https://milvus-io.github.io/milvus-helm
   version: 8.0.10
 - name: pulsar
   repository: https://helm.kafkaesque.io
   version: 1.0.31
-digest: sha256:63c59ed06507da3e27f7d760be707eeeb4aba320e9e0afc9c4920e1de9a14560
-generated: "2021-08-31T14:41:31.439082+08:00"
+digest: sha256:eb8d3ae623d013db841c41c1ea16f458c877f6f82ebbc2e78b42904bbef36b27
+generated: "2021-09-01T16:05:30.485045+08:00"
