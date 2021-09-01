@@ -6,4 +6,5 @@ chart-repos:
   - kafkaesque=https://helm.kafkaesque.io
   - bitnami=https://charts.bitnami.com/bitnami
   - minio=https://helm.min.io/
+  - incubator=https://charts.helm.sh/incubator
 helm-extra-args: --timeout 300s
