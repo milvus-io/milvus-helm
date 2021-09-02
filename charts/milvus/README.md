@@ -122,6 +122,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalS3.secretKey`                    | The Secret Key of the external S3             | `unset`                                                 |
 | `externalS3.bucketName`                   | The Bucket Name of the external S3            | `unset`                                                 |
 | `externalS3.useSSL`                       | If true, use SSL to connect to the external S3 | `false`                                                |
+| `externalGcs.bucketName`                  | The Bucket Name of the external GCS. Requires GCS gateway to be enabled in the minIO configuration | `unset`                                                |
 | `externalEtcd.enabled`                    | Enable or disable external Etcd               | `false`                                                 |
 | `externalEtcd.endpoints`                  | The endpoints of the external etcd            | `{}`                                                    |
 | `externalPulsar.enabled`                  | Enable or disable external Pulsar             | `false`                                                 |
