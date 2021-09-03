@@ -87,7 +87,7 @@ log:
       ##
       storageClass:
       accessModes: ReadWriteOnce
-      size: 5Gi
+      size: 10Gi
       subPath: ""
 
 metadata:
