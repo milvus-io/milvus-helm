@@ -335,7 +335,7 @@ pulsarStandalone:
       ##
       storageClass:
       accessModes: ReadWriteOnce
-      size: 5Gi
+      size: 100Gi
       subPath: ""
 
 ## Configuration values for the minio dependency
