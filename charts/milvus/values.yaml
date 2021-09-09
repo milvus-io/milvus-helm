@@ -358,6 +358,10 @@ minio:
     gcsKeyJson: "/etc/credentials/gcs_key.json"
     projectId: ""
 
+  azuregateway:
+    enabled: false
+    replicas: 1
+
   service:
     type: ClusterIP
     port: 9000
@@ -481,6 +485,13 @@ externalS3:
 # - these configs are only used when `minio.gcsgateway.enabled` is true
 ###################################
 externalGcs:
+  bucketName: ""
+
+###################################
+# GCS Gateway
+# - these configs are only used when `minio.gcsgateway.enabled` is true
+###################################
+externalAzure:
   bucketName: ""
 
 ###################################

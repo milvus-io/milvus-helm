@@ -40,6 +40,8 @@ minio:
   useSSL: {{ .Values.minio.tls.enabled }}
 {{- if .Values.minio.gcsgateway.enabled }}
   bucketName: {{ .Values.externalGcs.bucketName }}
+{{- else if .Values.minio.azuregateway.enabled }}
+  bucketName: {{ .Values.externalAzure.bucketName }}
 {{- else }}
   bucketName: "milvus-bucket"
 {{- end }}
