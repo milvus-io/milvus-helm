@@ -395,6 +395,18 @@ etcd:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+  ## Enable auto compaction
+  ## compaction by every 1000 revision
+  ##
+  autoCompactionMode: revision
+  autoCompactionRetention: "1000"
+
+  ## Increase default quota to 4G
+  ##
+  extraEnvVars:
+  - name: ETCD_QUOTA_BACKEND_BYTES
+    value: "4294967296"
+
 ## Configuration values for the pulsar dependency
 ## ref: https://github.com/kafkaesque-io/pulsar-helm-chart
 ##
