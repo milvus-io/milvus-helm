@@ -2,7 +2,7 @@
 
 For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
 
-To install Milvus, refer to [Milvus installation](https://milvus.io/docs/v2.0.0/install_standalone-docker.md).
+To install Milvus, refer to [Milvus installation](https://milvus.io/docs/v2.0.0/install_cluster-helm.md).
 
 ## Introduction
 This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm package manager.
@@ -32,7 +32,7 @@ Assume the release name is `my-release`:
 
 ```bash
 # Helm v3.x
-$ helm upgrade --install my-release milvus/milvus
+$ helm upgrade --install my-release --set cluster.enabled=false --set etcd.replicaCount=1 --set pulsar.enabled=false --set minio.mode=standalone milvus/milvus
 ```
 
 > **Tip**: To list all releases, using `helm list`.
@@ -43,14 +43,14 @@ Assume the release name is `my-release`:
 
 ```bash
 # Helm v3.x
-$ helm upgrade --install --set cluster.enabled=true my-release milvus/milvus
+$ helm upgrade --install my-release milvus/milvus
 ```
 
 ### Upgrade an existing Milvus cluster
 E.g. to scale out query node from 1(default) to 2:
 ```bash
 # Helm v3.x
-$ helm upgrade --install --set cluster.enabled=true --set queryNode.replicas=2 my-release milvus/milvus
+$ helm upgrade --install --set queryNode.replicas=2 my-release milvus/milvus
 ```
 
 ## Uninstall the Chart
@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `false`                                                 |
+| `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `true`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
 | `image.all.tag`                           | Image tag                                     | `v2.0.0-rc6-20210910-020f109`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
@@ -298,36 +298,6 @@ The following table lists the configurable parameters of the Milvus Data Node co
 | `dataNode.tolerations`                    | Toleration labels for Milvus Data Node pods assignment | `[]`                                           |
 | `dataNode.extraEnv`                       | Additional Milvus Data Node container environment variables | `[]`                                      |
 | `dataNode.autoscaling.*`                  | Configs for the HorizontalPodAutoscaler of the Data Node Pods | `<see values.yaml>`                     |
-
-### Pulsar Standalone Deployment Configuration
-
-The following table lists the configurable parameters of the Pulsar Standalone component and their default values.
-
-| Parameter                                 | Description                                   | Default                                                 |
-|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `pulsarStandalone.enabled`                | Enable or disable Pulsar Standalone mode      | `true`                                                  |
-| `pulsarStandalone.resources`              | Resource requests/limits for the Pulsar Standalone pods | `{}`                                          |
-| `pulsarStandalone.nodeSelector`           | Node labels for Pulsar Standalone pods assignment | `{}`                                                |
-| `pulsarStandalone.affinity`               | Affinity settings for Pulsar Standalone pods assignment | `{}`                                          |
-| `pulsarStandalone.tolerations`            | Toleration labels for Pulsar Standalone pods assignment | `[]`                                          |
-| `pulsarStandalone.extraEnv`               | Additional Pulsar Standalone container environment variables | `[]`                                     |
-| `pulsarStandalone.service.type`                        | Service type                                  | `ClusterIP`                                |
-| `pulsarStandalone.service.port`                        | Port where service is exposed                 | `6650`                                     |
-| `pulsarStandalone.service.nodePort`                    | Service nodePort                              | `unset`                                    |
-| `pulsarStandalone.service.annotations`                 | Service annotations                           | `{}`                                       |
-| `pulsarStandalone.service.labels`                      | Service custom labels                         | `{}`                                       |
-| `pulsarStandalone.service.clusterIP`                   | Internal cluster service IP                   | `unset`                                    |
-| `pulsarStandalone.service.loadBalancerIP`              | IP address to assign to load balancer (if supported) | `unset`                             |
-| `pulsarStandalone.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                |
-| `pulsarStandalone.service.externalIPs`                 | Service external IP addresses                 | `[]`                                       |
-| `pulsarStandalone.persistence.enabled`          | Use persistent volume to store Pulsar standalone data | `true`                                    |
-| `pulsarStandalone.persistence.mountPath` | Pulsar standalone data persistence volume mount path | `/pulsar/data`                                    |
-| `pulsarStandalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                              |
-| `pulsarStandalone.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name | `unset`              |
-| `pulsarStandalone.persistence.persistentVolumeClaim.storageClass` | The Pulsar standalone data Persistent Volume Storage Class | `unset`            |
-| `pulsarStandalone.persistence.persistentVolumeClaim.accessModes` | The Pulsar standalone data Persistence access modes | `ReadWriteOnce`            |
-| `pulsarStandalone.persistence.persistentVolumeClaim.size` | The size of Pulsar standalone data Persistent Volume Storage Class | `5Gi`              |
-| `pulsarStandalone.persistence.persistentVolumeClaim.subPath` | SubPath for Pulsar standalone data mount | `unset`                                   |
 
 ### Pulsar Configuration
 

@@ -1,3 +1,29 @@
 ## Enable or disable Milvus Cluster mode
 cluster:
   enabled: true
+etcd:
+  replicaCount: 1
+minio:
+  mode: standalone
+pulsar:
+  enabled: true
+  proxy:
+    resources:
+      requests:
+        cpu: 0.1
+  bookeeper:
+    resources:
+      requests:
+        cpu: 0.2
+  zookeeper:
+    resources:
+      requests:
+        cpu: 0.1
+  broker:
+    resources:
+      requests:
+        cpu: 0.1
+  bastion:
+    resources:
+      requests:
+        cpu: 0.1
