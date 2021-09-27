@@ -93,6 +93,12 @@ log:
 metadata:
   rootPath: "by-dev"
 
+## pulsar message channel
+##
+msgChannel:
+  chanNamePrefix:
+    cluster: "by-dev"
+
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}

@@ -115,6 +115,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.persistence.persistentVolumeClaim.accessModes` | The Milvus logs data Persistence access modes | `ReadWriteOnce`                               |
 | `log.persistence.persistentVolumeClaim.size` | The size of Milvus logs data Persistent Volume Storage Class | `5Gi`                                 |
 | `log.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs data mount | `unset`                                                      |
+| `msgChannel.chanNamePrefix.cluster`                       | Pulsar topic name prefix                    | `by-dev`                                                |
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
 | `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
 | `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
