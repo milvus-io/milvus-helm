@@ -129,4 +129,30 @@ log:
     maxBackups: {{ .Values.log.file.maxBackups }}
   format: {{ .Values.log.format }}
 
+msgChannel:
+  # channel name generation rule: ${namePrefix}-${ChannelIdx}
+  chanNamePrefix:
+    cluster: {{ .Values.msgChannel.chanNamePrefix.cluster }}
+    rootCoordTimeTick: "rootcoord-timetick"
+    rootCoordStatistics: "rootcoord-statistics"
+    rootCoordDml: "rootcoord-dml"
+    search: "search"
+    searchResult: "searchResult"
+    proxyTimeTick: "proxyTimeTick"
+    queryTimeTick: "queryTimeTick"
+    queryNodeStats: "query-node-stats"
+    cmd: "cmd"
+    dataCoordInsertChannel: "insert-channel-"
+    dataCoordStatistic: "datacoord-statistics-channel"
+    dataCoordTimeTick: "datacoord-timetick-channel"
+    dataCoordSegmentInfo: "segment-info-channel"
+
+  # sub name generation rule: ${subNamePrefix}-${NodeID}
+  subNamePrefix:
+    rootCoordSubNamePrefix: "rootCoord"
+    proxySubNamePrefix: "proxy"
+    queryNodeSubNamePrefix: "queryNode"
+    dataNodeSubNamePrefix: "dataNode"
+    dataCoordSubNamePrefix: "dataCoord"
+
 {{- end }}
