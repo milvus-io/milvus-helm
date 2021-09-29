@@ -33,6 +33,11 @@ spec:
         args: [ "milvus", "run", "querycoord" ]
         {{- if .Values.queryCoordinator.extraEnv }}
         env:
+          - name: CACHE_SIZE
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Gi
           {{- toYaml .Values.queryCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:

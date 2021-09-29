@@ -33,6 +33,11 @@ spec:
         args: [ "milvus", "run", "proxy" ]
         {{- if .Values.proxy.extraEnv }}
         env:
+          - name: CACHE_SIZE
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Gi
           {{- toYaml .Values.proxy.extraEnv | nindent 10 }}
         {{- end }}
         ports:

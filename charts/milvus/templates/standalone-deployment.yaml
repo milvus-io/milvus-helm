@@ -35,6 +35,11 @@ spec:
         args: [ "milvus", "run", "standalone" ]
         {{- if .Values.standalone.extraEnv }}
         env:
+          - name: CACHE_SIZE
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Gi
           {{- toYaml .Values.standalone.extraEnv | nindent 10 }}
         {{- end }}
         ports:

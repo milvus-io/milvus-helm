@@ -105,12 +105,7 @@ standalone:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   rocksmq:
     retentionTimeInMinutes: 10080
@@ -144,12 +139,7 @@ proxy:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -177,12 +167,7 @@ rootCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   service:
     port: 53100
@@ -197,12 +182,7 @@ queryCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   service:
     port: 19531
@@ -217,12 +197,7 @@ queryNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -250,12 +225,7 @@ indexCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   service:
     port: 31000
@@ -270,12 +240,7 @@ indexNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -303,12 +268,7 @@ dataCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   service:
     port: 13333
@@ -323,12 +283,7 @@ dataNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: CACHE_SIZE
-    valueFrom:
-      resourceFieldRef:
-        resource: limits.memory
-        divisor: 1Gi
+  extraEnv: []
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
