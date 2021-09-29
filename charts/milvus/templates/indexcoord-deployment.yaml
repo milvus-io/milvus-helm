@@ -33,6 +33,11 @@ spec:
         args: [ "milvus", "run", "indexcoord" ]
         {{- if .Values.indexCoordinator.extraEnv }}
         env:
+          - name: CACHE_SIZE
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Gi
           {{- toYaml .Values.indexCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:

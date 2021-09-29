@@ -33,6 +33,11 @@ spec:
         args: [ "milvus", "run", "datanode" ]
         {{- if .Values.dataNode.extraEnv }}
         env:
+          - name: CACHE_SIZE
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: 1Gi
           {{- toYaml .Values.dataNode.extraEnv | nindent 10 }}
         {{- end }}
         ports:
