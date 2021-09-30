@@ -1,6 +1,6 @@
 ## Enable or disable Milvus Cluster mode
 cluster:
-  enabled: false
+  enabled: true
 
 image:
   all:
@@ -304,46 +304,6 @@ dataNode:
             type: Utilization
             averageUtilization: 60
 
-pulsarStandalone:
-  image:
-    repository: apachepulsar/pulsar
-    tag: 2.7.3
-    pullPolicy: IfNotPresent
-    # pullSecrets:
-    #   - myRegistryKeySecretName
-  replicas: 1
-  resources: {}
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-
-  service:
-    port: 6650
-    annotations: {}
-    labels: {}
-    clusterIP: ""
-
-  persistence:
-    mountPath: "/pulsar/data"
-    ## If true, alertmanager will create/use a Persistent Volume Claim
-    ## If false, use emptyDir
-    ##
-    enabled: true
-    annotations: {}
-    #  helm.sh/resource-policy: keep
-    persistentVolumeClaim:
-      existingClaim: ""
-      ## milvus logs Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.
-      ##
-      storageClass:
-      accessModes: ReadWriteOnce
-      size: 100Gi
-      subPath: ""
-
 ## Configuration values for the minio dependency
 ## ref: https://github.com/minio/charts/blob/master/README.md
 ##
@@ -351,6 +311,7 @@ pulsarStandalone:
 minio:
   enabled: true
   name: minio
+  mode: distributed
   image:
     tag: "RELEASE.2020-11-06T23-17-07Z"
     pullPolicy: IfNotPresent
@@ -382,6 +343,7 @@ minio:
 etcd:
   enabled: true
   name: etcd
+  replicaCount: 3
   image:
     tag: "3.5.0-debian-10-r24"
     pullPolicy: IfNotPresent
@@ -399,7 +361,7 @@ etcd:
     enabled: true
     storageClass:
     accessMode: ReadWriteOnce
-    size: 8Gi
+    size: 10Gi
 
   ## Enable auto compaction
   ## compaction by every 1000 revision
@@ -418,12 +380,38 @@ etcd:
 ##
 
 pulsar:
-  enabled: false
+  enabled: true
   name: pulsar
 
   fullnameOverride: ""
-  persistence: no
+  persistence: yes
   enableAntiAffinity: no
+
+  image:
+    broker:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
+    function:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
+    zookeeper:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
+    bookkeeper:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
+    proxy:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
+    bastion:
+      repository: apachepulsar/pulsar
+      pullPolicy: IfNotPresent
+      tag: 2.7.3
 
   zookeeper:
     resources:
@@ -435,22 +423,29 @@ pulsar:
 
   bookkeeper:
     replicaCount: 2
+    volumes:
+      journal:
+        name: journal
+        size: 100Gi
+      ledgers:
+        name: ledgers
+        size: 100Gi
     resources:
       requests:
-        memory: 512Mi
-        cpu: 0.3
+        memory: 2048Mi
+        cpu: 1
     configData:
-      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+UseG1GC -XX:MaxGCPauseMillis=10 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -verbosegc -XX:G1LogLevel=finest\""
+      BOOKIE_MEM: "\"-Xms2048m -Xmx2048m -XX:MaxDirectMemorySize=2048m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+UseG1GC -XX:MaxGCPauseMillis=10 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -verbosegc -XX:G1LogLevel=finest\""
 
   broker:
     component: broker
     replicaCount: 1
     resources:
       requests:
-        memory: 512Mi
-        cpu: 0.3
+        memory: 4096Mi
+        cpu: 1.5
     configData:
-      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
+      PULSAR_MEM: "\"-Xms4096m -Xmx4096m -XX:MaxDirectMemorySize=4096m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
 
   autoRecovery:
     resources:
@@ -471,14 +466,14 @@ pulsar:
     replicaCount: 1
     resources:
       requests:
-        memory: 512Mi
-        cpu: 0.3
+        memory: 2048Mi
+        cpu: 1
     wsResources:
       requests:
         memory: 512Mi
         cpu: 0.3
     configData:
-      PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
+      PULSAR_MEM: "\"-Xms2048m -Xmx2048m -XX:MaxDirectMemorySize=2048m\""
 
 
 ###################################
