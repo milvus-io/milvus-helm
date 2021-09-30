@@ -61,9 +61,6 @@ pulsar:
   {{- end }}
   {{- end }}
   port: {{ $httpsPort | default $httpPort }}
-{{- else }}
-  address: {{ template "milvus.pulsar.fullname" . }}
-  port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
 
 rocksmq:

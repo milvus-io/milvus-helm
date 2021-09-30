@@ -25,33 +25,6 @@ spec:
     requests:
       storage: {{ $pvc.size }}
 {{- end }}
-{{- else }}
-{{- $pvc := .Values.pulsarStandalone.persistence.persistentVolumeClaim -}}
-{{- if and .Values.pulsarStandalone.persistence.enabled (not $pvc.existingClaim) }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ printf "%s-pulsar" (include "milvus.fullname" . | trunc 58)}}
-{{- with .Values.pulsarStandalone.persistence.annotations  }}
-  annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
-  labels:
-{{ include "milvus.labels" . | indent 4 }}
-spec:
-  accessModes:
-  - {{ $pvc.accessModes | quote }}
-  {{- if $pvc.storageClass }}
-    {{- if eq "-" $pvc.storageClass }}
-  storageClassName: ""
-    {{- else }}
-  storageClassName: {{ $pvc.storageClass }}
-    {{- end }}
-  {{- end }}
-  resources:
-    requests:
-      storage: {{ $pvc.size }}
-{{- end }}
 {{- end }}
 
 {{- $pvc := .Values.log.persistence.persistentVolumeClaim -}}

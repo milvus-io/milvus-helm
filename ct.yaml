@@ -7,4 +7,4 @@ chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
   - minio=https://helm.min.io/
   - incubator=https://charts.helm.sh/incubator
-helm-extra-args: --timeout 300s
+helm-extra-args: --timeout 900s
