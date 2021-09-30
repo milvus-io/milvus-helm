@@ -37,8 +37,8 @@ spec:
             resourceFieldRef:
               divisor: 1Gi
               resource: limits.memory
-          {{- if .Values.standalone.extraEnv }}
-            {{- toYaml .Values.standalone.extraEnv | nindent 8 }}
+          {{- if .Values.queryNode.extraEnv }}
+            {{- toYaml .Values.queryNode.extraEnv | nindent 8 }}
           {{- end }}
         ports:
           - name: querynode
