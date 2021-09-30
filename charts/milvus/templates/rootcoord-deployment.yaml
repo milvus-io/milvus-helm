@@ -31,15 +31,15 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "milvus", "run", "rootcoord" ]
-        {{- if .Values.rootCoordinator.extraEnv }}
         env:
-          - name: CACHE_SIZE
-            valueFrom:
-              resourceFieldRef:
-                resource: limits.memory
-                divisor: 1Gi
-          {{- toYaml .Values.rootCoordinator.extraEnv | nindent 10 }}
-        {{- end }}
+        - name: CACHE_SIZE
+          valueFrom:
+            resourceFieldRef:
+              divisor: 1Gi
+              resource: limits.memory
+          {{- if .Values.standalone.extraEnv }}
+            {{- toYaml .Values.standalone.extraEnv | nindent 8 }}
+          {{- end }}
         ports:
           - name: rootcoord
             containerPort: 53100
