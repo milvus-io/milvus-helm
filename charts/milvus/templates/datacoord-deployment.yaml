@@ -62,18 +62,30 @@ spec:
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
 
-      {{- with .Values.dataCoordinator.nodeSelector }}
+    {{- if and (.Values.nodeSelector) (not .Values.dataCoordinator.nodeSelector) }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.dataCoordinator.affinity }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.dataCoordinator.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.dataCoordinator.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if and (.Values.affinity) (not .Values.dataCoordinator.affinity) }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.dataCoordinator.tolerations }}
+{{ toYaml .Values.affinity | indent 8 }}
+    {{- end }}
+    {{- if .Values.dataCoordinator.affinity }}
+      affinity:
+{{ toYaml .Values.dataCoordinator.affinity | indent 8 }}
+    {{- end }}
+    {{- if and (.Values.tolerations) (not .Values.dataCoordinator.tolerations) }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+{{ toYaml .Values.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.dataCoordinator.tolerations }}
+      tolerations:
+{{ toYaml .Values.dataCoordinator.tolerations | indent 8 }}
+    {{- end }}
 
       volumes:
       - name: milvus-config
