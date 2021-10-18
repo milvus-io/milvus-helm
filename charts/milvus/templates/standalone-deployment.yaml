@@ -67,18 +67,30 @@ spec:
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
 
-      {{- with .Values.standalone.nodeSelector }}
+    {{- if and (.Values.nodeSelector) (not .Values.standalone.nodeSelector) }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.standalone.affinity }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.standalone.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.standalone.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if and (.Values.affinity) (not .Values.standalone.affinity) }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.standalone.tolerations }}
+{{ toYaml .Values.affinity | indent 8 }}
+    {{- end }}
+    {{- if .Values.standalone.affinity }}
+      affinity:
+{{ toYaml .Values.standalone.affinity | indent 8 }}
+    {{- end }}
+    {{- if and (.Values.tolerations) (not .Values.standalone.tolerations) }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+{{ toYaml .Values.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.standalone.tolerations }}
+      tolerations:
+{{ toYaml .Values.standalone.tolerations | indent 8 }}
+    {{- end }}
 
       volumes:
       - name: milvus-config
