@@ -86,6 +86,7 @@ queryCoord:
   address: localhost
 {{- end }}
   port: {{ .Values.queryCoordinator.service.port }}
+  autoHandoff: {{ .Values.queryCoordinator.autoHandoff }}
 
 queryNode:
   gracefulTime: 5000 #ms
