@@ -205,6 +205,8 @@ queryCoordinator:
     labels: {}
     clusterIP: ""
 
+  autoHandoff: true  # Enable auto handoff
+
 queryNode:
   enabled: true
   replicas: 1
