@@ -87,6 +87,7 @@ queryCoord:
 {{- end }}
   port: {{ .Values.queryCoordinator.service.port }}
   autoHandoff: {{ .Values.queryCoordinator.autoHandoff }}
+  autoBalance: {{ .Values.queryCoordinator.autoBalance }}
 
 queryNode:
   gracefulTime: 5000 #ms
