@@ -217,6 +217,9 @@ queryNode:
   tolerations: []
   extraEnv: []
 
+  # Minimum time before the newly inserted data can be searched (in ms)
+  gracefulTime: 0   # ms
+
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
     enabled: false
