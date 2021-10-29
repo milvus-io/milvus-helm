@@ -90,7 +90,7 @@ queryCoord:
   autoBalance: {{ .Values.queryCoordinator.autoBalance }}
 
 queryNode:
-  gracefulTime: 5000 #ms
+  gracefulTime: {{ .Values.queryNode.gracefulTime }} #ms
   port: 21123
 
 indexCoord:
