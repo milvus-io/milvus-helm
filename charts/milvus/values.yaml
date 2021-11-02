@@ -125,6 +125,7 @@ standalone:
   rocksmq:
     retentionTimeInMinutes: 10080
     retentionSizeInMB: 0
+    rocksmqPageSize: "2147483648"  ## 2 GB
 
   persistence:
     mountPath: "/var/lib/milvus"
