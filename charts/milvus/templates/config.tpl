@@ -65,6 +65,7 @@ pulsar:
 
 rocksmq:
   path: "{{ .Values.standalone.persistence.mountPath }}/rdb_data"
+  rocksmqPageSize: "{{ .Values.standalone.rocksmq.rocksmqPageSize }}"  # 2 GB
   retentionTimeInMinutes: {{ .Values.standalone.rocksmq.retentionTimeInMinutes }}
   retentionSizeInMB: {{ .Values.standalone.rocksmq.retentionSizeInMB }}
 
