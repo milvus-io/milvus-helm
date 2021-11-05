@@ -136,6 +136,7 @@ msgChannel:
     rootCoordTimeTick: "rootcoord-timetick"
     rootCoordStatistics: "rootcoord-statistics"
     rootCoordDml: "rootcoord-dml"
+    rootCoordDelta: "rootcoord-delta"
     search: "search"
     searchResult: "searchResult"
     proxyTimeTick: "proxyTimeTick"
