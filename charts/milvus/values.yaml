@@ -207,7 +207,7 @@ queryCoordinator:
     clusterIP: ""
 
   autoHandoff: true  # Enable auto handoff
-  autoBalance: off   # Disable auto balance
+  autoBalance: false  # Disable auto balance
 
 queryNode:
   enabled: true
