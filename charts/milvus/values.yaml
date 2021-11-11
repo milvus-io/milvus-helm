@@ -123,8 +123,8 @@ standalone:
   extraEnv: []
 
   rocksmq:
-    retentionTimeInMinutes: 10080
-    retentionSizeInMB: 0
+    retentionTimeInMinutes: 10080  ## 7 days
+    retentionSizeInMB: 8192        ## 8 GB
     rocksmqPageSize: "2147483648"  ## 2 GB
 
   persistence:
@@ -471,7 +471,7 @@ pulsar:
       PULSAR_MEM: "\"-Xms4096m -Xmx4096m -XX:MaxDirectMemorySize=4096m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
       maxMessageSize: "104857600"
       defaultRetentionTimeInMinutes: "10080"
-      defaultRetentionSizeInMB: "-1"
+      defaultRetentionSizeInMB: "8192"
 
   autoRecovery:
     resources:
