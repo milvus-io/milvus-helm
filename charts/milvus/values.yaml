@@ -76,6 +76,22 @@ metrics:
     # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
     additionalLabels: {}
 
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 90
+  periodSeconds: 30
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 90
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
 log:
   level: "debug"
   file:
