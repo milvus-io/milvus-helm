@@ -157,6 +157,11 @@ proxy:
   tolerations: []
   extraEnv: []
 
+  timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
+  maxFieldNum: 64     # max field number of a collection
+  maxShardNum: 256  # Maximum number of shards in a collection
+  maxTaskNum: 1024  # max task number of proxy task queue
+
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
     enabled: false
@@ -184,6 +189,10 @@ rootCoordinator:
   affinity: {}
   tolerations: []
   extraEnv: []
+
+  dmlChannelNum: 256   # The number of dml channels created at system startup
+  maxPartitionNum: 4096  # Maximum number of partitions in a collection
+  minSegmentSizeToEnableIndex: 1024  # It's a threshold. When the segment size is less than this value, the segment will not be indexed
 
   service:
     port: 53100
@@ -220,6 +229,8 @@ queryNode:
 
   # Minimum time before the newly inserted data can be searched (in ms)
   gracefulTime: 0   # ms
+  segcore:
+    chunkRows: 32768  # The number of vectors in a chunk.
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -292,6 +303,12 @@ dataCoordinator:
   tolerations: []
   extraEnv: []
 
+  enableCompaction: false
+  enableGarbageCollection: false
+
+  segment:
+    maxSize: 512  # Maximum size of a segment in MB
+
   service:
     port: 13333
     annotations: {}
@@ -306,6 +323,9 @@ dataNode:
   affinity: {}
   tolerations: []
   extraEnv: []
+
+  flush:
+    insertBufSize: "16777216"  ## bytes, 16MB
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -325,6 +345,12 @@ dataNode:
           target:
             type: Utilization
             averageUtilization: 60
+
+knowhere:
+  # Default value: auto
+  # Valid values: [auto, avx512, avx2, avx, sse4_2]
+  # This configuration is only used by querynode and indexnode, it selects CPU instruction set for Searching and Index-building.
+  simdType: auto
 
 ## Configuration values for the minio dependency
 ## ref: https://github.com/minio/charts/blob/master/README.md

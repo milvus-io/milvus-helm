@@ -77,8 +77,43 @@ rootCoord:
 {{- end }}
   port: {{ .Values.rootCoordinator.service.port }}
 
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
+  dmlChannelNum: "{{ .Values.rootCoordinator.dmlChannelNum }}"  # The number of dml channels created at system startup
+  maxPartitionNum: "{{ .Values.rootCoordinator.maxPartitionNum }}"  # Maximum number of partitions in a collection
+  minSegmentSizeToEnableIndex: "{{ .Values.rootCoordinator.minSegmentSizeToEnableIndex }}"  # It's a threshold. When the segment size is less than this value, the segment will not be indexed
+  timeout: 3600  # time out, 5 seconds
+  timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
+
 proxy:
   port: 19530
+
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
+  timeTickInterval: "{{ .Values.proxy.timeTickInterval }}"  # ms, the interval that proxy synchronize the time tick
+  msgStream:
+    insert:
+      bufSize: 1024  # msgPack chan buffer size
+    search:
+      bufSize: 512
+    searchResult:
+      recvBufSize: 1024  # msgPack chan buffer size
+      pulsarBufSize: 1024  # pulsar chan buffer size
+    timeTick:
+      bufSize: 512
+  maxNameLength: 255   # max name length of collection or alias
+  maxFieldNum: "{{ .Values.proxy.maxFieldNum }}"     # max field number of a collection
+  maxDimension: 32768  # Maximum dimension of vector
+  maxShardNum: "{{ .Values.proxy.maxShardNum }}"  # Maximum number of shards in a collection
+  maxTaskNum: "{{ .Values.proxy.maxTaskNum }}"  # max task number of proxy task queue
 
 queryCoord:
 {{- if .Values.cluster.enabled }}
@@ -89,10 +124,40 @@ queryCoord:
   port: {{ .Values.queryCoordinator.service.port }}
   autoHandoff: {{ .Values.queryCoordinator.autoHandoff }}
   autoBalance: {{ .Values.queryCoordinator.autoBalance }}
+  overloadedMemoryThresholdPercentage: 90
+  balanceIntervalSeconds: 60
+  memoryUsageMaxDifferencePercentage: 30
+
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
 
 queryNode:
-  gracefulTime: {{ .Values.queryNode.gracefulTime }} #ms
+  gracefulTime: {{ .Values.queryNode.gracefulTime }}  # ms
   port: 21123
+
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
+  stats:
+    publishInterval: 1000  # Interval for querynode to report node information (milliseconds)
+  dataSync:
+    flowGraph:
+      maxQueueLength: 1024  # Maximum length of task queue in flowgraph
+      maxParallelism: 1024  # Maximum number of tasks executed in parallel in the flowgraph
+  msgStream:
+    search:
+      recvBufSize: 512    # msgPack channel buffer size
+      pulsarBufSize: 512  # pulsar channel buffer size
+    searchResult:
+      recvBufSize: 64  # msgPack channel buffer size
+  segcore:
+    chunkRows: {{ .Values.queryNode.segcore.chunkRows }}  # The number of vectors in a chunk.
 
 indexCoord:
 {{- if .Values.cluster.enabled }}
@@ -102,8 +167,20 @@ indexCoord:
 {{- end }}
   port: {{ .Values.indexCoordinator.service.port }}
 
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
 indexNode:
   port: 21121
+
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
 
 dataCoord:
 {{- if .Values.cluster.enabled }}
@@ -113,8 +190,34 @@ dataCoord:
 {{- end }}
   port: {{ .Values.dataCoordinator.service.port }}
 
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+  enableCompaction: {{ .Values.dataCoordinator.enableCompaction }}
+  enableGarbageCollection: {{ .Values.dataCoordinator.enableGarbageCollection }}
+
+  segment:
+    maxSize: "{{ .Values.dataCoordinator.segment.maxSize }}"  # Maximum size of a segment in MB
+    sealProportion: 0.75  # It's the minimum proportion for a segment which can be sealed
+    assignmentExpiration: 2000  # ms
+
 dataNode:
   port: 21124
+
+  grpc:
+    serverMaxRecvSize: 2147483647  # math.MaxInt32
+    serverMaxSendSize: 2147483647  # math.MaxInt32
+    clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
+    clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
+  dataSync:
+    flowGraph:
+      maxQueueLength: 1024  # Maximum length of task queue in flowgraph
+      maxParallelism: 1024  # Maximum number of tasks executed in parallel in the flowgraph
+  flush:
+    insertBufSize: "{{ .Values.dataNode.flush.insertBufSize }}"  # Bytes, 16 MB
 
 log:
   level: {{ .Values.log.level }}
@@ -156,4 +259,10 @@ msgChannel:
     dataNodeSubNamePrefix: "dataNode"
     dataCoordSubNamePrefix: "dataCoord"
 
+common:
+  defaultPartitionName: "_default"  # default partition name for a collection
+  defaultIndexName: "_default_idx"  # default index name
+
+knowhere:
+  simdType: {{ .Values.knowhere.simdType }}  # default to auto
 {{- end }}
