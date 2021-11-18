@@ -319,7 +319,7 @@ dataCoordinator:
   tolerations: []
   extraEnv: []
 
-  enableCompaction: true
+  enableCompaction: false
   enableGarbageCollection: false
 
   segment:
