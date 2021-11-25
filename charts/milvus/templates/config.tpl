@@ -18,7 +18,11 @@ etcd:
   {{- end }}
 {{- else }}
   endpoints:
+{{- if contains .Values.etcd.name .Release.Name }}
+    - {{ .Release.Name }}:{{ .Values.etcd.service.port }}
+{{- else }}
     - {{ .Release.Name }}-{{ .Values.etcd.name }}:{{ .Values.etcd.service.port }}
+{{- end }}
 {{- end }}
   rootPath: {{ .Values.metadata.rootPath }}
   metaSubPath: meta # metaRootPath = rootPath + '/' + metaSubPath
