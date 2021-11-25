@@ -104,6 +104,28 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{ template "milvus.fullname" . }}-pulsar
 {{- end -}}
 
+{/*
+Create a default fully qualified insight name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.insight.fullname" -}}
+{{ template "milvus.fullname" . }}-insight
+{{- end -}}
+
+{{/*
+Create milvus insight env name.
+*/}}
+{{- define "milvus.insight.env" -}}
+- name: HOST_URL
+{{- if .Values.insight.ingress.enabled }}
+  value: https://{{ first .Values.insight.ingress.hosts }}
+{{- else }}
+  value: http://{{ template "milvus.insight.fullname" .}}:3000
+{{- end }}
+- name: MILVUS_URL
+  value: http://{{ template "milvus.fullname" .}}:19530
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

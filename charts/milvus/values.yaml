@@ -377,6 +377,31 @@ knowhere:
 ## ref: https://github.com/minio/charts/blob/master/README.md
 ##
 
+insight:
+  enabled: false
+  name: insight
+  image:
+    repository: milvusdb/milvus-insight
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3000
+  resources: {}
+  ingress:
+    enabled: true
+    annotations: {}
+    # Annotation example: set nginx ingress type
+    # kubernetes.io/ingress.class: nginx
+    labels: {}
+    hosts:
+      - milvus-insight.local
+    tls: []
+    #  - secretName: chart-insight-tls
+    #    hosts:
+    #      - milvus-insight.local
+
+
 minio:
   enabled: true
   name: minio
