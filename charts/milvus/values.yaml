@@ -518,7 +518,7 @@ pulsar:
       PULSAR_MEM: "\"-Xms1024m -Xmx1024m -Dcom.sun.management.jmxremote -Djute.maxbuffer=10485760 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:+DisableExplicitGC -XX:+PerfDisableSharedMem -Dzookeeper.forceSync=no\""
 
   bookkeeper:
-    replicaCount: 2
+    replicaCount: 3
     volumes:
       journal:
         name: journal
