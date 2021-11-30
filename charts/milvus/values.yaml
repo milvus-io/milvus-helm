@@ -373,10 +373,6 @@ knowhere:
   # This configuration is only used by querynode and indexnode, it selects CPU instruction set for Searching and Index-building.
   simdType: auto
 
-## Configuration values for the minio dependency
-## ref: https://github.com/minio/charts/blob/master/README.md
-##
-
 insight:
   enabled: false
   name: insight
@@ -402,6 +398,10 @@ insight:
     #      - milvus-insight.local
 
 
+## Configuration values for the minio dependency
+## ref: https://github.com/minio/charts/blob/master/README.md
+##
+
 minio:
   enabled: true
   name: minio
@@ -412,6 +412,8 @@ minio:
   accessKey: minioadmin
   secretKey: minioadmin
   existingSecret: ""
+  bucketName: "milvus-bucket"
+  rootPath: file
 
   gcsgateway:
     enabled: false
@@ -586,6 +588,7 @@ externalS3:
   secretKey: ""
   useSSL: false
   bucketName: ""
+  rootPath: ""
 
 ###################################
 # GCS Gateway
