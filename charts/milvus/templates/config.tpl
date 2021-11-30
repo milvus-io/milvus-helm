@@ -36,6 +36,7 @@ minio:
   secretAccessKey: {{ .Values.externalS3.secretKey }}
   useSSL: {{ .Values.externalS3.useSSL }}
   bucketName: {{ .Values.externalS3.bucketName }}
+  rootPath: {{ .Values.externalS3.rootPath }}
 {{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
   port: {{ .Values.minio.service.port }}
@@ -45,8 +46,9 @@ minio:
 {{- if .Values.minio.gcsgateway.enabled }}
   bucketName: {{ .Values.externalGcs.bucketName }}
 {{- else }}
-  bucketName: "milvus-bucket"
+  bucketName: {{ .Values.minio.bucketName }}
 {{- end }}
+  rootPath: {{ .Values.minio.rootPath }}
 {{- end }}
 
 pulsar:
