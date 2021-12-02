@@ -38,7 +38,11 @@ minio:
   bucketName: {{ .Values.externalS3.bucketName }}
   rootPath: {{ .Values.externalS3.rootPath }}
 {{- else }}
+{{- if contains .Values.minio.name .Release.Name }}
+  address: {{ .Release.Name }}
+{{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
+{{- end }}
   port: {{ .Values.minio.service.port }}
   accessKeyID: {{ .Values.minio.accessKey }}
   secretAccessKey: {{ .Values.minio.secretKey }}
@@ -56,7 +60,11 @@ pulsar:
   address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
 {{- else if .Values.pulsar.enabled }}
+{{- if contains .Values.pulsar.name .Release.Name }}
+  address: {{ .Release.Name }}-proxy
+{{- else }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
+{{- end }}
   {{- $httpPort := "" -}}
   {{- $httpsPort := "" -}}
   {{- range .Values.pulsar.proxy.service.ports }}
