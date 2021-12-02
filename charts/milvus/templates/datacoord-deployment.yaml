@@ -8,6 +8,8 @@ metadata:
     component: "datacoord"
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
 {{ include "milvus.matchLabels" . | indent 6 }}
