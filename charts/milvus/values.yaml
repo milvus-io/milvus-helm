@@ -525,7 +525,7 @@ pulsar:
         size: 100Gi
       ledgers:
         name: ledgers
-        size: 100Gi
+        size: 200Gi
     resources:
       requests:
         memory: 2048Mi
@@ -546,6 +546,8 @@ pulsar:
       maxMessageSize: "104857600"
       defaultRetentionTimeInMinutes: "10080"
       defaultRetentionSizeInMB: "8192"
+      backlogQuotaDefaultLimitGB: "8"
+      backlogQuotaDefaultRetentionPolicy: producer_exception
 
   autoRecovery:
     resources:
