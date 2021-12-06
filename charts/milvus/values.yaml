@@ -232,7 +232,7 @@ queryCoordinator:
     clusterIP: ""
 
   autoHandoff: true  # Enable auto handoff
-  autoBalance: false  # Disable auto balance
+  autoBalance: true  # Disable auto balance
 
 queryNode:
   enabled: true
