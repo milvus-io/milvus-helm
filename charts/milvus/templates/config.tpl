@@ -217,6 +217,10 @@ dataCoord:
     sealProportion: 0.75  # It's the minimum proportion for a segment which can be sealed
     assignmentExpiration: 2000  # ms
 
+  compaction:
+    enableAutoCompaction: {{ .Values.dataCoordinator.compaction.enableAutoCompaction }}
+    retentionDuration: {{ .Values.dataCoordinator.compaction.retentionDuration }}
+
   gc:
     interval: {{ .Values.dataCoordinator.gc.interval }} # gc interval in seconds
     missingTolerance: {{ .Values.dataCoordinator.gc.missingTolerance }} # file meta missing tolerance duration in seconds, 1 day

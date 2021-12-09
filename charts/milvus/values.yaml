@@ -325,6 +325,10 @@ dataCoordinator:
   segment:
     maxSize: 512  # Maximum size of a segment in MB
 
+  compaction:
+    enableAutoCompaction: true
+    retentionDuration: 432000  # 5 days in seconds
+
   gc:
     interval: 60   # gc interval in seconds
     missingTolerance: 60  # file meta missing tolerance duration in seconds, 1 day
