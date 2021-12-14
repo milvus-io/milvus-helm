@@ -174,7 +174,7 @@ proxy:
   extraEnv: []
 
   timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
-  maxFieldNum: 64     # max field number of a collection
+  maxFieldNum: 256     # max field number of a collection
   maxShardNum: 256  # Maximum number of shards in a collection
   maxTaskNum: 1024  # max task number of proxy task queue
 
