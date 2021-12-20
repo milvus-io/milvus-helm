@@ -121,7 +121,8 @@ trustedCertsSecret: ""
 ##
 persistence:
   enabled: true
-  annotations: {}
+  annotations:
+    helm.sh/resource-policy: "keep"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
