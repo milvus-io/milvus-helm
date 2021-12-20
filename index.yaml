@@ -3,6 +3,50 @@ entries:
   milvus:
   - apiVersion: v1
     appVersion: 2.0.0-rc.8
+    created: "2021-12-20T11:49:21.585104202Z"
+    dependencies:
+    - condition: etcd.enabled
+      name: etcd
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - etcd
+      version: 6.3.3
+    - condition: minio.enabled
+      name: minio
+      repository: https://milvus-io.github.io/milvus-helm
+      tags:
+      - minio
+      version: 8.0.10
+    - condition: pulsar.enabled
+      name: pulsar
+      repository: https://helm.kafkaesque.io
+      tags:
+      - pulsar
+      version: 1.0.31
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
+    digest: 253ae1217108702dfc29a87a746c4cc5608e88c8f126b74c437bc0716c1f0d66
+    home: https://milvus.io/
+    icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
+    keywords:
+    - milvus
+    - elastic
+    - vector
+    - search
+    - deploy
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: contact@milvus.io
+      name: contact
+      url: milvus.io
+    name: milvus
+    sources:
+    - https://github.com/milvus-io/milvus
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-2.4.16/milvus-2.4.16.tgz
+    version: 2.4.16
+  - apiVersion: v1
+    appVersion: 2.0.0-rc.8
     created: "2021-12-14T10:39:37.004432412Z"
     dependencies:
     - condition: etcd.enabled
@@ -3403,6 +3447,26 @@ entries:
   minio:
   - apiVersion: v1
     appVersion: master
+    created: "2021-12-20T11:49:21.67313251Z"
+    description: High Performance, Kubernetes Native Object Storage
+    digest: 38fe1f809ac5b7100e77f35826bfd9609a5512297152712a58bf209b03632ad0
+    home: https://min.io
+    icon: https://min.io/resources/img/logo/MINIO_wordmark.png
+    keywords:
+    - storage
+    - object-storage
+    - S3
+    maintainers:
+    - email: dev@minio.io
+      name: jeffoverflow
+    name: minio
+    sources:
+    - https://github.com/minio/minio
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.11/minio-8.0.11.tgz
+    version: 8.0.11
+  - apiVersion: v1
+    appVersion: master
     created: "2021-09-01T08:01:15.191483105Z"
     description: High Performance, Kubernetes Native Object Storage
     digest: 8a317e25b9a4ee4fcbd3d22cf85f48c997ede043624ed56071b06c40b8684303
@@ -3421,4 +3485,4 @@ entries:
     urls:
     - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.10/minio-8.0.10.tgz
     version: 8.0.10
-generated: "2021-12-14T10:39:37.005937032Z"
+generated: "2021-12-20T11:49:21.673978919Z"
