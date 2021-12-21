@@ -4,9 +4,9 @@ dependencies:
   version: 6.3.3
 - name: minio
   repository: https://milvus-io.github.io/milvus-helm
-  version: 8.0.10
+  version: 8.0.11
 - name: pulsar
   repository: https://helm.kafkaesque.io
   version: 1.0.31
-digest: sha256:eb8d3ae623d013db841c41c1ea16f458c877f6f82ebbc2e78b42904bbef36b27
-generated: "2021-09-01T16:05:30.485045+08:00"
+digest: sha256:beb39a6b3f6a84b2915f53d6417c7c0d090567872fb89fbe183c92d59761ffa8
+generated: "2021-12-21T10:05:11.595691+08:00"
