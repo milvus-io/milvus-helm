@@ -105,22 +105,22 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {/*
-Create a default fully qualified insight name.
+Create a default fully qualified attu name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus.insight.fullname" -}}
-{{ template "milvus.fullname" . }}-insight
+{{- define "milvus.attu.fullname" -}}
+{{ template "milvus.fullname" . }}-attu
 {{- end -}}
 
 {{/*
-Create milvus insight env name.
+Create milvus attu env name.
 */}}
-{{- define "milvus.insight.env" -}}
+{{- define "milvus.attu.env" -}}
 - name: HOST_URL
-{{- if .Values.insight.ingress.enabled }}
-  value: https://{{ first .Values.insight.ingress.hosts }}
+{{- if .Values.attu.ingress.enabled }}
+  value: https://{{ first .Values.attu.ingress.hosts }}
 {{- else }}
-  value: http://{{ template "milvus.insight.fullname" .}}:3000
+  value: http://{{ template "milvus.attu.fullname" .}}:3000
 {{- end }}
 - name: MILVUS_URL
   value: http://{{ template "milvus.fullname" .}}:19530

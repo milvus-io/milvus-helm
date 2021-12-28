@@ -378,11 +378,11 @@ knowhere:
   # This configuration is only used by querynode and indexnode, it selects CPU instruction set for Searching and Index-building.
   simdType: auto
 
-insight:
+attu:
   enabled: false
-  name: insight
+  name: attu
   image:
-    repository: milvusdb/milvus-insight
+    repository: zilliz/attu
     tag: latest
     pullPolicy: IfNotPresent
   service:
@@ -396,11 +396,11 @@ insight:
     # kubernetes.io/ingress.class: nginx
     labels: {}
     hosts:
-      - milvus-insight.local
+      - milvus-attu.local
     tls: []
-    #  - secretName: chart-insight-tls
+    #  - secretName: chart-attu-tls
     #    hosts:
-    #      - milvus-insight.local
+    #      - milvus-attu.local
 
 
 ## Configuration values for the minio dependency
