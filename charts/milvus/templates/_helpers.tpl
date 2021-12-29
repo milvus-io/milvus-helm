@@ -101,7 +101,12 @@ Create a default fully qualified pulsar name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "milvus.pulsar.fullname" -}}
-{{ template "milvus.fullname" . }}-pulsar
+{{- $name := .Values.pulsar.name -}}
+{{- if contains $name .Release.Name -}}
+{{ .Release.Name }}
+{{- else -}}
+{{ .Release.Name }}-pulsar
+{{- end -}}
 {{- end -}}
 
 {/*

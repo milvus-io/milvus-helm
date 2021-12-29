@@ -559,6 +559,8 @@ pulsar:
 
   broker:
     component: broker
+    podMonitor:
+      enabled: false
     replicaCount: 1
     resources:
       requests:
@@ -589,6 +591,8 @@ pulsar:
 
   proxy:
     replicaCount: 1
+    podMonitor:
+      enabled: false
     resources:
       requests:
         memory: 2048Mi
