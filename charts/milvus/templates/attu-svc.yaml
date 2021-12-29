@@ -1,0 +1,35 @@
+{{- if .Values.attu.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus.attu.fullname" . }}
+  labels:
+{{ include "milvus.labels" . | indent 4 }}
+    component: "attu"
+spec:
+{{- if (or (eq .Values.attu.service.type "ClusterIP") (empty .Values.attu.service.type)) }}
+  type: ClusterIP
+  {{- if .Values.attu.service.clusterIP }}
+  clusterIP: {{ .Values.service.clusterIP }}
+  {{- end }}
+{{- else if eq .Values.attu.service.type "LoadBalancer" }}
+  type: LoadBalancer
+  {{- if .Values.attu.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+{{- if .Values.attu.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.attu.service.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.attu.service.type }}
+{{- end }}
+  ports:
+    - name: attu
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+{{ include "milvus.matchLabels" . | indent 4 }}
+    component: "attu"
+{{- end }}
