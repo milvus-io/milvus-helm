@@ -136,7 +136,9 @@ standalone:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   rocksmq:
     retentionTimeInMinutes: 10080  ## 7 days
@@ -171,7 +173,9 @@ proxy:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
   maxFieldNum: 256     # max field number of a collection
@@ -204,7 +208,9 @@ rootCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   dmlChannelNum: 256   # The number of dml channels created at system startup
   maxPartitionNum: 4096  # Maximum number of partitions in a collection
@@ -223,7 +229,9 @@ queryCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   service:
     port: 19531
@@ -241,7 +249,9 @@ queryNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   # Minimum time before the newly inserted data can be searched (in ms)
   gracefulTime: 0   # ms
@@ -274,7 +284,9 @@ indexCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   service:
     port: 31000
@@ -289,7 +301,9 @@ indexNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
@@ -317,7 +331,9 @@ dataCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   enableCompaction: true
   enableGarbageCollection: true
@@ -348,7 +364,9 @@ dataNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
+  extraEnv:
+  - name: GODEBUG
+    value: "madvdontneed=1"
 
   flush:
     insertBufSize: "16777216"  ## bytes, 16MB
