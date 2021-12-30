@@ -430,6 +430,7 @@ minio:
   name: minio
   mode: distributed
   image:
+    repository: minio/minio
     tag: "RELEASE.2020-11-06T23-17-07Z"
     pullPolicy: IfNotPresent
   accessKey: minioadmin
@@ -464,6 +465,7 @@ etcd:
   name: etcd
   replicaCount: 3
   image:
+    registry: "docker.io"
     tag: "3.5.0-debian-10-r24"
     pullPolicy: IfNotPresent
 
