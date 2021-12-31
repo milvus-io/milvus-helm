@@ -81,7 +81,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `true`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
-| `image.all.tag`                           | Image tag                                     | `v2.0.0-rc6-20210910-020f109`                           |
+| `image.all.tag`                           | Image tag                                     | `v2.0.0-pre-ga`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |

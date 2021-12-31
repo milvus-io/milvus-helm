@@ -1,4 +1,4 @@
-# NOTE: **A new operator based [Helm Chart](https://github.com/minio/operator/tree/master/helm/minio-operator) replaces this project. This repository will be archived after April 2021**
+# NOTE: **A new operator based [Helm Chart](https://github.com/minio/operator) replaces this project. This repository will be archived after April 2021**
 
 ```bash
 helm repo remove minio
