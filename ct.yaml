@@ -3,7 +3,7 @@ remote: origin
 chart-dirs:
   - charts
 chart-repos:
-  - kafkaesque=https://helm.kafkaesque.io
+  - apache=https://pulsar.apache.org/charts
   - bitnami=https://charts.bitnami.com/bitnami
   - incubator=https://charts.helm.sh/incubator
 helm-extra-args: --timeout 900s
