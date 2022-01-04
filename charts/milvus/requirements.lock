@@ -6,7 +6,7 @@ dependencies:
   repository: https://milvus-io.github.io/milvus-helm
   version: 8.0.11
 - name: pulsar
-  repository: https://helm.kafkaesque.io
-  version: 1.0.31
-digest: sha256:beb39a6b3f6a84b2915f53d6417c7c0d090567872fb89fbe183c92d59761ffa8
-generated: "2022-03-10T14:04:57.494005+08:00"
+  repository: https://pulsar.apache.org/charts
+  version: 2.7.8
+digest: sha256:5a785d4805e5e75f58240a5f683bb0a47f06d2dd24682e503ce01ab475cc73a1
+generated: "2022-03-10T15:19:41.299459+08:00"

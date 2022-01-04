@@ -301,7 +301,7 @@ The following table lists the configurable parameters of the Milvus Data Node co
 This version of the chart includes the dependent Pulsar chart in the charts/ directory.
 
 You can find more information at:
-* [https://github.com/kafkaesque-io/pulsar-helm-chart](https://github.com/kafkaesque-io/pulsar-helm-chart)
+* [https://pulsar.apache.org/charts](https://pulsar.apache.org/charts)
 
 ### Etcd Configuration
 
