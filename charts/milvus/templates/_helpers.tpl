@@ -148,6 +148,20 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
+{{/* labels defiend by user*/}}
+{{- define "milvus.ud.labels" -}}
+{{- if .Values.labels }}
+{{- toYaml .Values.labels }}
+{{- end -}}
+{{- end -}}
+
+{{/* annotations defiend by user*/}}
+{{- define "milvus.ud.annotations" -}}
+{{- if .Values.annotations }}
+{{- toYaml .Values.annotations }}
+{{- end -}}
+{{- end -}}
+
 {{/* matchLabels */}}
 {{- define "milvus.matchLabels" -}}
 app.kubernetes.io/name: {{ include "milvus.name" . }}

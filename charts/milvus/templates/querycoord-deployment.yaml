@@ -6,6 +6,10 @@ metadata:
   labels:
 {{ include "milvus.labels" . | indent 4 }}
     component: "querycoord"
+{{ include "milvus.ud.labels" . | indent 4 }}
+  annotations:
+{{ include "milvus.ud.annotations" . | indent 4 }}
+
 spec:
   replicas: 1
   strategy:
@@ -18,9 +22,11 @@ spec:
     metadata:
       labels:
 {{ include "milvus.matchLabels" . | indent 8 }}
+{{ include "milvus.ud.labels" . | indent 8 }}
         component: "querycoord"
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+{{ include "milvus.ud.annotations" . | indent 8 }}
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
