@@ -493,6 +493,10 @@ etcd:
   extraEnvVars:
   - name: ETCD_QUOTA_BACKEND_BYTES
     value: "4294967296"
+  - name: ETCD_HEARTBEAT_INTERVAL
+    value: "500"
+  - name: ETCD_ELECTION_TIMEOUT
+    value: "2500"
 
 ## Configuration values for the pulsar dependency
 ## ref: https://github.com/kafkaesque-io/pulsar-helm-chart
