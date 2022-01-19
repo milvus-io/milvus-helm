@@ -519,27 +519,27 @@ pulsar:
     broker:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
     function:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
     zookeeper:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
     bookkeeper:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
     proxy:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
     bastion:
       repository: apachepulsar/pulsar
       pullPolicy: IfNotPresent
-      tag: 2.7.4
+      tag: 2.7.3
 
   zookeeper:
     resources:
