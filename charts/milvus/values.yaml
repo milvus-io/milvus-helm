@@ -77,7 +77,7 @@ metrics:
   serviceMonitor:
     # Set this to `true` to create ServiceMonitor for Prometheus operator
     enabled: false
-
+    interval: "30s"
     # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
     additionalLabels: {}
 
