@@ -14,7 +14,7 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      interval: 30s
+      interval: {{ .Values.metrics.serviceMonitor.interval }}
       path: /metrics
       port: metrics
   namespaceSelector:
@@ -44,7 +44,7 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      interval: 30s
+      interval: {{ .Values.metrics.serviceMonitor.interval }}
       path: /metrics
       port: metrics
   namespaceSelector:
