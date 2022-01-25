@@ -39,6 +39,7 @@ spec:
     http:
       paths:
         - path: /
+          pathType: Prefix
           backend:
             service:
               name: {{ $serviceName }}
@@ -83,6 +84,7 @@ spec:
     http:
       paths:
         - path: /
+          pathType: Prefix
           backend:
             serviceName: {{ $serviceName }}
             servicePort: {{ $servicePort }}
