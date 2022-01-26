@@ -15,6 +15,7 @@ spec:
   endpoints:
     - honorLabels: true
       interval: {{ .Values.metrics.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.metrics.serviceMonitor.scrapeTimeout }}
       path: /metrics
       port: metrics
   namespaceSelector:
@@ -45,6 +46,7 @@ spec:
   endpoints:
     - honorLabels: true
       interval: {{ .Values.metrics.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.metrics.serviceMonitor.scrapeTimeout }}
       path: /metrics
       port: metrics
   namespaceSelector:
