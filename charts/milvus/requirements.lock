@@ -1,12 +1,12 @@
 dependencies:
 - name: etcd
   repository: https://charts.bitnami.com/bitnami
-  version: 6.3.3
+  version: 6.13.2
 - name: minio
   repository: https://milvus-io.github.io/milvus-helm
   version: 8.0.11
 - name: pulsar
   repository: https://helm.kafkaesque.io
   version: 1.0.31
-digest: sha256:beb39a6b3f6a84b2915f53d6417c7c0d090567872fb89fbe183c92d59761ffa8
-generated: "2021-12-21T10:05:11.595691+08:00"
+digest: sha256:16a15060d89d20940441b0c249d16419af82dd2958dae9acac66bd70bb57bd69
+generated: "2022-02-09T15:43:48.740779+08:00"
