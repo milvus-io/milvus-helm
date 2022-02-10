@@ -108,12 +108,12 @@ log:
 
   persistence:
     mountPath: "/milvus/logs"
-    ## If true, alertmanager will create/use a Persistent Volume Claim
+    ## If true, create/use a Persistent Volume Claim
     ## If false, use emptyDir
     ##
     enabled: false
-    annotations: {}
-    #  helm.sh/resource-policy: keep
+    annotations:
+      helm.sh/resource-policy: keep
     persistentVolumeClaim:
       existingClaim: ""
       ## Milvus Logs Persistent Volume Storage Class
@@ -121,9 +121,10 @@ log:
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
       ## If undefined (the default) or set to null, no storageClassName spec is
       ##   set, choosing the default provisioner.
+      ## ReadWriteMany access mode required for milvus cluster.
       ##
       storageClass:
-      accessModes: ReadWriteOnce
+      accessModes: ReadWriteMany
       size: 10Gi
       subPath: ""
 
