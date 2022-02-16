@@ -332,7 +332,7 @@ attu:
   name: attu
   image:
     repository: zilliz/attu
-    tag: latest
+    tag: v2.0.1
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
