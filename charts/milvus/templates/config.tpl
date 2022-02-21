@@ -219,7 +219,6 @@ dataCoord:
 
   compaction:
     enableAutoCompaction: {{ .Values.dataCoordinator.compaction.enableAutoCompaction }}
-    retentionDuration: {{ .Values.dataCoordinator.compaction.retentionDuration }}
 
   gc:
     interval: {{ .Values.dataCoordinator.gc.interval }} # gc interval in seconds
@@ -285,6 +284,7 @@ msgChannel:
 common:
   defaultPartitionName: "_default"  # default partition name for a collection
   defaultIndexName: "_default_idx"  # default index name
+  retentionDuration: {{ .Values.dataCoordinator.compaction.retentionDuration }}
 
 knowhere:
   simdType: {{ .Values.knowhere.simdType }}  # default to auto
