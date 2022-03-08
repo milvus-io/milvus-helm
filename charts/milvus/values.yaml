@@ -394,8 +394,9 @@ etcd:
   enabled: true
   name: etcd
   replicaCount: 3
+  removeMemberOnContainerTermination: false
   image:
-    tag: "3.5.0-debian-10-r24"
+    tag: "3.5.1-debian-10-r88"
     pullPolicy: IfNotPresent
 
   service:
@@ -405,7 +406,8 @@ etcd:
 
   auth:
     rbac:
-      enabled: false
+      create: false
+      allowNoneAuthentication: true
 
   persistence:
     enabled: true
