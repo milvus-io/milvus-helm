@@ -27,7 +27,7 @@ jobs:
 
       - name: Add dependency chart repos
         run: |
-          helm repo add kafkaesque https://helm.kafkaesque.io
+          helm repo add apache https://pulsar.apache.org/charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add milvus https://milvus-io.github.io/milvus-helm
 
