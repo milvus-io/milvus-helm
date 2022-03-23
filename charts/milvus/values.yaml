@@ -595,6 +595,8 @@ pulsar:
         cpu: 1
     service:
       type: ClusterIP
+    ports:
+      pulsar: 6650
     configData:
       PULSAR_MEM: >
         -Xms2048m -Xmx2048m
