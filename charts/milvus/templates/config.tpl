@@ -65,16 +65,7 @@ pulsar:
 {{- else }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
 {{- end }}
-  {{- $httpPort := "" -}}
-  {{- $httpsPort := "" -}}
-  {{- range .Values.pulsar.proxy.service.ports }}
-  {{- if eq .name "pulsar" }}
-  {{- $httpPort = .port -}}
-  {{- else if eq .name "pulsarssl" }}
-  {{- $httpsPort = .port -}}
-  {{- end }}
-  {{- end }}
-  port: {{ $httpsPort | default $httpPort }}
+  port: {{ .Values.pulsar.proxy.ports.pulsar }}
 {{- end }}
 
 rocksmq:
