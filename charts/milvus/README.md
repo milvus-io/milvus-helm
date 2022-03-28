@@ -45,6 +45,12 @@ Assume the release name is `my-release`:
 # Helm v3.x
 $ helm upgrade --install my-release milvus/milvus
 ```
+By default, milvus cluster uses `Pulsar` as message queue. You can also use `Kafka` instead of `Pulsar` for milvus cluster:
+
+```bash
+# Helm v3.x
+$ helm upgrade --install my-release milvus/milvus --set pulsar.enabled=false --set kafka.enabled=true
+```
 
 ### Upgrade an existing Milvus cluster
 E.g. to scale out query node from 1(default) to 2:
@@ -129,6 +135,8 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalPulsar.enabled`                  | Enable or disable external Pulsar             | `false`                                                 |
 | `externalPulsar.host`                     | The host of the external Pulsar               | `localhost`                                             |
 | `externalPulsar.port`                     | The port of the external Pulsar               | `6650`                                                  |
+| `externalKafka.enabled`                   | Enable or disable external Kafka             | `false`                                                 |
+| `externalKafka.brokerList`                | The brokerList of the external Kafka separated by comma               | `localhost:9092`                                             |
 
 ### Milvus Standalone Deployment Configuration
 
@@ -316,3 +324,10 @@ This version of the chart includes the dependent Minio chart in the charts/ dire
 
 You can find more information at:
 * [https://github.com/minio/charts/blob/master/README.md](https://github.com/minio/charts/blob/master/README.md)
+
+### Kafka Configuration
+
+This version of the chart includes the dependent Kafka chart in the charts/ directory.
+
+You can find more information at:
+* [https://artifacthub.io/packages/helm/bitnami/kafka](https://artifacthub.io/packages/helm/bitnami/kafka)
