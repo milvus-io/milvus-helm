@@ -361,13 +361,16 @@ minio:
   name: minio
   mode: distributed
   image:
-    tag: "RELEASE.2020-11-06T23-17-07Z"
+    tag: "RELEASE.2022-03-17T06-34-49Z"
     pullPolicy: IfNotPresent
   accessKey: minioadmin
   secretKey: minioadmin
   existingSecret: ""
   bucketName: "milvus-bucket"
   rootPath: file
+  resources:
+    requests:
+      memory: 2Gi
 
   gcsgateway:
     enabled: false
