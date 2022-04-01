@@ -26,7 +26,7 @@ spec:
       {{- end }}
       secretName: {{ .secretName }}
   {{- end }}
-  backend:
+  defaultBackend:
     service:
       name: {{ $serviceName }}
       port: 
