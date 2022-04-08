@@ -136,6 +136,8 @@ proxy:
   maxDimension: 32768  # Maximum dimension of vector
   maxShardNum: "{{ .Values.proxy.maxShardNum }}"  # Maximum number of shards in a collection
   maxTaskNum: "{{ .Values.proxy.maxTaskNum }}"  # max task number of proxy task queue
+  bufFlagExpireTime: 300  # second, the time to expire bufFlag from cache in collectResultLoop
+  bufFlagCleanupInterval: 600  # second, the interval to clean bufFlag cache in collectResultLoop
 
 queryCoord:
 {{- if .Values.cluster.enabled }}
