@@ -17,3 +17,9 @@ dependencies:
   condition: pulsar.enabled
   tags:
     - pulsar
+- name: kafka
+  version: 15.5.1
+  repository: https://charts.bitnami.com/bitnami
+  condition: kafka.enabled
+  tags:
+    - kafka

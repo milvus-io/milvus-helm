@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: milvusdb/milvus
-    tag: v2.0.1
+    tag: v2.0.2
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -361,13 +361,16 @@ minio:
   name: minio
   mode: distributed
   image:
-    tag: "RELEASE.2020-11-06T23-17-07Z"
+    tag: "RELEASE.2022-03-17T06-34-49Z"
     pullPolicy: IfNotPresent
   accessKey: minioadmin
   secretKey: minioadmin
   existingSecret: ""
   bucketName: "milvus-bucket"
   rootPath: file
+  resources:
+    requests:
+      memory: 2Gi
 
   gcsgateway:
     enabled: false
@@ -616,6 +619,54 @@ pulsar:
       tag: 2.8.2
 
 
+## Configuration values for the kafka dependency
+## ref: https://artifacthub.io/packages/helm/bitnami/kafka
+##
+
+kafka:
+  enabled: false
+  name: kafka
+  replicaCount: 3
+  image:
+    repository: bitnami/kafka
+    tag: 3.1.0-debian-10-r52
+
+  ## Kafka Java Heap size
+  heapOpts: "-Xmx4096m -Xms4096m"
+  extraEnvVars:
+  - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
+    value: "5242880"
+  - name: KAFKA_CFG_MAX_REQUEST_SIZE
+    value: "5242880"
+  - name: KAFKA_CFG_MESSAGE_MAX_BYTES
+    value: "5242880"
+  - name: KAFKA_CFG_REPLICA_FETCH_MAX_BYTES
+    value: "5242880"
+  - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
+    value: "5242880"
+
+  persistence:
+    enabled: true
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 300Gi
+
+  metrics:
+    kafka:
+      enabled: false
+      image:
+        repository: bitnami/kafka-exporter
+        tag: 1.4.2-debian-10-r182
+
+  service:
+    type: ClusterIP
+    ports:
+      client: 9092
+
+  zookeeper:
+    enabled: true
+    replicaCount: 3
+
 ###################################
 # External S3
 # - these configs are only used when `externalS3.enabled` is true
@@ -656,3 +707,11 @@ externalPulsar:
   enabled: false
   host: localhost
   port: 6650
+
+###################################
+# External kafka
+# - these configs are only used when `externalKafka.enabled` is true
+###################################
+externalKafka:
+  enabled: false
+  brokerList: localhost:9092

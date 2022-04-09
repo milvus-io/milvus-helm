@@ -55,17 +55,34 @@ minio:
   rootPath: {{ .Values.minio.rootPath }}
 {{- end }}
 
-pulsar:
 {{- if .Values.externalPulsar.enabled }}
+
+pulsar:
   address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
 {{- else if .Values.pulsar.enabled }}
+
+pulsar:
 {{- if contains .Values.pulsar.name .Release.Name }}
   address: {{ .Release.Name }}-proxy
 {{- else }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
 {{- end }}
   port: {{ .Values.pulsar.proxy.ports.pulsar }}
+{{- end }}
+
+{{- if .Values.externalKafka.enabled }}
+
+kafka:
+  brokerList: {{ .Values.externalKafka.brokerList }}
+{{- else if .Values.kafka.enabled }}
+
+kafka:
+{{- if contains .Values.kafka.name .Release.Name }}
+  brokerList: {{ .Release.Name }}:{{ .Values.kafka.service.ports.client }}
+{{- else }}
+  brokerList: {{ .Release.Name }}-{{ .Values.kafka.name }}:{{ .Values.kafka.service.ports.client }}
+{{- end }}
 {{- end }}
 
 rocksmq:
@@ -119,6 +136,8 @@ proxy:
   maxDimension: 32768  # Maximum dimension of vector
   maxShardNum: "{{ .Values.proxy.maxShardNum }}"  # Maximum number of shards in a collection
   maxTaskNum: "{{ .Values.proxy.maxTaskNum }}"  # max task number of proxy task queue
+  bufFlagExpireTime: 300  # second, the time to expire bufFlag from cache in collectResultLoop
+  bufFlagCleanupInterval: 600  # second, the interval to clean bufFlag cache in collectResultLoop
 
 queryCoord:
 {{- if .Values.cluster.enabled }}
