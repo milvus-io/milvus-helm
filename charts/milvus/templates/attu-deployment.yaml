@@ -45,7 +45,7 @@ spec:
 {{ toYaml .Values.attu.affinity | indent 8 }}
     {{- end }}
     {{- if and (.Values.tolerations) (not .Values.attu.tolerations) }}
-    tolerations:
+      tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
     {{- end }}
     {{- if .Values.attu.tolerations }}
