@@ -633,15 +633,14 @@ kafka:
 
   ## Kafka Java Heap size
   heapOpts: "-Xmx4096m -Xms4096m"
+  maxMessageBytes: _10485760
   extraEnvVars:
   - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
     value: "5242880"
   - name: KAFKA_CFG_MAX_REQUEST_SIZE
     value: "5242880"
-  - name: KAFKA_CFG_MESSAGE_MAX_BYTES
-    value: "5242880"
   - name: KAFKA_CFG_REPLICA_FETCH_MAX_BYTES
-    value: "5242880"
+    value: "10485760"
   - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
     value: "5242880"
 
