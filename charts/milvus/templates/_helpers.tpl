@@ -123,7 +123,7 @@ Create milvus attu env name.
 {{- define "milvus.attu.env" -}}
 - name: HOST_URL
 {{- if .Values.attu.ingress.enabled }}
-  {{- if .Values.attu.ingress.tls }}
+  {{- if or .Values.attu.ingress.tls .Values.attu.ingress.https }}
   value: https://{{ first .Values.attu.ingress.hosts }}
   {{- else }}
   value: http://{{ first .Values.attu.ingress.hosts }}
