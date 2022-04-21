@@ -137,6 +137,11 @@ msgChannel:
   chanNamePrefix:
     cluster: "by-dev"
 
+## milvus authorization
+##
+authorization:
+  enabled: false
+
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
@@ -605,7 +610,7 @@ pulsar:
         -Xms2048m -Xmx2048m
       PULSAR_GC: >
         -XX:MaxDirectMemorySize=2048m
-      httpNumThreads: "50"
+      httpNumThreads: "100"
 
   pulsar_manager:
     service:
