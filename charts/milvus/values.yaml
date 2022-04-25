@@ -60,9 +60,13 @@ service:
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
     # Annotation example: set nginx ingress type
     # kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: GRPC
+    nginx.ingress.kubernetes.io/listen-ports-ssl: '[19530]'
+    nginx.ingress.kubernetes.io/proxy-body-size: 4m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
   labels: {}
   hosts:
     - milvus-example.local
