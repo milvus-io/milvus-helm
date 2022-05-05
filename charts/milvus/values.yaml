@@ -60,9 +60,13 @@ service:
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
     # Annotation example: set nginx ingress type
     # kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: GRPC
+    nginx.ingress.kubernetes.io/listen-ports-ssl: '[19530]'
+    nginx.ingress.kubernetes.io/proxy-body-size: 4m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
   labels: {}
   hosts:
     - milvus-example.local
@@ -136,6 +140,11 @@ metadata:
 msgChannel:
   chanNamePrefix:
     cluster: "by-dev"
+
+## milvus authorization
+##
+authorization:
+  enabled: false
 
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
@@ -605,7 +614,7 @@ pulsar:
         -Xms2048m -Xmx2048m
       PULSAR_GC: >
         -XX:MaxDirectMemorySize=2048m
-      httpNumThreads: "50"
+      httpNumThreads: "100"
 
   pulsar_manager:
     service:

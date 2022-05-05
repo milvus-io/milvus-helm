@@ -2,7 +2,7 @@
 
 For more information about installing and using Helm, see the [Helm Docs](https://helm.sh/docs/). For a quick introduction to Charts, see the [Chart Guide](https://helm.sh/docs/topics/charts/).
 
-To install Milvus, refer to [Milvus installation](https://milvus.io/docs/v2.0.0/install_cluster-helm.md).
+To install Milvus, refer to [Milvus installation](https://milvus.io/docs/v2.0.x/install_cluster-helm.md).
 
 ## Introduction
 This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm package manager.
@@ -83,6 +83,7 @@ kubectl delete pvc $(kubectl get pvc -l "${MILVUS_LABELS}" -o jsonpath='{range.i
 
 The following table lists the configurable parameters of the Milvus Service and their default values.
 
+<<<<<<< HEAD
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `true`                                                 |
@@ -108,6 +109,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `metrics.serviceMonitor.enabled`          | Create ServiceMonitor for Prometheus operator | `false`                                                 |
 | `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`         |
 | `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
+| `authorization.enabled`                   | Enable milvus authorization                   | `false`                                                |
 | `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
@@ -137,6 +139,60 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalPulsar.port`                     | The port of the external Pulsar               | `6650`                                                  |
 | `externalKafka.enabled`                   | Enable or disable external Kafka             | `false`                                                 |
 | `externalKafka.brokerList`                | The brokerList of the external Kafka separated by comma               | `localhost:9092`                                             |
+=======
+| Parameter                                             | Description                                                  | Default                                                      |
+| ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `cluster.enabled`                                     | Enable or disable Milvus Cluster mode                        | `true`                                                       |
+| `image.all.repository`                                | Image repository                                             | `milvusdb/milvus`                                            |
+| `image.all.tag`                                       | Image tag                                                    | `v2.0.1`                                                     |
+| `image.all.pullPolicy`                                | Image pull policy                                            | `IfNotPresent`                                               |
+| `image.all.pullSecrets`                               | Image pull secrets                                           | `{}`                                                         |
+| `service.type`                                        | Service type                                                 | `ClusterIP`                                                  |
+| `service.port`                                        | Port where service is exposed                                | `19530`                                                      |
+| `service.nodePort`                                    | Service nodePort                                             | `unset`                                                      |
+| `service.annotations`                                 | Service annotations                                          | `{}`                                                         |
+| `service.labels`                                      | Service custom labels                                        | `{}`                                                         |
+| `service.clusterIP`                                   | Internal cluster service IP                                  | `unset`                                                      |
+| `service.loadBalancerIP`                              | IP address to assign to load balancer (if supported)         | `unset`                                                      |
+| `service.loadBalancerSourceRanges`                    | List of IP CIDRs allowed access to lb (if supported)         | `[]`                                                         |
+| `service.externalIPs`                                 | Service external IP addresses                                | `[]`                                                         |
+| `ingress.enabled`                                     | If true, Ingress will be created                             | `false`                                                      |
+| `ingress.annotations`                                 | Ingress annotations                                          | The default setting applies to nginx ingress type. For other types of Ingress Controller, different settings are required. |
+| `ingress.labels`                                      | Ingress labels                                               | `{}`                                                         |
+| `ingress.hosts`                                       | Ingress hostnames                                            | `[]`                                                         |
+| `ingress.tls`                                         | Ingress TLS configuration                                    | `[]`                                                         |
+| `metrics.enabled`                                     | Export Prometheus monitoring metrics                         | `true`                                                       |
+| `metrics.serviceMonitor.enabled`                      | Create ServiceMonitor for Prometheus operator                | `false`                                                      |
+| `metrics.serviceMonitor.additionalLabels`             | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`                                                      |
+| `metadata.rootPath`                                   | Root of key prefix to etcd                                   | `by-dev`                                                     |
+| `log.level`                                           | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`                                                      |
+| `log.file.maxSize`                                    | The size limit of the log file (MB)                          | `300`                                                        |
+| `log.file.maxAge`                                     | The maximum number of days that the log is retained. (day)   | `10`                                                         |
+| `log.file.maxBackups`                                 | The maximum number of retained logs.                         | `20`                                                         |
+| `log.format`                                          | Format used for the logs. Valid formats are `text` and `json` | `text`                                                       |
+| `log.persistence.enabled`                             | Use persistent volume to store Milvus logs data              | `false`                                                      |
+| `log.persistence.mountPath`                           | Milvus logs data persistence volume mount path               | `/milvus/logs`                                               |
+| `log.persistence.annotations`                         | PersistentVolumeClaim annotations                            | `{}`                                                         |
+| `log.persistence.persistentVolumeClaim.existingClaim` | Use your own data Persistent Volume existing claim name      | `unset`                                                      |
+| `log.persistence.persistentVolumeClaim.storageClass`  | The Milvus logs data Persistent Volume Storage Class         | `unset`                                                      |
+| `log.persistence.persistentVolumeClaim.accessModes`   | The Milvus logs data Persistence access modes                | `ReadWriteOnce`                                              |
+| `log.persistence.persistentVolumeClaim.size`          | The size of Milvus logs data Persistent Volume Storage Class | `5Gi`                                                        |
+| `log.persistence.persistentVolumeClaim.subPath`       | SubPath for Milvus logs data mount                           | `unset`                                                      |
+| `msgChannel.chanNamePrefix.cluster`                   | Pulsar topic name prefix                                     | `by-dev`                                                     |
+| `externalS3.enabled`                                  | Enable or disable external S3                                | `false`                                                      |
+| `externalS3.host`                                     | The host of the external S3                                  | `unset`                                                      |
+| `externalS3.port`                                     | The port of the external S3                                  | `unset`                                                      |
+| `externalS3.accessKey`                                | The Access Key of the external S3                            | `unset`                                                      |
+| `externalS3.secretKey`                                | The Secret Key of the external S3                            | `unset`                                                      |
+| `externalS3.bucketName`                               | The Bucket Name of the external S3                           | `unset`                                                      |
+| `externalS3.useSSL`                                   | If true, use SSL to connect to the external S3               | `false`                                                      |
+| `externalGcs.bucketName`                              | The Bucket Name of the external GCS. Requires GCS gateway to be enabled in the minIO configuration | `unset`                                                      |
+| `externalEtcd.enabled`                                | Enable or disable external Etcd                              | `false`                                                      |
+| `externalEtcd.endpoints`                              | The endpoints of the external etcd                           | `{}`                                                         |
+| `externalPulsar.enabled`                              | Enable or disable external Pulsar                            | `false`                                                      |
+| `externalPulsar.host`                                 | The host of the external Pulsar                              | `localhost`                                                  |
+| `externalPulsar.port`                                 | The port of the external Pulsar                              | `6650`                                                       |
+>>>>>>> Add default values for ingress.annotations
 
 ### Milvus Standalone Deployment Configuration
 
