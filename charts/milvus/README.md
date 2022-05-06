@@ -34,7 +34,18 @@ Assume the release name is `my-release`:
 # Helm v3.x
 $ helm upgrade --install my-release --set cluster.enabled=false --set etcd.replicaCount=1 --set pulsar.enabled=false --set minio.mode=standalone milvus/milvus
 ```
+By default, milvus standalone uses `rocksmq` as message queue. You can also use `pulsar` or `kafka` as message queue:
+```bash
+# Helm v3.x
+# Milvus Standalone with pulsar as message queue
+$ helm upgrade --install my-release --set cluster.enabled=false --set standalone.messageQueue=pulsar --set etcd.replicaCount=1 --set pulsar.enabled=true --set minio.mode=standalone milvus/milvus
+```
 
+```bash
+# Helm v3.x
+# Milvus Standalone with kafka as message queue
+$ helm upgrade --install my-release --set cluster.enabled=false --set standalone.messageQueue=kafka --set etcd.replicaCount=1 --set pulsar.enabled=false --set kafka.enabled=true --set minio.mode=standalone milvus/milvus
+```
 > **Tip**: To list all releases, using `helm list`.
 
 ### Deploy Milvus with cluster mode
@@ -45,7 +56,7 @@ Assume the release name is `my-release`:
 # Helm v3.x
 $ helm upgrade --install my-release milvus/milvus
 ```
-By default, milvus cluster uses `Pulsar` as message queue. You can also use `Kafka` instead of `Pulsar` for milvus cluster:
+By default, milvus cluster uses `pulsar` as message queue. You can also use `kafka` instead of `pulsar` for milvus cluster:
 
 ```bash
 # Helm v3.x
@@ -205,6 +216,7 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
+| `standalone.messageQueue`                     | Message queue for Milvus Standalone: rocksmq, pulsar, kafka | `rocksmq`                                     |
 | `standalone.rocksmq.retentionTimeInMinutes` | Set the retention time of rocksmq           | `10080`                                                 |
 | `standalone.rocksmq.retentionSizeInMB`    | Set the retention size of rocksmq             | `0`                                                     |
 | `standalone.persistence.enabled`          | Use persistent volume to store Milvus standalone data | `true`                                          |
