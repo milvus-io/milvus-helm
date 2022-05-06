@@ -156,6 +156,9 @@ standalone:
   - name: GODEBUG
     value: "madvdontneed=1"
 
+  ## Default message queue for milvus standalone
+  ## Supported value: rocksmq, pulsar and kafka
+  messageQueue: rocksmq
   rocksmq:
     retentionTimeInMinutes: 10080  ## 7 days
     retentionSizeInMB: 8192        ## 8 GB

@@ -85,11 +85,15 @@ kafka:
 {{- end }}
 {{- end }}
 
+{{- if and (not .Values.cluster.enabled) (eq .Values.standalone.messageQueue "rocksmq") }}
+
 rocksmq:
   path: "{{ .Values.standalone.persistence.mountPath }}/rdb_data"
   rocksmqPageSize: "{{ .Values.standalone.rocksmq.rocksmqPageSize }}"  # 2 GB
   retentionTimeInMinutes: {{ .Values.standalone.rocksmq.retentionTimeInMinutes }}
   retentionSizeInMB: {{ .Values.standalone.rocksmq.retentionSizeInMB }}
+
+{{- end }}
 
 rootCoord:
 {{- if .Values.cluster.enabled }}
