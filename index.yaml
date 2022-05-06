@@ -3,7 +3,7 @@ entries:
   milvus:
   - apiVersion: v1
     appVersion: 2.0.2
-    created: "2022-04-25T10:40:13.140951709Z"
+    created: "2022-05-06T06:20:18.451274901Z"
     dependencies:
     - condition: etcd.enabled
       name: etcd
@@ -31,7 +31,7 @@ entries:
       version: 15.5.1
     description: Milvus is an open-source vector database built to power AI applications
       and vector similarity search.
-    digest: 16176e90e4343b810c9b6a9cd4dd83c32e244990de558d579d66324d9930eeae
+    digest: 30660a6238b063d593e200922e9520130cfeca3fe32e0294e8075ece4a53e465
     home: https://milvus.io/
     icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
     keywords:
@@ -49,8 +49,8 @@ entries:
     sources:
     - https://github.com/milvus-io/milvus
     urls:
-    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-3.0.22/milvus-3.0.22.tgz
-    version: 3.0.22
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-3.0.23/milvus-3.0.23.tgz
+    version: 3.0.23
   - apiVersion: v1
     appVersion: 2.0.2
     created: "2022-04-22T03:30:07.284780511Z"
@@ -5031,4 +5031,4 @@ entries:
     urls:
     - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.10/minio-8.0.10.tgz
     version: 8.0.10
-generated: "2022-04-25T10:40:13.142431427Z"
+generated: "2022-05-06T06:20:18.452407409Z"
