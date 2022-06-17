@@ -663,11 +663,24 @@ kafka:
     size: 300Gi
 
   metrics:
+    ## Prometheus Kafka exporter: exposes complimentary metrics to JMX exporter
     kafka:
       enabled: false
       image:
         repository: bitnami/kafka-exporter
         tag: 1.4.2-debian-10-r182
+
+    ## Prometheus JMX exporter: exposes the majority of Kafkas metrics
+    jmx:
+      enabled: false
+      image:
+        repository: bitnami/jmx-exporter
+        tag: 0.16.1-debian-10-r245
+
+    ## To enable serviceMonitor, you must enable either kafka exporter or jmx exporter.
+    ## And you can enable them both
+    serviceMonitor:
+      enabled: false
 
   service:
     type: ClusterIP
