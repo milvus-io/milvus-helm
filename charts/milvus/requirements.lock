@@ -1,6 +1,6 @@
 dependencies:
 - name: etcd
-  repository: https://charts.bitnami.com/bitnami
+  repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
   version: 6.3.3
 - name: minio
   repository: https://milvus-io.github.io/milvus-helm
@@ -11,5 +11,5 @@ dependencies:
 - name: kafka
   repository: https://charts.bitnami.com/bitnami
   version: 15.5.1
-digest: sha256:6f7dac7840a8b00b76a0bb819094cb5ea287dd0021902f08ba769c12d6b4847e
-generated: "2022-03-23T14:45:09.223015+08:00"
+digest: sha256:2e382d3ff91f947e0f6e18bc8957f57df533275d68c9bc1254f64e87cd24ec19
+generated: "2022-06-17T16:32:31.532131+08:00"
