@@ -150,6 +150,10 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalPulsar.port`                     | The port of the external Pulsar               | `6650`                                                  |
 | `externalKafka.enabled`                   | Enable or disable external Kafka             | `false`                                                 |
 | `externalKafka.brokerList`                | The brokerList of the external Kafka separated by comma               | `localhost:9092`                                             |
+| `externalKafka.securityProtocol`          | The securityProtocol used for kafka authentication                    | `SASL_SSL`                                                   |
+| `externalKafka.sasl.mechanisms`           | SASL mechanism to use for kafka authentication                        | `PLAIN`                                                      |
+| `externalKafka.sasl.username`             | username for PLAIN or SASL/PLAIN authentication                       | ``                                                           |
+| `externalKafka.sasl.password`             | password for PLAIN or SASL/PLAIN authentication                       | ``                                                           |
 =======
 | Parameter                                             | Description                                                  | Default                                                      |
 | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |

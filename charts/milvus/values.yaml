@@ -739,3 +739,8 @@ externalPulsar:
 externalKafka:
   enabled: false
   brokerList: localhost:9092
+  securityProtocol: SASL_SSL
+  sasl:
+    mechanisms: PLAIN
+    username: ""
+    password: ""
