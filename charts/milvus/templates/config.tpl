@@ -75,6 +75,14 @@ pulsar:
 
 kafka:
   brokerList: {{ .Values.externalKafka.brokerList }}
+  securityProtocol: {{ .Values.externalKafka.securityProtocol }}
+  saslMechanisms: {{ .Values.externalKafka.sasl.mechanisms }}
+{{- if .Values.externalKafka.sasl.username }}
+  saslUsername: {{ .Values.externalKafka.sasl.username }}
+{{- end }}
+{{- if .Values.externalKafka.sasl.password }}
+  saslPassword: {{ .Values.externalKafka.sasl.password }}
+{{- end }}
 {{- else if .Values.kafka.enabled }}
 
 kafka:
