@@ -410,7 +410,8 @@ etcd:
   name: etcd
   replicaCount: 3
   image:
-    tag: "3.5.0-debian-10-r24"
+    repository: "milvusdb/etcd"
+    tag: "3.5.0-r6"
     pullPolicy: IfNotPresent
 
   service:
