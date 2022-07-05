@@ -642,6 +642,12 @@ kafka:
   image:
     repository: bitnami/kafka
     tag: 3.1.0-debian-10-r52
+  ## Increase graceful termination for kafka graceful shutdown
+  terminationGracePeriodSeconds: "90"
+
+  ## Enable startup probe to prevent pod restart during recovering
+  startupProbe:
+    enabled: true
 
   ## Kafka Java Heap size
   heapOpts: "-Xmx4096m -Xms4096m"
