@@ -269,6 +269,9 @@ indexCoordinator:
   - name: GODEBUG
     value: "madvdontneed=1"
 
+  gc:
+    interval: 600  # gc interval in seconds
+
   service:
     port: 31000
     annotations: {}
@@ -285,6 +288,10 @@ indexNode:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+
+  ## Specify how many index tasks can parallelly run in the same index node
+  scheduler:
+    buildParallel: 1
 
 dataCoordinator:
   enabled: true

@@ -325,6 +325,7 @@ The following table lists the configurable parameters of the Milvus Index Coordi
 | `indexCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                              |
 | `indexCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
 | `indexCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                        |
+| `indexCoordinator.gc.interval`                        | GC interval in seconds                 | `600`                                        |
 
 ### Milvus Index Node Deployment Configuration
 
@@ -339,6 +340,7 @@ The following table lists the configurable parameters of the Milvus Index Node c
 | `indexNode.affinity`                      | Affinity settings for Milvus Index Node pods assignment | `{}`                                          |
 | `indexNode.tolerations`                   | Toleration labels for Milvus Index Node pods assignment | `[]`                                          |
 | `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
+| `indexNode.scheduler.buildParallel`       | Index task build paralellism | `1`                                     |
 
 ### Milvus Data Coordinator Deployment Configuration
 
