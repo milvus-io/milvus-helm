@@ -209,6 +209,9 @@ indexCoord:
     clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
     clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
 
+  gc:
+    interval: {{ .Values.indexCoordinator.gc.interval }}  # gc interval in seconds
+
 indexNode:
   port: 21121
 
@@ -217,6 +220,10 @@ indexNode:
     serverMaxSendSize: 2147483647  # math.MaxInt32
     clientMaxRecvSize: 104857600   # 100 MB, 100 * 1024 * 1024
     clientMaxSendSize: 104857600   # 100 MB, 100 * 1024 * 1024
+
+  scheduler:
+    buildParallel: {{ .Values.indexNode.scheduler.buildParallel }} # one index node can run how many index tasks in parallel
+
 
 dataCoord:
 {{- if .Values.cluster.enabled }}
