@@ -121,16 +121,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Create milvus attu env name.
 */}}
 {{- define "milvus.attu.env" -}}
-- name: HOST_URL
-{{- if .Values.attu.ingress.enabled }}
-  {{- if .Values.attu.ingress.tls }}
-  value: https://{{ first .Values.attu.ingress.hosts }}
-  {{- else }}
-  value: http://{{ first .Values.attu.ingress.hosts }}
-  {{- end }}
-{{- else }}
-  value: http://{{ template "milvus.attu.fullname" .}}:3000
-{{- end }}
 - name: MILVUS_URL
   value: http://{{ template "milvus.fullname" .}}:19530
 {{- end -}}
