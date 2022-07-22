@@ -351,14 +351,14 @@ attu:
   name: attu
   image:
     repository: zilliz/attu
-    tag: v2.0.1
+    tag: v2.1.0
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
     port: 3000
   resources: {}
   ingress:
-    enabled: true
+    enabled: false
     annotations: {}
     # Annotation example: set nginx ingress type
     # kubernetes.io/ingress.class: nginx
