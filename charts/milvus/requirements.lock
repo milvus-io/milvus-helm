@@ -12,7 +12,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 15.5.1
 - name: mysql
-  repository: https://charts.bitnami.com/bitnami
-  version: 9.2.1
-digest: sha256:fd5ff3b07045b17d7a4401b387226390d2836a95c42697d79143227e476bc5ad
-generated: "2022-07-25T13:05:42.713297+08:00"
+  repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
+  version: 8.5.3
+digest: sha256:724eda0aab72cf7e7dd421af1d70d5eb8e25822703c31b303c7f75c15631e296
+generated: "2022-07-25T19:04:23.469903+08:00"
