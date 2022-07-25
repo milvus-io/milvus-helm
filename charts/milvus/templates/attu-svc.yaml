@@ -6,6 +6,10 @@ metadata:
   labels:
 {{ include "milvus.labels" . | indent 4 }}
     component: "attu"
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
 {{- if (or (eq .Values.attu.service.type "ClusterIP") (empty .Values.attu.service.type)) }}
   type: ClusterIP
