@@ -153,6 +153,14 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalKafka.sasl.mechanisms`           | SASL mechanism to use for kafka authentication                        | `PLAIN`                                                      |
 | `externalKafka.sasl.username`             | username for PLAIN or SASL/PLAIN authentication                       | ``                                                           |
 | `externalKafka.sasl.password`             | password for PLAIN or SASL/PLAIN authentication                       | ``                                                           |
+| `externalMysql.enabled`                   | Enable or disable external MySQL             | `false`                                                 |
+| `externalMysql.username`                  | MySQL username                               |                                        ``                                                      |
+| `externalMysql.password`                  | MySQL password                               | ``                                                      |
+| `externalMysql.address`                   | MySQL address                                | `localhost`                                             |
+| `externalMysql.port`                      | MySQL port                                   | `3306`                                                  |
+| `externalMysql.dbName`                    | MySQL meta database                          | `milvus_meta`                                           |
+| `externalMysql.maxOpenConns`              | MySQL client maxOpenConns                    | `20`                                                    |
+| `externalMysql.maxIdleConns`              | MySQL client maxIdleConns                    | `5`                                                     |
 
 ### Milvus Standalone Deployment Configuration
 
@@ -350,3 +358,10 @@ This version of the chart includes the dependent Kafka chart in the charts/ dire
 
 You can find more information at:
 * [https://artifacthub.io/packages/helm/bitnami/kafka](https://artifacthub.io/packages/helm/bitnami/kafka)
+
+### MySQL Configuration
+
+This version of the chart includes the dependent MySQL chart in the charts/ directory.
+
+You can find more information at:
+* [https://artifacthub.io/packages/helm/bitnami/mysql](https://artifacthub.io/packages/helm/bitnami/mysql)
