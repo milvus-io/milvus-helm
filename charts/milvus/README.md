@@ -172,6 +172,7 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.nodeSelector`                 | Node labels for Milvus Standalone pods assignment | `{}`                                                |
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
+| `standalone.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
 | `standalone.messageQueue`                     | Message queue for Milvus Standalone: rocksmq, pulsar, kafka | `rocksmq`                                     |
 | `standalone.rocksmq.retentionTimeInMinutes` | Set the retention time of rocksmq           | `10080`                                                 |
@@ -197,6 +198,7 @@ The following table lists the configurable parameters of the Milvus Proxy compon
 | `proxy.nodeSelector`                      | Node labels for Milvus Proxy pods assignment | `{}`                                                     |
 | `proxy.affinity`                          | Affinity settings for Milvus Proxy pods assignment | `{}`                                               |
 | `proxy.tolerations`                       | Toleration labels for Milvus Proxy pods assignment | `[]`                                               |
+| `proxy.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `proxy.extraEnv`                          | Additional Milvus Proxy container environment variables | `[]`                                          |
 
 ### Milvus Root Coordinator Deployment Configuration
@@ -210,6 +212,7 @@ The following table lists the configurable parameters of the Milvus Root Coordin
 | `rootCoordinator.nodeSelector`            | Node labels for Milvus Root Coordinator pods assignment | `{}`                                          |
 | `rootCoordinator.affinity`                | Affinity settings for Milvus Root Coordinator pods assignment | `{}`                                    |
 | `rootCoordinator.tolerations`             | Toleration labels for Milvus Root Coordinator pods assignment | `[]`                                    |
+| `rootCoordinator.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `rootCoordinator.extraEnv`                | Additional Milvus Root Coordinator container environment variables | `[]`                               |
 | `rootCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                  |
 | `rootCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                      |
@@ -232,6 +235,7 @@ The following table lists the configurable parameters of the Milvus Query Coordi
 | `queryCoordinator.nodeSelector`           | Node labels for Milvus Query Coordinator pods assignment | `{}`                                         |
 | `queryCoordinator.affinity`               | Affinity settings for Milvus Query Coordinator pods assignment | `{}`                                   |
 | `queryCoordinator.tolerations`            | Toleration labels for Milvus Query Coordinator pods assignment | `[]`                                   |
+| `queryCoordinator.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `queryCoordinator.extraEnv`               | Additional Milvus Query Coordinator container environment variables | `[]`                              |
 | `queryCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `queryCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
@@ -255,6 +259,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.nodeSelector`                  | Node labels for Milvus Query Node pods assignment | `{}`                                                |
 | `queryNode.affinity`                      | Affinity settings for Milvus Query Node pods assignment | `{}`                                          |
 | `queryNode.tolerations`                   | Toleration labels for Milvus Query Node pods assignment | `[]`                                          |
+| `queryNode.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
 
 ### Milvus Index Coordinator Deployment Configuration
@@ -268,6 +273,7 @@ The following table lists the configurable parameters of the Milvus Index Coordi
 | `indexCoordinator.nodeSelector`           | Node labels for Milvus Index Coordinator pods assignment | `{}`                                         |
 | `indexCoordinator.affinity`               | Affinity settings for Milvus Index Coordinator pods assignment | `{}`                                   |
 | `indexCoordinator.tolerations`            | Toleration labels for Milvus Index Coordinator pods assignment | `[]`                                   |
+| `indexCoordinator.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `indexCoordinator.extraEnv`               | Additional Milvus Index Coordinator container environment variables | `[]`                              |
 | `indexCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `indexCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
@@ -292,6 +298,7 @@ The following table lists the configurable parameters of the Milvus Index Node c
 | `indexNode.nodeSelector`                  | Node labels for Milvus Index Node pods assignment | `{}`                                                |
 | `indexNode.affinity`                      | Affinity settings for Milvus Index Node pods assignment | `{}`                                          |
 | `indexNode.tolerations`                   | Toleration labels for Milvus Index Node pods assignment | `[]`                                          |
+| `indexNode.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
 | `indexNode.scheduler.buildParallel`       | Index task build paralellism | `1`                                     |
 
@@ -306,6 +313,7 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.nodeSelector`            | Node labels for Milvus Data Coordinator pods assignment | `{}`                                          |
 | `dataCoordinator.affinity`                | Affinity settings for Milvus Data Coordinator pods assignment  | `{}`                                   |
 | `dataCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
+| `dataCoordinator.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
@@ -329,6 +337,7 @@ The following table lists the configurable parameters of the Milvus Data Node co
 | `dataNode.nodeSelector`                   | Node labels for Milvus Data Node pods assignment | `{}`                                                 |
 | `dataNode.affinity`                       | Affinity settings for Milvus Data Node pods assignment | `{}`                                           |
 | `dataNode.tolerations`                    | Toleration labels for Milvus Data Node pods assignment | `[]`                                           |
+| `dataNode.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `dataNode.extraEnv`                       | Additional Milvus Data Node container environment variables | `[]`                                      |
 
 ### Pulsar Configuration

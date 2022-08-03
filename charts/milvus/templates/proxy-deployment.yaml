@@ -33,19 +33,40 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
+      {{- if .Values.proxy.heaptrack.enabled }}
+      initContainers:
+      - name: heaptrack
+        command:
+        - /bin/bash
+        - -c
+        - "cp -r /opt/heaptrack /milvus/tools"
+        image: "{{ .Values.heaptrack.image.repository }}:{{ .Values.heaptrack.image.tag }}"
+        imagePullPolicy: {{ .Values.heaptrack.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /milvus/tools
+          name: heaptrack
+      {{- end }}
       containers:
       - name: proxy
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
+        {{- if .Values.proxy.heaptrack.enabled }}
+        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "proxy" ]
+        {{- else }}
         args: [ "milvus", "run", "proxy" ]
-        {{- if .Values.proxy.extraEnv }}
+        {{- end }}
         env:
-          - name: CACHE_SIZE
-            valueFrom:
-              resourceFieldRef:
-                resource: limits.memory
-                divisor: 1Gi
-          {{- toYaml .Values.proxy.extraEnv | nindent 10 }}
+        {{- if .Values.proxy.heaptrack.enabled }}
+        - name: LD_LIBRARY_PATH
+          value: /milvus/tools/heaptrack/lib:/milvus/lib:/usr/lib
+        {{- end }}
+        - name: CACHE_SIZE
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.memory
+              divisor: 1Gi
+        {{- if .Values.proxy.extraEnv }}
+          {{- toYaml .Values.proxy.extraEnv | nindent 8 }}
         {{- end }}
         ports:
           - name: milvus
@@ -88,6 +109,11 @@ spec:
           mountPath: {{ .Values.log.persistence.mountPath | quote }}
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
+        {{- if .Values.proxy.heaptrack.enabled }}
+        - mountPath: /milvus/tools
+          name: heaptrack
+        {{- end }}
+
 
     {{- if and (.Values.nodeSelector) (not .Values.proxy.nodeSelector) }}
       nodeSelector:
@@ -122,5 +148,9 @@ spec:
       - name: milvus-logs-disk
         persistentVolumeClaim:
           claimName: {{ .Values.log.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
+      {{- end }}
+      {{- if .Values.proxy.heaptrack.enabled }}
+      - name: heaptrack
+        emptyDir: {}
       {{- end }}
 {{- end }}
