@@ -76,6 +76,7 @@ minio:
   accessKeyID: {{ .Values.externalS3.accessKey }}
   secretAccessKey: {{ .Values.externalS3.secretKey }}
   useSSL: {{ .Values.externalS3.useSSL }}
+  useIAM: {{ .Values.externalS3.useIAM }}
   bucketName: {{ .Values.externalS3.bucketName }}
   rootPath: {{ .Values.externalS3.rootPath }}
 {{- else }}
