@@ -146,6 +146,15 @@ msgChannel:
 authorization:
   enabled: false
 
+## Heaptrack traces all memory allocations and annotates these events with stack traces.
+## See more: https://github.com/KDE/heaptrack
+## Enable heaptrack in production is not recommended.
+heaptrack:
+  image:
+    repository: milvusdb/heaptrack
+    tag: v0.1.0
+    pullPolicy: IfNotPresent
+
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
@@ -155,6 +164,8 @@ standalone:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   ## Default message queue for milvus standalone
   ## Supported value: rocksmq, pulsar and kafka
@@ -195,6 +206,8 @@ proxy:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
   maxFieldNum: 256     # max field number of a collection
@@ -211,6 +224,8 @@ rootCoordinator:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   dmlChannelNum: 256   # The number of dml channels created at system startup
   maxPartitionNum: 4096  # Maximum number of partitions in a collection
@@ -232,6 +247,8 @@ queryCoordinator:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   service:
     port: 19531
@@ -252,6 +269,8 @@ queryNode:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   # Minimum time before the newly inserted data can be searched (in ms)
   gracefulTime: 0   # ms
@@ -268,6 +287,8 @@ indexCoordinator:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   gc:
     interval: 600  # gc interval in seconds
@@ -288,6 +309,8 @@ indexNode:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   ## Specify how many index tasks can parallelly run in the same index node
   scheduler:
@@ -303,6 +326,8 @@ dataCoordinator:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   enableCompaction: true
   enableGarbageCollection: true
@@ -336,6 +361,8 @@ dataNode:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  heaptrack:
+    enabled: false
 
   flush:
     insertBufSize: "16777216"  ## bytes, 16MB
@@ -715,7 +742,8 @@ mysql:
   name: mysql
   image:
     repository: bitnami/mysql
-    tag: 8.0.29-debian-11-r9
+    tag: 8.0.23-debian-10-r84
+
 
   architecture: replication
   auth:

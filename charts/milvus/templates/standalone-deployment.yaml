@@ -34,11 +34,28 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
+      {{- if .Values.standalone.heaptrack.enabled }}
+      initContainers:
+      - name: heaptrack
+        command:
+        - /bin/bash
+        - -c
+        - "cp -r /opt/heaptrack /milvus/tools"
+        image: "{{ .Values.heaptrack.image.repository }}:{{ .Values.heaptrack.image.tag }}"
+        imagePullPolicy: {{ .Values.heaptrack.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /milvus/tools
+          name: heaptrack
+      {{- end }}
       containers:
       - name: standalone
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
+        {{- if .Values.standalone.heaptrack.enabled }}
+        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "standalone" ]
+        {{- else }}
         args: [ "milvus", "run", "standalone" ]
+        {{- end }}
         ports:
           - name: milvus
             containerPort: 19530
@@ -71,6 +88,10 @@ spec:
         resources:
           {{- toYaml .Values.standalone.resources | nindent 10 }}
         env:
+        {{- if .Values.standalone.heaptrack.enabled }}
+        - name: LD_LIBRARY_PATH
+          value: /milvus/tools/heaptrack/lib:/milvus/lib:/usr/lib
+        {{- end }}
         - name: CACHE_SIZE
           valueFrom:
             resourceFieldRef:
@@ -91,6 +112,10 @@ spec:
         - name: milvus-logs-disk
           mountPath: {{ .Values.log.persistence.mountPath | quote }}
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
+        {{- end }}
+        {{- if .Values.standalone.heaptrack.enabled }}
+        - mountPath: /milvus/tools
+          name: heaptrack
         {{- end }}
 
     {{- if and (.Values.nodeSelector) (not .Values.standalone.nodeSelector) }}
@@ -133,5 +158,9 @@ spec:
       - name: milvus-logs-disk
         persistentVolumeClaim:
           claimName: {{ .Values.log.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
+      {{- end }}
+      {{- if .Values.standalone.heaptrack.enabled }}
+      - name: heaptrack
+        emptyDir: {}
       {{- end }}
 {{- end }}
