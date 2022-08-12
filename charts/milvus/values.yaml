@@ -174,6 +174,7 @@ standalone:
     retentionTimeInMinutes: 10080  ## 7 days
     retentionSizeInMB: 8192        ## 8 GB
     rocksmqPageSize: "2147483648"  ## 2 GB
+    lrucacheratio: 0.06           ## rocksdb cache memory ratio
 
   persistence:
     mountPath: "/var/lib/milvus"
@@ -193,7 +194,7 @@ standalone:
       ##
       storageClass:
       accessModes: ReadWriteOnce
-      size: 5Gi
+      size: 50Gi
       subPath: ""
 
 proxy:
@@ -208,6 +209,10 @@ proxy:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  http:
+    enabled: false  # whether to enable http rest server
+    debugMode:
+      enabled: false
 
   timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
   maxFieldNum: 256     # max field number of a collection
@@ -272,10 +277,11 @@ queryNode:
   heaptrack:
     enabled: false
 
-  # Minimum time before the newly inserted data can be searched (in ms)
-  gracefulTime: 0   # ms
   segcore:
-    chunkRows: 32768  # The number of vectors in a chunk.
+    chunkRows: 1024  # The number of vectors in a chunk.
+
+  grouping:
+    enabled: true    # Grouping small nq search
 
 indexCoordinator:
   enabled: true
@@ -337,7 +343,6 @@ dataCoordinator:
 
   compaction:
     enableAutoCompaction: true
-    retentionDuration: 432000  # 5 days in seconds
 
   gc:
     interval: 60   # gc interval in seconds
@@ -367,10 +372,11 @@ dataNode:
   flush:
     insertBufSize: "16777216"  ## bytes, 16MB
 
-knowhere:
+common:
+  compaction:
+    retentionDuration: 432000  # 5 days in seconds
   # Default value: auto
   # Valid values: [auto, avx512, avx2, avx, sse4_2]
-  # This configuration is only used by querynode and indexnode, it selects CPU instruction set for Searching and Index-building.
   simdType: auto
 
 attu:
@@ -414,6 +420,8 @@ minio:
   existingSecret: ""
   bucketName: "milvus-bucket"
   rootPath: file
+  useIAM: false
+  iamEndpoint: ""
   resources:
     requests:
       memory: 2Gi
@@ -489,6 +497,8 @@ pulsar:
 
   fullnameOverride: ""
   persistence: true
+
+  maxMessageSize: 5242880  # 5 * 1024 * 1024 Bytes, Maximum size of each message in pulsar.
 
   rbac:
     enabled: false
@@ -744,7 +754,6 @@ mysql:
     repository: bitnami/mysql
     tag: 8.0.23-debian-10-r84
 
-
   architecture: replication
   auth:
     rootPassword: "ChangeMe"
@@ -777,6 +786,7 @@ mysql:
       accessModes:
         - ReadWriteOnce
       size: 100Gi
+
 ###################################
 # External S3
 # - these configs are only used when `externalS3.enabled` is true
@@ -790,6 +800,8 @@ externalS3:
   useSSL: false
   bucketName: ""
   rootPath: ""
+  useIAM: false
+  iamEndpoint: ""
 
 ###################################
 # GCS Gateway
@@ -817,6 +829,7 @@ externalPulsar:
   enabled: false
   host: localhost
   port: 6650
+  maxMessageSize: 5242880  # 5 * 1024 * 1024 Bytes, Maximum size of each message in pulsar.
 
 ###################################
 # External kafka

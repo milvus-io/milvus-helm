@@ -141,6 +141,8 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalS3.secretKey`                    | The Secret Key of the external S3             | `unset`                                                 |
 | `externalS3.bucketName`                   | The Bucket Name of the external S3            | `unset`                                                 |
 | `externalS3.useSSL`                       | If true, use SSL to connect to the external S3 | `false`                                                |
+| `externalS3.useIAM`                       | If true, use iam to connect to the external S3 | `false`                                                |
+| `externalS3.iamEndpoint`                  | The IAM endpoint of  the external S3 | ``                                                |
 | `externalGcs.bucketName`                  | The Bucket Name of the external GCS. Requires GCS gateway to be enabled in the minIO configuration | `unset`                                                |
 | `externalEtcd.enabled`                    | Enable or disable external Etcd               | `false`                                                 |
 | `externalEtcd.endpoints`                  | The endpoints of the external etcd            | `{}`                                                    |
@@ -200,6 +202,8 @@ The following table lists the configurable parameters of the Milvus Proxy compon
 | `proxy.tolerations`                       | Toleration labels for Milvus Proxy pods assignment | `[]`                                               |
 | `proxy.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `proxy.extraEnv`                          | Additional Milvus Proxy container environment variables | `[]`                                          |
+| `proxy.http.enabled`                          | Enable rest api for Milvus Proxy | `false`                                          |
+| `proxy.http.debugMode.enabled`                          | Enable debug mode for rest api | `false`                                          |
 
 ### Milvus Root Coordinator Deployment Configuration
 
@@ -261,6 +265,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.tolerations`                   | Toleration labels for Milvus Query Node pods assignment | `[]`                                          |
 | `queryNode.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
+| `queryNode.grouping.enabled`              | Enable grouping small nq search |               `true`                                     |
 
 ### Milvus Index Coordinator Deployment Configuration
 

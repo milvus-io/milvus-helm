@@ -92,14 +92,9 @@ spec:
         - name: LD_LIBRARY_PATH
           value: /milvus/tools/heaptrack/lib:/milvus/lib:/usr/lib
         {{- end }}
-        - name: CACHE_SIZE
-          valueFrom:
-            resourceFieldRef:
-              divisor: 1Gi
-              resource: limits.memory
-          {{- if .Values.standalone.extraEnv }}
-            {{- toYaml .Values.standalone.extraEnv | nindent 8 }}
-          {{- end }}
+        {{- if .Values.standalone.extraEnv }}
+          {{- toYaml .Values.standalone.extraEnv | nindent 8 }}
+        {{- end }}
         volumeMounts:
         - name: milvus-config
           mountPath: /milvus/configs/milvus.yaml
