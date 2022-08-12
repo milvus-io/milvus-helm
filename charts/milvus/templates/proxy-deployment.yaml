@@ -60,11 +60,6 @@ spec:
         - name: LD_LIBRARY_PATH
           value: /milvus/tools/heaptrack/lib:/milvus/lib:/usr/lib
         {{- end }}
-        - name: CACHE_SIZE
-          valueFrom:
-            resourceFieldRef:
-              resource: limits.memory
-              divisor: 1Gi
         {{- if .Values.proxy.extraEnv }}
           {{- toYaml .Values.proxy.extraEnv | nindent 8 }}
         {{- end }}
