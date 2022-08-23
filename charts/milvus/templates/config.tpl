@@ -197,8 +197,12 @@ queryCoord:
 queryNode:
   port: 21123
   loadMemoryUsageFactor: 3 # The multiply factor of calculating the memory usage while loading segments
-
+{{- if .Values.cluster.enabled }}
   enableDisk: {{ .Values.queryNode.disk.enabled }} # Enable querynode load disk index, and search on disk index
+{{- else }}
+  enableDisk: {{ .Values.standalone.disk.enabled }} # Enable querynode load disk index, and search on disk index
+{{- end }}
+
   stats:
     publishInterval: 1000 # Interval for querynode to report node information (milliseconds)
   dataSync:
@@ -240,7 +244,11 @@ indexCoord:
 indexNode:
   port: 21121
 
+{{- if .Values.cluster.enabled }}
   enableDisk: {{ .Values.indexNode.disk.enabled }} # Enable index node build disk vector index
+{{- else }}
+  enableDisk: {{ .Values.standalone.disk.enabled }} # Enable index node build disk vector index
+{{- end }}
 
   scheduler:
     buildParallel: {{ .Values.indexNode.scheduler.buildParallel }} # one index node can run how many index tasks in parallel
