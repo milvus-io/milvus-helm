@@ -107,6 +107,10 @@ spec:
         - mountPath: /milvus/tools
           name: heaptrack
         {{- end }}
+        {{- if .Values.queryNode.disk.enabled }}
+        - mountPath: /milvus/data
+          name: disk
+        {{- end }}
 
     {{- if and (.Values.nodeSelector) (not .Values.queryNode.nodeSelector) }}
       nodeSelector:
@@ -144,6 +148,10 @@ spec:
       {{- end }}
       {{- if .Values.queryNode.heaptrack.enabled }}
       - name: heaptrack
+        emptyDir: {}
+      {{- end }}
+      {{- if .Values.queryNode.disk.enabled }}
+      - name: disk
         emptyDir: {}
       {{- end }}
 {{- end }}

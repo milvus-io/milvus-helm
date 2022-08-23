@@ -198,6 +198,7 @@ queryNode:
   port: 21123
   loadMemoryUsageFactor: 3 # The multiply factor of calculating the memory usage while loading segments
 
+  enableDisk: {{ .Values.queryNode.disk.enabled }} # Enable querynode load disk index, and search on disk index
   stats:
     publishInterval: 1000 # Interval for querynode to report node information (milliseconds)
   dataSync:
@@ -238,6 +239,8 @@ indexCoord:
 
 indexNode:
   port: 21121
+
+  enableDisk: {{ .Values.indexNode.disk.enabled }} # Enable index node build disk vector index
 
   scheduler:
     buildParallel: {{ .Values.indexNode.scheduler.buildParallel }} # one index node can run how many index tasks in parallel

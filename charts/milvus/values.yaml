@@ -276,6 +276,8 @@ queryNode:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  disk:
+    enabled: false  # Enable querynode load disk index, and search on disk index
 
   segcore:
     chunkRows: 1024  # The number of vectors in a chunk.
@@ -317,6 +319,8 @@ indexNode:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  disk:
+    enabled: false  # Enable index node build disk vector index
 
   ## Specify how many index tasks can parallelly run in the same index node
   scheduler:
