@@ -166,6 +166,8 @@ standalone:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  disk:
+    enabled: false
 
   ## Default message queue for milvus standalone
   ## Supported value: rocksmq, pulsar and kafka
