@@ -224,7 +224,7 @@ The following table lists the configurable parameters of the MinIO chart and the
 | `gcsgateway.enabled`                             | Use MinIO as a Google Cloud Storage gateway                                                                                             | `false`                          |
 | `gcsgateway.gcsKeyJson`                          | credential json file of service account key                                                                                             | `""`                             |
 | `gcsgateway.projectId`                           | Google cloud project id                                                                                                                 | `""`                             |
-| `nasgateway.enabled`                             | Use MinIO as a [NAS gateway](https://docs.MinIO.io/docs/minio-gateway-for-nas)                                                          | `false`                          |
+| `nasgateway.enabled`                             | Use MinIO as a NAS gateway                                                          | `false`                          
 | `nasgateway.replicas`                            | Number of NAS gateway instances to be run in parallel on a PV                                                                           | `4`                              |
 | `environment`                                    | Set MinIO server relevant environment variables in `values.yaml` file. MinIO containers will be passed these variables when they start. | `MINIO_STORAGE_CLASS_STANDARD: EC:4"` |
 | `metrics.serviceMonitor.enabled`                 | Set this to `true` to create ServiceMonitor for Prometheus operator                                                                     | `false`                          |
@@ -290,12 +290,12 @@ NAS Gateway
 
 ### Prerequisites
 
-MinIO in [NAS gateway mode](https://docs.minio.io/docs/minio-gateway-for-nas) can be used to create multiple MinIO instances backed by single PV in `ReadWriteMany` mode. Currently few [Kubernetes volume plugins](https://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes) support `ReadWriteMany` mode. To deploy MinIO NAS gateway with Helm chart you'll need to have a Persistent Volume running with one of the supported volume plugins. [This document](https://kubernetes.io/docs/user-guide/volumes/#nfs)
+MinIO in NAS gateway mode can be used to create multiple MinIO instances backed by single PV in `ReadWriteMany` mode. Currently few [Kubernetes volume plugins](https://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes) support `ReadWriteMany` mode. To deploy MinIO NAS gateway with Helm chart you'll need to have a Persistent Volume running with one of the supported volume plugins. [This document](https://kubernetes.io/docs/user-guide/volumes/#nfs)
 outlines steps to create a NFS PV in Kubernetes cluster.
 
 ### Provision NAS Gateway MinIO instances
 
-To provision MinIO servers in [NAS gateway mode](https://docs.minio.io/docs/minio-gateway-for-nas), set the `nasgateway.enabled` field to `true`,
+To provision MinIO servers in NAS gateway mode, set the `nasgateway.enabled` field to `true`,
 
 ```bash
 $ helm install --set nasgateway.enabled=true minio/minio
