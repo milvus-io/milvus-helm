@@ -118,6 +118,17 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
+  Create the name of the service account to use for the Milvus components
+  */}}
+  {{- define "milvus.serviceAccount" -}}
+  {{- if .Values.serviceAccount.create -}}
+      {{ default "milvus" .Values.serviceAccount.name }}
+  {{- else -}}
+      {{ default "default" .Values.serviceAccount.name }}
+  {{- end -}}
+  {{- end -}}
+
+{{/*
 Create milvus attu env name.
 */}}
 {{- define "milvus.attu.env" -}}

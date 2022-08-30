@@ -115,6 +115,10 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `ingress.labels`                          | Ingress labels                                | `{}`                                                    |
 | `ingress.hosts`                           | Ingress hostnames                             | `[]`                                                    |
 | `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
+| `serviceAccount.create`                   | Create a custom service account               | `false`                                                 |
+| `serviceAccount.name`                     | Service Account name                          | `milvus`                                                |
+| `serviceAccount.annotations`              | Service Account Annotations                   | `{}`                                                    |
+| `serviceAccount.labels`                   | Service Account labels                        | `{}`                                                    |
 | `metrics.enabled`                         | Export Prometheus monitoring metrics          | `true`                                                  |
 | `metrics.serviceMonitor.enabled`          | Create ServiceMonitor for Prometheus operator | `false`                                                 |
 | `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`         |

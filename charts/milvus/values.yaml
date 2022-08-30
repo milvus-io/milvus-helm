@@ -75,6 +75,12 @@ ingress:
   #    hosts:
   #      - milvus-example.local
 
+serviceAccount:
+  create: false
+  name:
+  annotations:
+  labels:
+
 metrics:
   enabled: true
 
