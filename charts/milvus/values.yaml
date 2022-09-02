@@ -272,6 +272,9 @@ quotaAndLimits:
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
+  # Set local storage size in resources
+  # limits:
+  #    ephemeral-storage: 100Gi
   nodeSelector: {}
   affinity: {}
   tolerations: []
@@ -282,6 +285,8 @@ standalone:
     enabled: false
   disk:
     enabled: false
+    size:
+      enabled: false  # Enable local storage size limit
   profiling:
     enabled: false  # Enable live profiling
 
@@ -399,6 +404,9 @@ queryNode:
   enabled: true
   replicas: 1
   resources: {}
+  # Set local storage size in resources
+  # limits:
+  #    ephemeral-storage: 100Gi
   nodeSelector: {}
   affinity: {}
   tolerations: []
@@ -409,8 +417,12 @@ queryNode:
     enabled: false
   disk:
     enabled: false  # Enable querynode load disk index, and search on disk index
+    size:
+      enabled: false  # Enable local storage size limit
   profiling:
     enabled: false  # Enable live profiling
+    size:
+      enabled: false  # Enable local storage size limit
 
   segcore:
     chunkRows: 1024  # The number of vectors in a chunk.
@@ -447,6 +459,9 @@ indexNode:
   enabled: true
   replicas: 1
   resources: {}
+  # Set local storage size in resources
+  # limits:
+  #    ephemeral-storage: 100Gi
   nodeSelector: {}
   affinity: {}
   tolerations: []
@@ -459,6 +474,8 @@ indexNode:
     enabled: false  # Enable live profiling
   disk:
     enabled: false  # Enable index node build disk vector index
+    size:
+      enabled: false  # Enable local storage size limit
 
   ## Specify how many index tasks can parallelly run in the same index node
   scheduler:
