@@ -25,6 +25,11 @@ spec:
 {{ include "milvus.ud.labels" . | indent 8 }}
         component: "querycoord"
       annotations:
+      {{- if .Values.queryCoordinator.profiling.enabled }}
+        pyroscope.io/scrape: "true"
+        pyroscope.io/application-name: {{ template "milvus.querycoord.fullname" . }}
+        pyroscope.io/port: "9091"
+      {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ include "milvus.ud.annotations" . | indent 8 }}
     spec:

@@ -168,6 +168,8 @@ standalone:
     enabled: false
   disk:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
 
   ## Default message queue for milvus standalone
   ## Supported value: rocksmq, pulsar and kafka
@@ -184,8 +186,8 @@ standalone:
     ## If false, use emptyDir
     ##
     enabled: true
-    annotations: {}
-    #  helm.sh/resource-policy: keep
+    annotations:
+      helm.sh/resource-policy: keep
     persistentVolumeClaim:
       existingClaim: ""
       ## Milvus Persistent Volume Storage Class
@@ -211,6 +213,8 @@ proxy:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
   http:
     enabled: false  # whether to enable http rest server
     debugMode:
@@ -233,6 +237,8 @@ rootCoordinator:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
 
   dmlChannelNum: 256   # The number of dml channels created at system startup
   maxPartitionNum: 4096  # Maximum number of partitions in a collection
@@ -256,6 +262,8 @@ queryCoordinator:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
 
   service:
     port: 19531
@@ -280,6 +288,8 @@ queryNode:
     enabled: false
   disk:
     enabled: false  # Enable querynode load disk index, and search on disk index
+  profiling:
+    enabled: false  # Enable live profiling
 
   segcore:
     chunkRows: 1024  # The number of vectors in a chunk.
@@ -299,6 +309,8 @@ indexCoordinator:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
 
   gc:
     interval: 600  # gc interval in seconds
@@ -321,6 +333,8 @@ indexNode:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
   disk:
     enabled: false  # Enable index node build disk vector index
 
@@ -340,6 +354,8 @@ dataCoordinator:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: true  # Enable live profiling
 
   enableCompaction: true
   enableGarbageCollection: true
@@ -374,6 +390,8 @@ dataNode:
     value: "madvdontneed=1"
   heaptrack:
     enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
 
   flush:
     insertBufSize: "16777216"  ## bytes, 16MB
