@@ -9,7 +9,7 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 
 ## Prerequisites
 
-- Kubernetes 1.14+
+- Kubernetes 1.14+ (Attu requires 1.18+)
 - Helm >= 3.2.0
 
 > **IMPORTANT** The master branch is for the development of Milvus v2.x. On March 9th, 2021, we released Milvus v1.0, the first stable version of Milvus with long-term support. To use Milvus v1.x, switch to [branch 1.1](https://github.com/milvus-io/milvus-helm/tree/1.1).
