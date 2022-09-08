@@ -25,6 +25,11 @@ spec:
         component: "indexcoord"
 {{ include "milvus.ud.labels" . | indent 8 }}
       annotations:
+      {{- if .Values.indexCoordinator.profiling.enabled }}
+        pyroscope.io/scrape: "true"
+        pyroscope.io/application-name: {{ template "milvus.indexcoord.fullname" . }}
+        pyroscope.io/port: "9091"
+      {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ include "milvus.ud.annotations" . | indent 8 }}
     spec:

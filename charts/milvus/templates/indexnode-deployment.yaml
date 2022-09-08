@@ -23,6 +23,11 @@ spec:
         component: "indexnode"
 {{ include "milvus.ud.labels" . | indent 8 }}
       annotations:
+      {{- if .Values.indexNode.profiling.enabled }}
+        pyroscope.io/scrape: "true"
+        pyroscope.io/application-name: {{ template "milvus.indexnode.fullname" . }}
+        pyroscope.io/port: "9091"
+      {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ include "milvus.ud.annotations" . | indent 8 }}
     spec:

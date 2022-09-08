@@ -24,6 +24,11 @@ spec:
         component: "proxy"
 {{ include "milvus.ud.labels" . | indent 8 }}
       annotations:
+      {{- if .Values.proxy.profiling.enabled }}
+        pyroscope.io/scrape: "true"
+        pyroscope.io/application-name: {{ template "milvus.proxy.fullname" . }}
+        pyroscope.io/port: "9091"
+      {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ include "milvus.ud.annotations" . | indent 8 }}
     spec:
