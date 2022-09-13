@@ -745,6 +745,8 @@ kafka:
   ## Kafka Java Heap size
   heapOpts: "-Xmx4096m -Xms4096m"
   maxMessageBytes: _10485760
+  defaultReplicationFactor: 3
+  offsetsTopicReplicationFactor: 3
   extraEnvVars:
   - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
     value: "5242880"
