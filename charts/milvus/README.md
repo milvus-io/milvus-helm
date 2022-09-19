@@ -134,6 +134,38 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.persistence.persistentVolumeClaim.size` | The size of Milvus logs data Persistent Volume Storage Class | `5Gi`                                 |
 | `log.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs data mount | `unset`                                                      |
 | `msgChannel.chanNamePrefix.cluster`                       | Pulsar topic name prefix                    | `by-dev`                                                |
+| `quotaAndLimits.enabled`                  | Enable milvus quota and limits                | `false`                                                |
+| `quotaAndLimits.quotaCenterCollectInterval`                  | Collect metrics interval                | `3`                                                |
+| `quotaAndLimits.ddl.eabled`               | Enable milvus ddl limit                       | `false`                                                |
+| `quotaAndLimits.ddl.collectionRate`       | Milvus ddl collection rate per minute         | `unset`                                                |
+| `quotaAndLimits.ddl.partitionRate`        | Milvus ddl partition rate per minute          | `unset`                                                |
+| `quotaAndLimits.ddl.indexRate`            | Milvus ddl index rate per minute              | `unset`                                                |
+| `quotaAndLimits.ddl.flushRate`            | Milvus ddl flush rate per minute              | `unset`                                                |
+| `quotaAndLimits.ddl.compactionRate`       | Milvus ddl compaction rate per minute         | `unset`                                                |
+| `quotaAndLimits.dml.eabled`               | Enable milvus dml limit                       | `false`                                                |
+| `quotaAndLimits.dml.insertRate.max`       | Milvus dml max insert rate MB/s               | `unset`                                                |
+| `quotaAndLimits.dml.insertRate.min`       | Milvus dml min insert rate MB/s               | `unset`                                                |
+| `quotaAndLimits.dml.deleteRate.max`       | Milvus dml max delete rate MB/s               | `unset`                                                |
+| `quotaAndLimits.dml.deleteRate.min`       | Milvus dml min delete rate MB/s               | `unset`                                                |
+| `quotaAndLimits.dml.bulkLoadRate.max`     | Milvus dml max bulk load rate MB/s            | `unset`                                                |
+| `quotaAndLimits.dml.bulkLoadRate.min`     | Milvus dml min bulk load rate MB/s            | `unset`                                                |
+| `quotaAndLimits.dql.eabled`               | Enable milvus dql limit                       | `false`                                                |
+| `quotaAndLimits.dql.searchRate.max`       | Milvus dml max search vps                     | `unset`                                                |
+| `quotaAndLimits.dql.searchRate.min`       | Milvus dml min search vps                     | `unset`                                                |
+| `quotaAndLimits.dql.queryRate.max`        | Milvus dml max query qps                      | `unset`                                                |
+| `quotaAndLimits.dql.queryRate.min`        | Milvus dml max query qps                      | `unset`                                                |
+| `quotaAndLimits.limitWriting.forceDeny`   | Deny write requests if quota exceeded         | `false`                                                |
+| `quotaAndLimits.limitWriting.ttProtection.enabled`   | Enable milvus time tick protection         | `true`                                                |
+| `quotaAndLimits.limitWriting.ttProtection.maxTimeTickDelay`   | Max time tick delay in seconds        | `30`                                                |
+| `quotaAndLimits.limitWriting.memProtection.enabled`   | Enable milvus memory protection         | `true`                                                |
+| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryLowWaterLevel`     | Low water level for data node      | `0.8`                                                |
+| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel`    | High water level for data node     | `0.9`                                                |
+ | `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel`   | Low water level for query node     | `0.8`                                                |
+| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel`   | High water level for query node    | `0.9`                                                |
+| `quotaAndLimits.limitReading.forceDeny`   | Deny read requests if quota exceeded          | `false`                                                |
+| `quotaAndLimits.limitReading.queueProtection.nqInQueueThreshold`   | NQ in queue threshold         | `unset`                                                |
+| `quotaAndLimits.limitReading.queueProtection.queueLatencyThreshold`   | Queue latency threshold         | `unset`                                                |
+| `quotaAndLimits.limitReading.queueProtection.coolOffSpeed`   | Cooloff speed         | `0.9`                                                |
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
 | `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
 | `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
