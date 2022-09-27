@@ -360,4 +360,60 @@ common:
   storageType: minio
   mem_purge_ratio: 0.2 # in Linux os, if memory-fragmentation-size >= used-memory * ${mem_purge_ratio}, then do `malloc_trim`
 
+quotaAndLimits:
+  enabled: {{ .Values.quotaAndLimits.enabled }}
+  quotaCenterCollectInterval: {{ .Values.quotaAndLimits.quotaCenterCollectInterval }}  # seconds
+
+  ddl:
+    enabled: {{ .Values.quotaAndLimits.ddl.enabled }}
+    collectionRate: {{ .Values.quotaAndLimits.ddl.collectionRate }}
+    partitionRate: {{ .Values.quotaAndLimits.ddl.partitionRate }}
+    indexRate: {{ .Values.quotaAndLimits.ddl.indexRate }}
+    flushRate: {{ .Values.quotaAndLimits.ddl.flushRate }}
+    compactionRate: {{ .Values.quotaAndLimits.ddl.compactionRate }}
+
+  dml:
+    enabled: {{ .Values.quotaAndLimits.dml.enabled }}
+    insertRate:
+      max: {{ .Values.quotaAndLimits.dml.insertRate.max }}
+      min: {{ .Values.quotaAndLimits.dml.insertRate.min}}
+    deleteRate:
+      max: {{ .Values.quotaAndLimits.dml.deleteRate.max }}
+      min: {{ .Values.quotaAndLimits.dml.deleteRate.min}}
+    bulkLoadRate:
+      max: {{ .Values.quotaAndLimits.dml.bulkLoadRate.max }}
+      min: {{ .Values.quotaAndLimits.dml.bulkLoadRate.min }}
+
+  dql:
+    enabled: {{ .Values.quotaAndLimits.dql.enabled }}
+    searchRate:
+      max: {{ .Values.quotaAndLimits.dql.searchRate.max }}
+      min: {{ .Values.quotaAndLimits.dql.searchRate.min }}
+    queryRate:
+      max: {{ .Values.quotaAndLimits.dql.queryRate.max }}
+      min: {{ .Values.quotaAndLimits.dql.queryRate.min }}
+
+  limitWriting:
+    forceDeny: {{ .Values.quotaAndLimits.limitWriting.forceDeny }}
+
+    ttProtection:
+      enabled: {{ .Values.quotaAndLimits.limitWriting.ttProtection.enabled }}
+      maxTimeTickDelay: {{ .Values.quotaAndLimits.limitWriting.ttProtection.maxTimeTickDelay }}  # seconds
+
+    memProtection:
+      enabled: {{ .Values.quotaAndLimits.limitWriting.memProtection.enabled }}
+      dataNodeMemoryLowWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.dataNodeMemoryLowWaterLevel }}
+      dataNodeMemoryHighWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel }}
+      queryNodeMemoryLowWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel }}
+      queryNodeMemoryHighWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel }}
+
+  limitReading:
+    forceDeny: {{ .Values.quotaAndLimits.limitReading.forceDeny }}
+
+    queueProtection:
+      enabled: {{ .Values.quotaAndLimits.limitReading.queueProtection.enabled }}
+      nqInQueueThreshold: {{ .Values.quotaAndLimits.limitReading.queueProtection.nqInQueueThreshold }}
+      queueLatencyThreshold: {{ .Values.quotaAndLimits.limitReading.queueProtection.queueLatencyThreshold }}
+      coolOffSpeed: {{ .Values.quotaAndLimits.limitReading.queueProtection.coolOffSpeed }}
+
 {{- end }}
