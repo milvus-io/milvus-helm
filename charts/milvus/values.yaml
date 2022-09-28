@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: milvusdb/milvus
-    tag: v2.1.2
+    tag: v2.1.3
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -185,14 +185,14 @@ quotaAndLimits:
   dml:
     enabled: false
     insertRate:
-      max:  # MB/s, default no limit
-      min:  # MB/s, default 0
+      max:    # MB/s, default no limit
+      min: 0  # MB/s, default 0
     deleteRate:
-      max:  # MB/s, default no limit
-      min:  # MB/s, default 0
-    bulkLoadRate:  # not support yet. TODO: limit bulkLoad rate
-      max:  # MB/s, default no limit
-      min:  # MB/s, default 0
+      max:    # MB/s, default no limit
+      min: 0  # MB/s, default 0
+    bulkLoadRate:
+      max:    # MB/s, default no limit
+      min: 0  # MB/s, default 0
 
   # dql limit rates, default no limit.
   # The maximum rate will not be greater than `max`,
@@ -200,11 +200,11 @@ quotaAndLimits:
   dql:
     enabled: false
     searchRate:
-      max:  # vps, default no limit
-      min:  # vps, default 0
+      max:    # vps, default no limit
+      min: 0  # vps, default 0
     queryRate:
-      max:  # qps, default no limit
-      min:  # qps, default 0
+      max:    # qps, default no limit
+      min: 0  # qps, default 0
 
   # limitWriting decides whether dml requests are allowed.
   limitWriting:
@@ -392,6 +392,7 @@ queryNode:
 
   grouping:
     enabled: true    # Grouping small nq search
+    maxNQ: 1000
 
 indexCoordinator:
   enabled: true
@@ -458,6 +459,8 @@ dataCoordinator:
 
   segment:
     maxSize: 512  # Maximum size of a segment in MB
+    sealProportion: 0.25  # Minimum proportion for a segment which can be sealed
+    maxLife: 3600  # The max lifetime of segment in seconds, 24*60*60
 
   compaction:
     enableAutoCompaction: true
@@ -494,7 +497,7 @@ dataNode:
 
 common:
   compaction:
-    retentionDuration: 432000  # 5 days in seconds
+    retentionDuration: 0  # time travel reserved time, insert/delete will not be cleaned in this period.
   # Default value: auto
   # Valid values: [auto, avx512, avx2, avx, sse4_2]
   simdType: auto

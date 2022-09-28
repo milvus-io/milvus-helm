@@ -98,7 +98,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `true`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
-| `image.all.tag`                           | Image tag                                     | `v2.1.2`                           |
+| `image.all.tag`                           | Image tag                                     | `v2.1.3`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
@@ -305,6 +305,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
 | `queryNode.grouping.enabled`              | Enable grouping small nq search |               `true`                                     |
+| `queryNode.grouping.maxNQ`                | Grouping small nq search max threshold |               `1000`                                     |
 
 ### Milvus Index Coordinator Deployment Configuration
 
@@ -362,6 +363,9 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
 | `dataCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
 | `dataCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
+| `dataCoordinator.segment.maxSize`         | Maximum size of a segment in MB                   | `512`                                          |
+| `dataCoordinator.segment.sealProportion`         | Minimum proportion for a segment which can be sealed                   | `0.25`                                          |
+| `dataCoordinator.segment.maxLife`         | Maximum lifetime of a segment in seconds                   | `3600`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
