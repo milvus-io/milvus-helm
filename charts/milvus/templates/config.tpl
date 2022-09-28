@@ -226,7 +226,7 @@ queryNode:
 
   grouping:
     enabled: {{ .Values.queryNode.grouping.enabled }}
-    maxNQ: 1000
+    maxNQ: "{{ .Values.queryNode.grouping.maxNQ }}"
     topKMergeRatio: 10.0
 
 
@@ -267,9 +267,9 @@ dataCoord:
 
   segment:
     maxSize: "{{ .Values.dataCoordinator.segment.maxSize }}"  # Maximum size of a segment in MB
-    sealProportion: 0.25 # It's the minimum proportion for a segment which can be sealed
+    sealProportion: "{{ .Values.dataCoordinator.segment.sealProportion }}" # It's the minimum proportion for a segment which can be sealed
     assignmentExpiration: 2000 # The time of the assignment expiration in ms
-    maxLife: 86400 # The max lifetime of segment in seconds, 24*60*60
+    maxLife: "{{ .Values.dataCoordinator.segment.maxLife }}" # The max lifetime of segment in seconds, 60*60
 
   compaction:
     enableAutoCompaction: {{ .Values.dataCoordinator.compaction.enableAutoCompaction }}
