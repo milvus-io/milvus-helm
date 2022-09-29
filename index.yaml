@@ -2,6 +2,62 @@ apiVersion: v1
 entries:
   milvus:
   - apiVersion: v1
+    appVersion: 2.1.4
+    created: "2022-09-29T09:01:26.885690025Z"
+    dependencies:
+    - condition: etcd.enabled
+      name: etcd
+      repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
+      tags:
+      - etcd
+      version: 6.3.3
+    - condition: minio.enabled
+      name: minio
+      repository: https://milvus-io.github.io/milvus-helm
+      tags:
+      - minio
+      version: 8.0.14
+    - condition: pulsar.enabled
+      name: pulsar
+      repository: https://pulsar.apache.org/charts
+      tags:
+      - pulsar
+      version: 2.7.8
+    - condition: kafka.enabled
+      name: kafka
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - kafka
+      version: 15.5.1
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
+      tags:
+      - mysql
+      version: 8.5.3
+    description: Milvus is an open-source vector database built to power AI applications
+      and vector similarity search.
+    digest: 3d7a0c4488e5adf8170ed2b1801fef1c03e6c5ed025886afcc5f54481049d575
+    home: https://milvus.io/
+    icon: https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png
+    keywords:
+    - milvus
+    - elastic
+    - vector
+    - search
+    - deploy
+    kubeVersion: ^1.10.0-0
+    maintainers:
+    - email: contact@milvus.io
+      name: contact
+      url: milvus.io
+    name: milvus
+    sources:
+    - https://github.com/milvus-io/milvus
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/milvus-3.2.4/milvus-3.2.4.tgz
+    version: 3.2.4
+  - apiVersion: v1
     appVersion: 2.1.3
     created: "2022-09-28T10:45:40.588490797Z"
     dependencies:
@@ -6241,4 +6297,4 @@ entries:
     urls:
     - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.10/minio-8.0.10.tgz
     version: 8.0.10
-generated: "2022-09-28T10:45:40.589989617Z"
+generated: "2022-09-29T09:01:26.886994545Z"
