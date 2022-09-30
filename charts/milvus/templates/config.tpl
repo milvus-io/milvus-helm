@@ -193,6 +193,13 @@ queryCoord:
   overloadedMemoryThresholdPercentage: 90
   balanceIntervalSeconds: 60
   memoryUsageMaxDifferencePercentage: 30
+  checkInterval: "{{ .Values.queryCoordinator.checkInterval }}"
+  channelTaskTimeout: "{{ .Values.queryCoordinator.channelTaskTimeout }}"
+  segmentTaskTimeout: "{{ .Values.queryCoordinator.segmentTaskTimeout }}"
+  distPullInterval: "{{ .Values.queryCoordinator.distPullInterval }}"
+  loadTimeoutSeconds: "{{ .Values.queryCoordinator.loadTimeoutSeconds }}"
+  checkHandoffInterval: "{{ .Values.queryCoordinator.checkHandoffInterval }}"
+  taskMergeCap: "{{ .Values.queryCoordinator.taskMergeCap }}"
 
 queryNode:
   port: 21123
@@ -267,6 +274,7 @@ dataCoord:
 
   segment:
     maxSize: "{{ .Values.dataCoordinator.segment.maxSize }}"  # Maximum size of a segment in MB
+    diskSegmentMaxSize: "{{ .Values.dataCoordinator.segment.diskSegmentMaxSize }}" # Maximum size of segment in MB for disk index collection
     sealProportion: "{{ .Values.dataCoordinator.segment.sealProportion }}" # It's the minimum proportion for a segment which can be sealed
     assignmentExpiration: 2000 # The time of the assignment expiration in ms
     maxLife: "{{ .Values.dataCoordinator.segment.maxLife }}" # The max lifetime of segment in seconds, 60*60
