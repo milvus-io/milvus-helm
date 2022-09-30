@@ -782,8 +782,8 @@ pulsar:
         -XX:+ExitOnOutOfMemoryError
       maxMessageSize: "104857600"
       defaultRetentionTimeInMinutes: "10080"
-      defaultRetentionSizeInMB: "8192"
       backlogQuotaDefaultLimitGB: "8"
+      ttlDurationDefaultInSeconds: "259200"
       backlogQuotaDefaultRetentionPolicy: producer_exception
 
   autorecovery:
