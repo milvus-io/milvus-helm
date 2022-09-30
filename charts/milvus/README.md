@@ -364,6 +364,7 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
 | `dataCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
 | `dataCoordinator.segment.maxSize`         | Maximum size of a segment in MB                   | `512`                                          |
+| `dataCoordinator.segment.diskSegmentMaxSize`         | Maximum size of a segment in MB for disk index collection                   | `2048`                                          |
 | `dataCoordinator.segment.sealProportion`         | Minimum proportion for a segment which can be sealed                   | `0.25`                                          |
 | `dataCoordinator.segment.maxLife`         | Maximum lifetime of a segment in seconds                   | `3600`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |

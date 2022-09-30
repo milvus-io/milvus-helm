@@ -369,6 +369,13 @@ queryCoordinator:
 
   autoHandoff: true  # Enable auto handoff
   autoBalance: true  # Disable auto balance
+  checkInterval: 1000  # 1000ms
+  channelTaskTimeout: 60000   # 1 minute
+  segmentTaskTimeout: 120000  # 2 minute
+  distPullInterval: 500  # 500ms
+  loadTimeoutSeconds: 600
+  checkHandoffInterval: 5000  # 5000ms
+  taskMergeCap: 8
 
 queryNode:
   enabled: true
@@ -459,6 +466,7 @@ dataCoordinator:
 
   segment:
     maxSize: 512  # Maximum size of a segment in MB
+    diskSegmentMaxSize: 2048  # Maximum segment size in MB for disk index collection
     sealProportion: 0.25  # Minimum proportion for a segment which can be sealed
     maxLife: 3600  # The max lifetime of segment in seconds, 24*60*60
 
