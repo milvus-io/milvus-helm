@@ -376,30 +376,32 @@ quotaAndLimits:
     enabled: {{ .Values.quotaAndLimits.ddl.enabled }}
     collectionRate: {{ .Values.quotaAndLimits.ddl.collectionRate }}
     partitionRate: {{ .Values.quotaAndLimits.ddl.partitionRate }}
-    indexRate: {{ .Values.quotaAndLimits.ddl.indexRate }}
-    flushRate: {{ .Values.quotaAndLimits.ddl.flushRate }}
-    compactionRate: {{ .Values.quotaAndLimits.ddl.compactionRate }}
+
+  indexRate:
+    enabled: {{ .Values.quotaAndLimits.indexRate.enabled }}
+    max: {{ .Values.quotaAndLimits.indexRate.max }}
+  flushRate:
+    enabled: {{ .Values.quotaAndLimits.flushRate.enabled }}
+    max: {{ .Values.quotaAndLimits.flushRate.max }}
+  compactionRate:
+    enabled: {{ .Values.quotaAndLimits.compactionRate.enabled }}
+    max: {{ .Values.quotaAndLimits.compactionRate.max }}
 
   dml:
     enabled: {{ .Values.quotaAndLimits.dml.enabled }}
     insertRate:
       max: {{ .Values.quotaAndLimits.dml.insertRate.max }}
-      min: {{ .Values.quotaAndLimits.dml.insertRate.min}}
     deleteRate:
       max: {{ .Values.quotaAndLimits.dml.deleteRate.max }}
-      min: {{ .Values.quotaAndLimits.dml.deleteRate.min}}
     bulkLoadRate:
       max: {{ .Values.quotaAndLimits.dml.bulkLoadRate.max }}
-      min: {{ .Values.quotaAndLimits.dml.bulkLoadRate.min }}
 
   dql:
     enabled: {{ .Values.quotaAndLimits.dql.enabled }}
     searchRate:
       max: {{ .Values.quotaAndLimits.dql.searchRate.max }}
-      min: {{ .Values.quotaAndLimits.dql.searchRate.min }}
     queryRate:
       max: {{ .Values.quotaAndLimits.dql.queryRate.max }}
-      min: {{ .Values.quotaAndLimits.dql.queryRate.min }}
 
   limitWriting:
     forceDeny: {{ .Values.quotaAndLimits.limitWriting.forceDeny }}
