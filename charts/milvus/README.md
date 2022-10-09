@@ -137,32 +137,31 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `quotaAndLimits.enabled`                  | Enable milvus quota and limits                | `false`                                                |
 | `quotaAndLimits.quotaCenterCollectInterval`                  | Collect metrics interval                | `3`                                                |
 | `quotaAndLimits.ddl.eabled`               | Enable milvus ddl limit                       | `false`                                                |
-| `quotaAndLimits.ddl.collectionRate`       | Milvus ddl collection rate per minute         | `unset`                                                |
-| `quotaAndLimits.ddl.partitionRate`        | Milvus ddl partition rate per minute          | `unset`                                                |
-| `quotaAndLimits.ddl.indexRate`            | Milvus ddl index rate per minute              | `unset`                                                |
-| `quotaAndLimits.ddl.flushRate`            | Milvus ddl flush rate per minute              | `unset`                                                |
-| `quotaAndLimits.ddl.compactionRate`       | Milvus ddl compaction rate per minute         | `unset`                                                |
+| `quotaAndLimits.ddl.collectionRate`       | Milvus ddl collection rate qps                | `unset`                                                |
+| `quotaAndLimits.ddl.partitionRate`        | Milvus ddl partition rate qps                 | `unset`                                                |
+| `quotaAndLimits.indexRate.eabled`         | Enable milvus index rate limit                | `false`                                                |
+| `quotaAndLimits.indexRate.max`            | Milvus max index rate qps                     | `unset`                                                |
+| `quotaAndLimits.flushRate.eabled`         | Enable milvus flush rate limit                | `false`                                                |
+| `quotaAndLimits.flushRate.max`            | Milvus max flush rate qps                     | `unset`                                                |
+| `quotaAndLimits.compactionRate.eabled`    | Enable milvus compaction rate limit           | `false`                                                |
+| `quotaAndLimits.compactionRate.max`       | Milvus max compaction rate qps                | `unset`                                                |
 | `quotaAndLimits.dml.eabled`               | Enable milvus dml limit                       | `false`                                                |
 | `quotaAndLimits.dml.insertRate.max`       | Milvus dml max insert rate MB/s               | `unset`                                                |
-| `quotaAndLimits.dml.insertRate.min`       | Milvus dml min insert rate MB/s               | `unset`                                                |
 | `quotaAndLimits.dml.deleteRate.max`       | Milvus dml max delete rate MB/s               | `unset`                                                |
-| `quotaAndLimits.dml.deleteRate.min`       | Milvus dml min delete rate MB/s               | `unset`                                                |
 | `quotaAndLimits.dml.bulkLoadRate.max`     | Milvus dml max bulk load rate MB/s            | `unset`                                                |
-| `quotaAndLimits.dml.bulkLoadRate.min`     | Milvus dml min bulk load rate MB/s            | `unset`                                                |
 | `quotaAndLimits.dql.eabled`               | Enable milvus dql limit                       | `false`                                                |
 | `quotaAndLimits.dql.searchRate.max`       | Milvus dml max search vps                     | `unset`                                                |
-| `quotaAndLimits.dql.searchRate.min`       | Milvus dml min search vps                     | `unset`                                                |
 | `quotaAndLimits.dql.queryRate.max`        | Milvus dml max query qps                      | `unset`                                                |
-| `quotaAndLimits.dql.queryRate.min`        | Milvus dml max query qps                      | `unset`                                                |
 | `quotaAndLimits.limitWriting.forceDeny`   | Deny write requests if quota exceeded         | `false`                                                |
 | `quotaAndLimits.limitWriting.ttProtection.enabled`   | Enable milvus time tick protection         | `true`                                                |
 | `quotaAndLimits.limitWriting.ttProtection.maxTimeTickDelay`   | Max time tick delay in seconds        | `30`                                                |
 | `quotaAndLimits.limitWriting.memProtection.enabled`   | Enable milvus memory protection         | `true`                                                |
-| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryLowWaterLevel`     | Low water level for data node      | `0.8`                                                |
-| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel`    | High water level for data node     | `0.9`                                                |
- | `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel`   | Low water level for query node     | `0.8`                                                |
-| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel`   | High water level for query node    | `0.9`                                                |
+| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryLowWaterLevel`     | Low water level for data node      | `0.85`                                                |
+| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel`    | High water level for data node     | `0.95`                                                |
+| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel`   | Low water level for query node     | `0.85`                                                |
+| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel`   | High water level for query node    | `0.95`                                                |
 | `quotaAndLimits.limitReading.forceDeny`   | Deny read requests if quota exceeded          | `false`                                                |
+| `quotaAndLimits.limitReading.queueProtection.enabled`   | Enable queue protection         | `false`                                                |
 | `quotaAndLimits.limitReading.queueProtection.nqInQueueThreshold`   | NQ in queue threshold         | `unset`                                                |
 | `quotaAndLimits.limitReading.queueProtection.queueLatencyThreshold`   | Queue latency threshold         | `unset`                                                |
 | `quotaAndLimits.limitReading.queueProtection.coolOffSpeed`   | Cooloff speed         | `0.9`                                                |
