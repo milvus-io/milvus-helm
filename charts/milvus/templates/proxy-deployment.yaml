@@ -32,6 +32,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{ include "milvus.ud.annotations" . | indent 8 }}
     spec:
+      serviceAccountName: {{ include "milvus.serviceAccount" . }}
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.image.all.pullSecrets }}
