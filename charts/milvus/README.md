@@ -369,7 +369,10 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.segment.maxSize`         | Maximum size of a segment in MB                   | `512`                                          |
 | `dataCoordinator.segment.diskSegmentMaxSize`         | Maximum size of a segment in MB for disk index collection                   | `2048`                                          |
 | `dataCoordinator.segment.sealProportion`         | Minimum proportion for a segment which can be sealed                   | `0.25`                                          |
-| `dataCoordinator.segment.maxLife`         | Maximum lifetime of a segment in seconds                   | `3600`                                          |
+| `dataCoordinator.segment.maxLife`                | Maximum lifetime of a segment in seconds                   | `3600`                                          |
+| `dataCoordinator.segment.maxIdleTime`            | Maximum idle time for growing segment in seconds           | `300`                                          |
+| `dataCoordinator.segment.minSizeFromIdleToSealed`         | The minimum size in MB of segment which can be idle from sealed                   | `16`                                          |
+| `dataCoordinator.segment.smallProportion`         | The proportion for a sealed segment, which would not be compacted                   | `0.9`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
