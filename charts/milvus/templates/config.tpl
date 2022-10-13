@@ -278,6 +278,9 @@ dataCoord:
     sealProportion: "{{ .Values.dataCoordinator.segment.sealProportion }}" # It's the minimum proportion for a segment which can be sealed
     assignmentExpiration: 2000 # The time of the assignment expiration in ms
     maxLife: "{{ .Values.dataCoordinator.segment.maxLife }}" # The max lifetime of segment in seconds, 60*60
+    maxIdleTime: "{{ .Values.dataCoordinator.segment.maxIdleTime }}" # The maximum idle time of a growing segment in seconds, 5*60
+    minSizeFromIdleToSealed: "{{ .Values.dataCoordinator.segment.minSizeFromIdleToSealed }}"  # The minimum size in MB of segment which can be idle from sealed
+    smallProportion: "{{ .Values.dataCoordinator.segment.smallProportion }}" # The proportion for a sealed segment, which would not be compacted
 
   compaction:
     enableAutoCompaction: {{ .Values.dataCoordinator.compaction.enableAutoCompaction }}

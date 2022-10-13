@@ -473,7 +473,10 @@ dataCoordinator:
     maxSize: 512  # Maximum size of a segment in MB
     diskSegmentMaxSize: 2048  # Maximum segment size in MB for disk index collection
     sealProportion: 0.25  # Minimum proportion for a segment which can be sealed
-    maxLife: 3600  # The max lifetime of segment in seconds, 24*60*60
+    maxLife: 3600  # The max lifetime of segment in seconds, 60*60
+    maxIdleTime: 300  # The maximum idle time of a growing segment in seconds, 5*60
+    minSizeFromIdleToSealed: 16  # The minimum size in MB of segment which can be idle from sealed
+    smallProportion: 0.9  # The proportion for a sealed segment, which would not be compacted
 
   compaction:
     enableAutoCompaction: true
