@@ -419,6 +419,9 @@ quotaAndLimits:
       dataNodeMemoryHighWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel }}
       queryNodeMemoryLowWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel }}
       queryNodeMemoryHighWaterLevel: {{ .Values.quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel }}
+    diskProtection:
+      enabled: {{ .Values.quotaAndLimits.limitWriting.diskProtection.enabled }}
+      diskQuota: {{ .Values.quotaAndLimits.limitWriting.diskProtection.diskQuota }}
 
   limitReading:
     forceDeny: {{ .Values.quotaAndLimits.limitReading.forceDeny }}
@@ -427,6 +430,11 @@ quotaAndLimits:
       enabled: {{ .Values.quotaAndLimits.limitReading.queueProtection.enabled }}
       nqInQueueThreshold: {{ .Values.quotaAndLimits.limitReading.queueProtection.nqInQueueThreshold }}
       queueLatencyThreshold: {{ .Values.quotaAndLimits.limitReading.queueProtection.queueLatencyThreshold }}
-      coolOffSpeed: {{ .Values.quotaAndLimits.limitReading.queueProtection.coolOffSpeed }}
+
+    resultProtection:
+      enabled: {{ .Values.quotaAndLimits.limitReading.resultProtection.enabled }}
+      maxReadResultRate: {{ .Values.quotaAndLimits.limitReading.resultProtection.maxReadResultRate }}
+
+    coolOffSpeed: {{ .Values.quotaAndLimits.limitReading.coolOffSpeed }}
 
 {{- end }}
