@@ -7,7 +7,7 @@ dependencies:
   version: 8.0.14
 - name: pulsar
   repository: https://pulsar.apache.org/charts
-  version: 2.7.8
+  version: 2.9.4
 - name: kafka
   repository: https://charts.bitnami.com/bitnami
   version: 15.5.1
