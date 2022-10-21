@@ -65,6 +65,13 @@ spec:
         - name: LD_LIBRARY_PATH
           value: /milvus/tools/heaptrack/lib:/milvus/lib:/usr/lib
         {{- end }}
+        {{- if .Values.queryNode.disk.size.enabled }}
+        - name: LOCAL_STORAGE_SIZE
+          valueFrom:
+            resourceFieldRef:
+              divisor: 1Gi
+              resource: limits.ephemeral-storage
+        {{- end }}
         {{- if .Values.queryNode.extraEnv }}
           {{- toYaml .Values.queryNode.extraEnv | nindent 8 }}
         {{- end }}
