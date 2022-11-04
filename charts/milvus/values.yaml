@@ -398,7 +398,7 @@ queryCoordinator:
   distPullInterval: 500  # 500ms
   loadTimeoutSeconds: 600
   checkHandoffInterval: 5000  # 5000ms
-  taskMergeCap: 8
+  taskMergeCap: 16
 
 queryNode:
   enabled: true
@@ -421,8 +421,6 @@ queryNode:
       enabled: false  # Enable local storage size limit
   profiling:
     enabled: false  # Enable live profiling
-    size:
-      enabled: false  # Enable local storage size limit
 
   segcore:
     chunkRows: 1024  # The number of vectors in a chunk.
