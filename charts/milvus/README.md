@@ -210,7 +210,7 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
 | `standalone.heaptrack.enabled`            | Whether to enable heaptrack                             | `false`                                          |
-| `standalone.disk.enabled`                 | Whether to enable disk                             | `false`                                          |
+| `standalone.disk.enabled`                 | Whether to enable disk                             | `true`                                          |
 | `standalone.profiling.enabled`            | Whether to enable live profiling                   | `false`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
 | `standalone.messageQueue`                     | Message queue for Milvus Standalone: rocksmq, pulsar, kafka | `rocksmq`                                     |
@@ -304,7 +304,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.affinity`                      | Affinity settings for Milvus Query Node pods assignment | `{}`                                          |
 | `queryNode.tolerations`                   | Toleration labels for Milvus Query Node pods assignment | `[]`                                          |
 | `queryNode.heaptrack.enabled`             | Whether to enable heaptrack                             | `false`                                          |
-| `queryNode.disk.enabled`                  | Whether to enable disk for query                             | `false`                                          |
+| `queryNode.disk.enabled`                  | Whether to enable disk for query                             | `true`                                          |
 | `queryNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
 | `queryNode.grouping.enabled`              | Enable grouping small nq search |               `true`                                     |
@@ -348,7 +348,7 @@ The following table lists the configurable parameters of the Milvus Index Node c
 | `indexNode.affinity`                      | Affinity settings for Milvus Index Node pods assignment | `{}`                                          |
 | `indexNode.tolerations`                   | Toleration labels for Milvus Index Node pods assignment | `[]`                                          |
 | `indexNode.heaptrack.enabled`             | Whether to enable heaptrack                             | `false`                                          |
-| `indexNode.disk.enabled`                  | Whether to enable disk for index node                             | `false`                                          |
+| `indexNode.disk.enabled`                  | Whether to enable disk for index node                             | `true`                                          |
 | `indexNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
 | `indexNode.scheduler.buildParallel`       | Index task build paralellism | `1`                                     |
