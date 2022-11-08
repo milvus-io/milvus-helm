@@ -284,7 +284,7 @@ standalone:
   heaptrack:
     enabled: false
   disk:
-    enabled: false
+    enabled: true
     size:
       enabled: false  # Enable local storage size limit
   profiling:
@@ -416,7 +416,7 @@ queryNode:
   heaptrack:
     enabled: false
   disk:
-    enabled: false  # Enable querynode load disk index, and search on disk index
+    enabled: true  # Enable querynode load disk index, and search on disk index
     size:
       enabled: false  # Enable local storage size limit
   profiling:
@@ -471,7 +471,7 @@ indexNode:
   profiling:
     enabled: false  # Enable live profiling
   disk:
-    enabled: false  # Enable index node build disk vector index
+    enabled: true  # Enable index node build disk vector index
     size:
       enabled: false  # Enable local storage size limit
 
