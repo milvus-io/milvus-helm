@@ -545,6 +545,8 @@ common:
   # Default value: auto
   # Valid values: [auto, avx512, avx2, avx, sse4_2]
   simdType: auto
+  # Specify how many times the number of threads in pool is the number of cores
+  threadCoreCoefficient: "10"
 
 attu:
   enabled: false

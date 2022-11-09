@@ -367,6 +367,7 @@ common:
     authorizationEnabled: {{ .Values.authorization.enabled }}
   simdType: {{ .Values.common.simdType }}  # default to auto
   indexSliceSize: 16 # MB
+  threadCoreCoefficient: {{ .Values.common.threadCoreCoefficient }} // default to 10
 
   storageType: minio
   mem_purge_ratio: 0.2 # in Linux os, if memory-fragmentation-size >= used-memory * ${mem_purge_ratio}, then do `malloc_trim`
