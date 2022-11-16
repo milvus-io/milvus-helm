@@ -40,8 +40,8 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      {{- if .Values.standalone.heaptrack.enabled }}
       initContainers:
+      {{- if .Values.standalone.heaptrack.enabled }}
       - name: heaptrack
         command:
         - /bin/bash
@@ -51,16 +51,26 @@ spec:
         imagePullPolicy: {{ .Values.heaptrack.image.pullPolicy }}
         volumeMounts:
         - mountPath: /milvus/tools
-          name: heaptrack
+          name: tools
       {{- end }}
+      - name: config
+        command:
+        - /cp
+        - /run-helm.sh,/merge
+        - /milvus/tools/run-helm.sh,/milvus/tools/merge
+        image: "{{ .Values.image.tools.repository }}:{{ .Values.image.tools.tag }}"
+        imagePullPolicy: {{ .Values.image.tools.pullPolicy}}
+        volumeMounts:
+        - mountPath: /milvus/tools
+          name: tools
       containers:
       - name: standalone
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         {{- if .Values.standalone.heaptrack.enabled }}
-        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "standalone" ]
+        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "/milvus/tools/run-helm.sh", "milvus", "run", "standalone" ]
         {{- else }}
-        args: [ "milvus", "run", "standalone" ]
+        args: [ "/milvus/tools/run-helm.sh", "milvus", "run", "standalone" ]
         {{- end }}
         ports:
           - name: milvus
@@ -109,9 +119,15 @@ spec:
           {{- toYaml .Values.standalone.extraEnv | nindent 8 }}
         {{- end }}
         volumeMounts:
+        - mountPath: /milvus/tools
+          name: tools
         - name: milvus-config
-          mountPath: /milvus/configs/milvus.yaml
-          subPath: milvus.yaml
+          mountPath: /milvus/configs/default.yaml
+          subPath: default.yaml
+          readOnly: true
+        - name: milvus-config
+          mountPath: /milvus/configs/user.yaml
+          subPath: user.yaml
           readOnly: true
         - name: milvus-data-disk
           mountPath: {{ .Values.standalone.persistence.mountPath | quote }}
@@ -156,6 +172,8 @@ spec:
     {{- end }}
 
       volumes:
+      - emptyDir: {}
+        name: tools
       - name: milvus-config
         configMap:
           name: {{ template "milvus.fullname" . }}
@@ -170,10 +188,6 @@ spec:
       - name: milvus-logs-disk
         persistentVolumeClaim:
           claimName: {{ .Values.log.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
-      {{- end }}
-      {{- if .Values.standalone.heaptrack.enabled }}
-      - name: heaptrack
-        emptyDir: {}
       {{- end }}
       {{- if .Values.standalone.disk.enabled }}
       - name: disk

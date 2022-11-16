@@ -102,12 +102,16 @@ minio:
 
 {{- if .Values.externalPulsar.enabled }}
 
+messageQueue: pulsar
+
 pulsar:
   address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
   maxMessageSize: {{ .Values.externalPulsar.maxMessageSize }}
 
 {{- else if .Values.pulsar.enabled }}
+
+messageQueue: pulsar
 
 pulsar:
 {{- if contains .Values.pulsar.name .Release.Name }}
@@ -121,6 +125,8 @@ pulsar:
 
 {{- if .Values.externalKafka.enabled }}
 
+messageQueue: kafka
+
 kafka:
   brokerList: {{ .Values.externalKafka.brokerList }}
   securityProtocol: {{ .Values.externalKafka.securityProtocol }}
@@ -133,6 +139,8 @@ kafka:
 {{- end }}
 {{- else if .Values.kafka.enabled }}
 
+messageQueue: kafka
+
 kafka:
 {{- if contains .Values.kafka.name .Release.Name }}
   brokerList: {{ .Release.Name }}:{{ .Values.kafka.service.ports.client }}
@@ -142,6 +150,8 @@ kafka:
 {{- end }}
 
 {{- if and (not .Values.cluster.enabled) (eq .Values.standalone.messageQueue "rocksmq") }}
+
+messageQueue: rocksmq
 
 rocksmq:
   path: "{{ .Values.standalone.persistence.mountPath }}/rdb_data"
@@ -228,7 +238,7 @@ queryNode:
   scheduler:
     receiveChanSize: 10240
     unsolvedQueueSize: 10240
-    maxReadConcurrency: 0 # maximum concurrency of read task. if set to less or equal 0, it means no uppper limit.
+    maxReadConcurrentRatio: "{{ .Values.queryNode.scheduler.maxReadConcurrentRatio }}"
     cpuRatio: 10.0 # ratio used to estimate read task cpu usage.
 
   grouping:
