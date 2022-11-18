@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: milvusdb/milvus
-    tag: v2.1.4
+    tag: v2.2.0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -510,9 +510,9 @@ dataCoordinator:
     enableAutoCompaction: true
 
   gc:
-    interval: 60   # gc interval in seconds
-    missingTolerance: 3600  # file meta missing tolerance duration in seconds, 1 day
-    dropTolerance: 3600  # file belongs to dropped entity tolerance duration in seconds, 1 day
+    interval: 3600   # gc interval in seconds
+    missingTolerance: 86400  # file meta missing tolerance duration in seconds, 1 day
+    dropTolerance: 86400  # file belongs to dropped entity tolerance duration in seconds, 1 day
 
 
   service:
@@ -536,8 +536,13 @@ dataNode:
   profiling:
     enabled: false  # Enable live profiling
 
-  flush:
-    insertBufSize: "16777216"  ## bytes, 16MB
+  segment:
+    # Max buffer size to flush for a single segment.
+    insertBufSize: "16777216"  # Bytes, 16 MB
+    # Max buffer size to flush del for a single channel
+    deleteBufBytes: "67108864"  # Bytes, 64MB
+    # The period to sync segments if buffer is not empty.
+    syncPeriod: 600  # Seconds, 10min
 
 common:
   compaction:

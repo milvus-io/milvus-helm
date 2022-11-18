@@ -64,6 +64,8 @@ $ helm upgrade --install my-release milvus/milvus --set pulsar.enabled=false --s
 ```
 
 ### Upgrade an existing Milvus cluster
+> **IMPORTANT** If you have installed a milvus cluster with version below v2.1.x, you need follow the instructions at here: https://github.com/milvus-io/milvus/blob/master/deployments/migrate-meta/README.md. After meta migration, you use `helm upgrade` to update your cluster again.
+
 E.g. to scale out query node from 1(default) to 2:
 ```bash
 # Helm v3.x
