@@ -297,8 +297,10 @@ dataNode:
     flowGraph:
       maxQueueLength: 1024  # Maximum length of task queue in flowgraph
       maxParallelism: 1024  # Maximum number of tasks executed in parallel in the flowgraph
-  flush:
-    insertBufSize: "{{ .Values.dataNode.flush.insertBufSize }}"  # Bytes, 16 MB
+  segment:
+    insertBufSize: "{{ .Values.dataNode.segment.insertBufSize }}"  # Bytes, 16 MB
+    deleteBufBytes: "{{ .Values.dataNode.segment.deleteBufBytes }}"  # Bytes, 64 MB
+    syncPeriod: "{{ .Values.dataNode.segment.syncPeriod }}"  # Seconds, 10min
 
 log:
   level: {{ .Values.log.level }}
@@ -367,7 +369,7 @@ common:
     authorizationEnabled: {{ .Values.authorization.enabled }}
   simdType: {{ .Values.common.simdType }}  # default to auto
   indexSliceSize: 16 # MB
-  threadCoreCoefficient: {{ .Values.common.threadCoreCoefficient }}  # default to 10
+  threadCoreCoefficient: {{ .Values.common.threadCoreCoefficient }}
 
   storageType: minio
   mem_purge_ratio: 0.2 # in Linux os, if memory-fragmentation-size >= used-memory * ${mem_purge_ratio}, then do `malloc_trim`
