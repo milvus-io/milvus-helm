@@ -109,7 +109,7 @@ readinessProbe:
   failureThreshold: 5
 
 log:
-  level: "debug"
+  level: "info"
   file:
     maxSize: 300    # MB
     maxAge: 10    # day
@@ -335,7 +335,7 @@ proxy:
   profiling:
     enabled: false  # Enable live profiling
   http:
-    enabled: false  # whether to enable http rest server
+    enabled: true  # whether to enable http rest server
     debugMode:
       enabled: false
 
