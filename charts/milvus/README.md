@@ -126,7 +126,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`         |
 | `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
 | `authorization.enabled`                   | Enable milvus authorization                   | `false`                                                |
-| `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `debug`          |
+| `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `info`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
 | `log.file.maxBackups`                     | The maximum number of retained logs.          | `20`                                                    |
@@ -242,7 +242,7 @@ The following table lists the configurable parameters of the Milvus Proxy compon
 | `proxy.heaptrack.enabled`                 | Whether to enable heaptrack                             | `false`                                          |
 | `proxy.profiling.enabled`                 | Whether to enable live profiling                   | `false`                                          |
 | `proxy.extraEnv`                          | Additional Milvus Proxy container environment variables | `[]`                                          |
-| `proxy.http.enabled`                          | Enable rest api for Milvus Proxy | `false`                                          |
+| `proxy.http.enabled`                          | Enable rest api for Milvus Proxy | `true`                                          |
 | `proxy.http.debugMode.enabled`                          | Enable debug mode for rest api | `false`                                          |
 
 ### Milvus Root Coordinator Deployment Configuration
