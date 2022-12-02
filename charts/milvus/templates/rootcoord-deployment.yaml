@@ -40,8 +40,8 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      {{- if .Values.rootCoordinator.heaptrack.enabled }}
       initContainers:
+      {{- if .Values.rootCoordinator.heaptrack.enabled }}
       - name: heaptrack
         command:
         - /bin/bash
@@ -51,8 +51,18 @@ spec:
         imagePullPolicy: {{ .Values.heaptrack.image.pullPolicy }}
         volumeMounts:
         - mountPath: /milvus/tools
-          name: heaptrack
+          name: tools
       {{- end }}
+      - name: config
+        command:
+        - /cp
+        - /run-helm.sh,/merge
+        - /milvus/tools/run-helm.sh,/milvus/tools/merge
+        image: "{{ .Values.image.tools.repository }}:{{ .Values.image.tools.tag }}"
+        imagePullPolicy: {{ .Values.image.tools.pullPolicy}}
+        volumeMounts:
+        - mountPath: /milvus/tools
+          name: tools
       containers:
       - name: rootcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
@@ -60,7 +70,7 @@ spec:
         {{- if .Values.rootCoordinator.heaptrack.enabled }}
         args: [ "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "rootcoord" ]
         {{- else }}
-        args: [ "milvus", "run", "rootcoord" ]
+        args: [ "/milvus/tools/run-helm.sh", "milvus", "run", "rootcoord" ]
         {{- end }}
         env:
         {{- if .Values.rootCoordinator.heaptrack.enabled }}
@@ -103,18 +113,20 @@ spec:
           {{- toYaml .Values.rootCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-config
-          mountPath: /milvus/configs/milvus.yaml
-          subPath: milvus.yaml
+          mountPath: /milvus/configs/default.yaml
+          subPath: default.yaml
+          readOnly: true
+        - name: milvus-config
+          mountPath: /milvus/configs/user.yaml
+          subPath: user.yaml
           readOnly: true
         {{- if .Values.log.persistence.enabled }}
         - name: milvus-logs-disk
           mountPath: {{ .Values.log.persistence.mountPath | quote }}
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
-        {{- if .Values.rootCoordinator.heaptrack.enabled }}
         - mountPath: /milvus/tools
-          name: heaptrack
-        {{- end }}
+          name: tools
 
     {{- if and (.Values.nodeSelector) (not .Values.rootCoordinator.nodeSelector) }}
       nodeSelector:
@@ -150,8 +162,6 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Values.log.persistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
       {{- end }}
-      {{- if .Values.rootCoordinator.heaptrack.enabled }}
-      - name: heaptrack
+      - name: tools
         emptyDir: {}
-      {{- end }}
 {{- end }}

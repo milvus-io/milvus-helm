@@ -103,6 +103,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `image.all.tag`                           | Image tag                                     | `v2.1.4`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
+| `extraConfigFiles`                        | Extra config to override default milvus.yaml  | `user.yaml:`                                                     |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
 | `service.port`                            | Port where service is exposed                 | `19530`                                                 |
 | `service.nodePort`                        | Service nodePort                              | `unset`                                                 |
@@ -311,6 +312,7 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
 | `queryNode.grouping.enabled`              | Enable grouping small nq search |               `true`                                     |
 | `queryNode.grouping.maxNQ`                | Grouping small nq search max threshold |               `1000`                                     |
+| `queryNode.scheduler.maxReadConcurrentRatio`                | Concurrency ratio of read tasks |               `2.0`                                     |
 
 ### Milvus Index Coordinator Deployment Configuration
 
