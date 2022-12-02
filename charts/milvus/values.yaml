@@ -1050,6 +1050,10 @@ externalPulsar:
   host: localhost
   port: 6650
   maxMessageSize: 5242880  # 5 * 1024 * 1024 Bytes, Maximum size of each message in pulsar.
+  tenant: public
+  namespace: default
+  authPlugin: ""
+  authParams: ""
 
 ###################################
 # External kafka
