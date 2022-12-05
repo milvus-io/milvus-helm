@@ -245,6 +245,7 @@ The following table lists the configurable parameters of the Milvus Root Coordin
 | `rootCoordinator.tolerations`             | Toleration labels for Milvus Root Coordinator pods assignment | `[]`                                    |
 | `rootCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
 | `rootCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
+| `rootCoordinator.activeStandby.enabled`   | Whether to enable active-standby                   | `false`                                          |
 | `rootCoordinator.extraEnv`                | Additional Milvus Root Coordinator container environment variables | `[]`                               |
 | `rootCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                  |
 | `rootCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                      |
@@ -269,6 +270,7 @@ The following table lists the configurable parameters of the Milvus Query Coordi
 | `queryCoordinator.tolerations`            | Toleration labels for Milvus Query Coordinator pods assignment | `[]`                                   |
 | `queryCoordinator.heaptrack.enabled`      | Whether to enable heaptrack                             | `false`                                          |
 | `queryCoordinator.profiling.enabled`      | Whether to enable live profiling                   | `false`                                          |
+| `queryCoordinator.activeStandby.enabled`  | Whether to enable active-standby                   | `false`                                          |
 | `queryCoordinator.extraEnv`               | Additional Milvus Query Coordinator container environment variables | `[]`                              |
 | `queryCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `queryCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
@@ -310,6 +312,7 @@ The following table lists the configurable parameters of the Milvus Index Coordi
 | `indexCoordinator.tolerations`            | Toleration labels for Milvus Index Coordinator pods assignment | `[]`                                   |
 | `indexCoordinator.heaptrack.enabled`      | Whether to enable heaptrack                             | `false`                                          |
 | `indexCoordinator.profiling.enabled`      | Whether to enable live profiling                   | `false`                                          |
+| `indexCoordinator.activeStandby.enabled`  | Whether to enable active-standby                   | `false`                                          |
 | `indexCoordinator.extraEnv`               | Additional Milvus Index Coordinator container environment variables | `[]`                              |
 | `indexCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `indexCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
@@ -351,6 +354,7 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
 | `dataCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
 | `dataCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
+| `dataCoordinator.activeStandby.enabled`   | Whether to enable active-standby                   | `false`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |

@@ -226,6 +226,7 @@ proxy:
 
 rootCoordinator:
   enabled: true
+  # You can set the number of replicas greater than 1, only if enable active standby
   replicas: 1  # Run Root Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
@@ -236,6 +237,8 @@ rootCoordinator:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
+  activeStandby:
+    enabled: false  # Enable active-standby when you set multiple replicas for root coordinator
 
   service:
     port: 53100
@@ -245,6 +248,7 @@ rootCoordinator:
 
 queryCoordinator:
   enabled: true
+  # You can set the number of replicas greater than 1, only if enable active standby
   replicas: 1  # Run Query Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
@@ -255,6 +259,8 @@ queryCoordinator:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
+  activeStandby:
+    enabled: false  # Enable active-standby when you set multiple replicas for query coordinator
 
   service:
     port: 19531
@@ -284,6 +290,7 @@ queryNode:
 
 indexCoordinator:
   enabled: true
+  # You can set the number of replicas greater than 1, only if enable active standby
   replicas: 1   # Run Index Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
@@ -294,6 +301,8 @@ indexCoordinator:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
+  activeStandby:
+    enabled: false  # Enable active-standby when you set multiple replicas for index coordinator
 
   service:
     port: 31000
@@ -323,6 +332,7 @@ indexNode:
 
 dataCoordinator:
   enabled: true
+  # You can set the number of replicas greater than 1, only if enable active standby
   replicas: 1           # Run Data Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
@@ -333,6 +343,8 @@ dataCoordinator:
     enabled: false
   profiling:
     enabled: true  # Enable live profiling
+  activeStandby:
+    enabled: false  # Enable active-standby when you set multiple replicas for data coordinator
 
   service:
     port: 13333

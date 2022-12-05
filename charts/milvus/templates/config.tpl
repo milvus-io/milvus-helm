@@ -164,6 +164,7 @@ rootCoord:
   address: localhost
 {{- end }}
   port: {{ .Values.rootCoordinator.service.port }}
+  enableActiveStandby: {{ .Values.rootCoordinator.activeStandby.enabled }}  # Enable active-standby
 
 proxy:
   port: 19530
@@ -176,6 +177,8 @@ queryCoord:
   address: localhost
 {{- end }}
   port: {{ .Values.queryCoordinator.service.port }}
+
+  enableActiveStandby: {{ .Values.queryCoordinator.activeStandby.enabled }}  # Enable active-standby
 
 queryNode:
   port: 21123
@@ -192,6 +195,7 @@ indexCoord:
   address: localhost
 {{- end }}
   port: {{ .Values.indexCoordinator.service.port }}
+  enableActiveStandby: {{ .Values.indexCoordinator.activeStandby.enabled }}  # Enable active-standby
 
 indexNode:
   port: 21121
@@ -209,6 +213,7 @@ dataCoord:
   address: localhost
 {{- end }}
   port: {{ .Values.dataCoordinator.service.port }}
+  enableActiveStandby: {{ .Values.dataCoordinator.activeStandby.enabled }}  # Enable active-standby
 
 dataNode:
   port: 21124
