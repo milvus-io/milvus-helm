@@ -187,6 +187,10 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalPulsar.enabled`                  | Enable or disable external Pulsar             | `false`                                                 |
 | `externalPulsar.host`                     | The host of the external Pulsar               | `localhost`                                             |
 | `externalPulsar.port`                     | The port of the external Pulsar               | `6650`                                                  |
+| `externalPulsar.tenant`                   | The tenant of the external Pulsar             | `public`                                                  |
+| `externalPulsar.namespace`                | The namespace of the external Pulsar          | `default`                                                  |
+| `externalPulsar.authPlugin`               | The authPlugin of the external Pulsar         | `""`                                                  |
+| `externalPulsar.authParams`               | The authParams of the external Pulsar         | `""`                                                  |
 | `externalKafka.enabled`                   | Enable or disable external Kafka             | `false`                                                 |
 | `externalKafka.brokerList`                | The brokerList of the external Kafka separated by comma               | `localhost:9092`                                             |
 | `externalKafka.securityProtocol`          | The securityProtocol used for kafka authentication                    | `SASL_SSL`                                                   |

@@ -108,6 +108,10 @@ pulsar:
   address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
   maxMessageSize: {{ .Values.externalPulsar.maxMessageSize }}
+  tenant: {{ .Values.externalPulsar.tenant }}
+  namespace: {{ .Values.externalPulsar.namespace }}
+  authPlugin: {{ .Values.externalPulsar.authPlugin }}
+  authParams: {{ .Values.externalPulsar.authParams }}
 
 {{- else if .Values.pulsar.enabled }}
 
