@@ -855,6 +855,7 @@ pulsar:
       defaultRetentionTimeInMinutes: "10080"
       backlogQuotaDefaultLimitGB: "8"
       ttlDurationDefaultInSeconds: "259200"
+      subscriptionExpirationTimeMinutes: "30"
       backlogQuotaDefaultRetentionPolicy: producer_exception
 
   autorecovery:
