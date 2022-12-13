@@ -616,6 +616,8 @@ minio:
   rootPath: file
   useIAM: false
   iamEndpoint: ""
+  podDisruptionBudget:
+    enabled: false
   resources:
     requests:
       memory: 2Gi
@@ -669,6 +671,8 @@ etcd:
   enabled: true
   name: etcd
   replicaCount: 3
+  pdb:
+    create: false
   image:
     repository: "milvusdb/etcd"
     tag: "3.5.0-r7"
@@ -789,6 +793,8 @@ pulsar:
          -XX:+DisableExplicitGC
          -XX:+PerfDisableSharedMem
          -Dzookeeper.forceSync=no
+    pdb:
+      usePolicy: false
 
   bookkeeper:
     replicaCount: 3
@@ -824,6 +830,8 @@ pulsar:
         -XX:+PerfDisableSharedMem
         -XX:+PrintGCDetails
       nettyMaxFrameSizeBytes: "104867840"
+    pdb:
+      usePolicy: false
 
   broker:
     component: broker
@@ -857,6 +865,8 @@ pulsar:
       ttlDurationDefaultInSeconds: "259200"
       subscriptionExpirationTimeMinutes: "30"
       backlogQuotaDefaultRetentionPolicy: producer_exception
+    pdb:
+      usePolicy: false
 
   autorecovery:
     resources:
@@ -882,6 +892,8 @@ pulsar:
       PULSAR_GC: >
         -XX:MaxDirectMemorySize=2048m
       httpNumThreads: "100"
+    pdb:
+      usePolicy: false
 
   pulsar_manager:
     service:
@@ -908,6 +920,8 @@ kafka:
     tag: 3.1.0-debian-10-r52
   ## Increase graceful termination for kafka graceful shutdown
   terminationGracePeriodSeconds: "90"
+  pdb:
+    create: false
 
   ## Enable startup probe to prevent pod restart during recovering
   startupProbe:
