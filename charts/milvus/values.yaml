@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: milvusdb/milvus
-    tag: v2.2.0
+    tag: v2.2.1
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -155,20 +155,6 @@ log:
       size: 10Gi
       subPath: ""
 
-metadata:
-  rootPath: "by-dev"
-
-## pulsar message channel
-##
-msgChannel:
-  chanNamePrefix:
-    cluster: "by-dev"
-
-## milvus authorization
-##
-authorization:
-  enabled: false
-
 ## Heaptrack traces all memory allocations and annotates these events with stack traces.
 ## See more: https://github.com/KDE/heaptrack
 ## Enable heaptrack in production is not recommended.
@@ -177,114 +163,6 @@ heaptrack:
     repository: milvusdb/heaptrack
     tag: v0.1.0
     pullPolicy: IfNotPresent
-
-## Configuration for Milvus quota and limits.
-# By default, we enable:
-#   1. TT protection;
-#   2. Memory protection;
-#   3. Disk quota protection;
-# You can enable:
-#   1. DML throughput limitation;
-#   2. DDL, DQL qps/rps limitation;
-#   3. DQL Queue length/latency protection;
-#   4. DQL result rate protection;
-# If necessary, you can also manually force to deny RW requests.
-quotaAndLimits:
-  enabled: true  # `true` to enable quota and limits, `false` to disable.
-
-  # quotaCenterCollectInterval is the time interval that quotaCenter
-  # collects metrics from Proxies, Query cluster and Data cluster.
-  quotaCenterCollectInterval: 3  # seconds, (0 ~ 65536)
-
-  ddl:  # ddl limit rates, default no limit.
-    enabled: false
-    collectionRate: -1  # qps, default no limit, rate for CreateCollection, DropCollection, LoadCollection, ReleaseCollection
-    partitionRate: -1  # qps, default no limit, rate for CreatePartition, DropPartition, LoadPartition, ReleasePartition
-
-  indexRate:
-    enabled: false
-    max: -1  # qps, default no limit, rate for CreateIndex, DropIndex
-  flushRate:
-    enabled: false
-    max: -1  # qps, default no limit, rate for flush
-  compactionRate:
-    enabled: false
-    max: -1  # qps, default no limit, rate for manualCompaction
-
-  # dml limit rates, default no limit.
-  # The maximum rate will not be greater than `max`.
-  dml:
-    enabled: false
-    insertRate:
-      max: -1  # MB/s, default no limit
-    deleteRate:
-      max: -1  # MB/s, default no limit
-    bulkLoadRate:  # not support yet. TODO: limit bulkLoad rate
-      max: -1  # MB/s, default no limit
-
-  # dql limit rates, default no limit.
-  # The maximum rate will not be greater than `max`.
-  dql:
-    enabled: false
-    searchRate:
-      max: -1  # vps (vectors per second), default no limit
-    queryRate:
-      max: -1  # qps, default no limit
-
-  # limitWriting decides whether dml requests are allowed.
-  limitWriting:
-    # forceDeny `false` means dml requests are allowed (except for some
-    # specific conditions, such as memory of nodes to water marker), `true` means always reject all dml requests.
-    forceDeny: false
-    ttProtection:
-      enabled: false
-      # maxTimeTickDelay indicates the backpressure for DML Operations.
-      # DML rates would be reduced according to the ratio of time tick delay to maxTimeTickDelay,
-      # if time tick delay is greater than maxTimeTickDelay, all DML requests would be rejected.
-      maxTimeTickDelay: 300  # in seconds
-    memProtection:
-      enabled: true
-      # When memory usage > memoryHighWaterLevel, all dml requests would be rejected;
-      # When memoryLowWaterLevel < memory usage < memoryHighWaterLevel, reduce the dml rate;
-      # When memory usage < memoryLowWaterLevel, no action.
-      # memoryLowWaterLevel should be less than memoryHighWaterLevel.
-      dataNodeMemoryLowWaterLevel: 0.85  # (0, 1], memoryLowWaterLevel in DataNodes
-      dataNodeMemoryHighWaterLevel: 0.95  # (0, 1], memoryHighWaterLevel in DataNodes
-      queryNodeMemoryLowWaterLevel: 0.85  # (0, 1], memoryLowWaterLevel in QueryNodes
-      queryNodeMemoryHighWaterLevel: 0.95  # (0, 1], memoryHighWaterLevel in QueryNodes
-    diskProtection:
-      # When the total file size of object storage is greater than `diskQuota`, all dml requests would be rejected;
-      enabled: true
-      diskQuota: -1  # MB, (0, +inf), default no limit
-
-  # limitReading decides whether dql requests are allowed.
-  limitReading:
-    # forceDeny `false` means dql requests are allowed (except for some
-    # specific conditions, such as collection has been dropped), `true` means always reject all dql requests.
-    forceDeny: false
-
-    queueProtection:
-      enabled: false
-      # nqInQueueThreshold indicated that the system was under backpressure for Search/Query path.
-      # If NQ in any QueryNode's queue is greater than nqInQueueThreshold, search&query rates would gradually cool off
-      # until the NQ in queue no longer exceeds nqInQueueThreshold. We think of the NQ of query request as 1.
-      nqInQueueThreshold: -1  # int, default no limit
-
-      # queueLatencyThreshold indicated that the system was under backpressure for Search/Query path.
-      # If dql latency of queuing is greater than queueLatencyThreshold, search&query rates would gradually cool off
-      # until the latency of queuing no longer exceeds queueLatencyThreshold.
-      # The latency here refers to the averaged latency over a period of time.
-      queueLatencyThreshold: -1  # milliseconds, default no limit
-
-    resultProtection:
-      enabled: false
-      # maxReadResultRate indicated that the system was under backpressure for Search/Query path.
-      # If dql result rate is greater than maxReadResultRate, search&query rates would gradually cool off
-      # until the read result rate no longer exceeds maxReadResultRate.
-      maxReadResultRate: -1  # MB/s, default no limit
-
-    # coolOffSpeed is the speed of search&query rates cool off.
-    coolOffSpeed: 0.9  # (0, 1]
 
 standalone:
   replicas: 1  # Run standalone mode with replication disabled
@@ -295,9 +173,7 @@ standalone:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   disk:
@@ -310,12 +186,6 @@ standalone:
   ## Default message queue for milvus standalone
   ## Supported value: rocksmq, pulsar and kafka
   messageQueue: rocksmq
-  rocksmq:
-    retentionTimeInMinutes: 10080  ## 7 days
-    retentionSizeInMB: 8192        ## 8 GB
-    rocksmqPageSize: "2147483648"  ## 2 GB
-    lrucacheratio: 0.06           ## rocksdb cache memory ratio
-
   persistence:
     mountPath: "/var/lib/milvus"
     ## If true, alertmanager will create/use a Persistent Volume Claim
@@ -344,9 +214,7 @@ proxy:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
@@ -356,11 +224,6 @@ proxy:
     debugMode:
       enabled: false
 
-  timeTickInterval: 200  # ms, the interval that proxy synchronize the time tick
-  maxFieldNum: 256     # max field number of a collection
-  maxShardNum: 256  # Maximum number of shards in a collection
-  maxTaskNum: 1024  # max task number of proxy task queue
-
 rootCoordinator:
   enabled: true
   replicas: 1  # Run Root Coordinator mode with replication disabled
@@ -368,17 +231,11 @@ rootCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
-
-  dmlChannelNum: 256   # The number of dml channels created at system startup
-  maxPartitionNum: 4096  # Maximum number of partitions in a collection
-  minSegmentSizeToEnableIndex: 1024  # It's a threshold. When the segment size is less than this value, the segment will not be indexed
 
   service:
     port: 53100
@@ -393,9 +250,7 @@ queryCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
@@ -407,16 +262,6 @@ queryCoordinator:
     labels: {}
     clusterIP: ""
 
-  autoHandoff: true  # Enable auto handoff
-  autoBalance: true  # Disable auto balance
-  checkInterval: 1000  # 1000ms
-  channelTaskTimeout: 60000   # 1 minute
-  segmentTaskTimeout: 120000  # 2 minute
-  distPullInterval: 500  # 500ms
-  loadTimeoutSeconds: 600
-  checkHandoffInterval: 5000  # 5000ms
-  taskMergeCap: 16
-
 queryNode:
   enabled: true
   replicas: 1
@@ -427,9 +272,7 @@ queryNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   disk:
@@ -439,16 +282,6 @@ queryNode:
   profiling:
     enabled: false  # Enable live profiling
 
-  segcore:
-    chunkRows: 1024  # The number of vectors in a chunk.
-
-  grouping:
-    enabled: true    # Grouping small nq search
-    maxNQ: 1000
-
-  scheduler:
-    maxReadConcurrentRatio: "2.0"
-
 indexCoordinator:
   enabled: true
   replicas: 1   # Run Index Coordinator mode with replication disabled
@@ -456,16 +289,11 @@ indexCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
-
-  gc:
-    interval: 600  # gc interval in seconds
 
   service:
     port: 31000
@@ -483,9 +311,7 @@ indexNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
@@ -495,10 +321,6 @@ indexNode:
     size:
       enabled: false  # Enable local storage size limit
 
-  ## Specify how many index tasks can parallelly run in the same index node
-  scheduler:
-    buildParallel: 1
-
 dataCoordinator:
   enabled: true
   replicas: 1           # Run Data Coordinator mode with replication disabled
@@ -506,34 +328,11 @@ dataCoordinator:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
     enabled: true  # Enable live profiling
-
-  enableCompaction: true
-  enableGarbageCollection: true
-
-  segment:
-    maxSize: 512  # Maximum size of a segment in MB
-    diskSegmentMaxSize: 2048  # Maximum segment size in MB for disk index collection
-    sealProportion: 0.25  # Minimum proportion for a segment which can be sealed
-    maxLife: 3600  # The max lifetime of segment in seconds, 60*60
-    maxIdleTime: 300  # The maximum idle time of a growing segment in seconds, 5*60
-    minSizeFromIdleToSealed: 16  # The minimum size in MB of segment which can be idle from sealed
-    smallProportion: 0.9  # The proportion for a sealed segment, which would not be compacted
-
-  compaction:
-    enableAutoCompaction: true
-
-  gc:
-    interval: 3600   # gc interval in seconds
-    missingTolerance: 86400  # file meta missing tolerance duration in seconds, 1 day
-    dropTolerance: 86400  # file belongs to dropped entity tolerance duration in seconds, 1 day
-
 
   service:
     port: 13333
@@ -548,30 +347,11 @@ dataNode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv:
-  - name: GODEBUG
-    value: "madvdontneed=1"
+  extraEnv: []
   heaptrack:
     enabled: false
   profiling:
     enabled: false  # Enable live profiling
-
-  segment:
-    # Max buffer size to flush for a single segment.
-    insertBufSize: "16777216"  # Bytes, 16 MB
-    # Max buffer size to flush del for a single channel
-    deleteBufBytes: "67108864"  # Bytes, 64MB
-    # The period to sync segments if buffer is not empty.
-    syncPeriod: 600  # Seconds, 10min
-
-common:
-  compaction:
-    retentionDuration: 0  # time travel reserved time, insert/delete will not be cleaned in this period.
-  # Default value: auto
-  # Valid values: [auto, avx512, avx2, avx, sse4_2]
-  simdType: auto
-  # Specify how many times the number of threads in pool is the number of cores
-  threadCoreCoefficient: "10"
 
 attu:
   enabled: false
@@ -861,6 +641,7 @@ pulsar:
         -XX:+ExitOnOutOfMemoryError
       maxMessageSize: "104857600"
       defaultRetentionTimeInMinutes: "10080"
+      defaultRetentionSizeInMB: "-1"
       backlogQuotaDefaultLimitGB: "8"
       ttlDurationDefaultInSeconds: "259200"
       subscriptionExpirationTimeMinutes: "30"

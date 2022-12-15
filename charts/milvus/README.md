@@ -35,6 +35,7 @@ Assume the release name is `my-release`:
 $ helm upgrade --install my-release --set cluster.enabled=false --set etcd.replicaCount=1 --set pulsar.enabled=false --set minio.mode=standalone milvus/milvus
 ```
 By default, milvus standalone uses `rocksmq` as message queue. You can also use `pulsar` or `kafka` as message queue:
+
 ```bash
 # Helm v3.x
 # Milvus Standalone with pulsar as message queue
@@ -67,10 +68,23 @@ $ helm upgrade --install my-release milvus/milvus --set pulsar.enabled=false --s
 > **IMPORTANT** If you have installed a milvus cluster with version below v2.1.x, you need follow the instructions at here: https://github.com/milvus-io/milvus/blob/master/deployments/migrate-meta/README.md. After meta migration, you use `helm upgrade` to update your cluster again.
 
 E.g. to scale out query node from 1(default) to 2:
+
 ```bash
 # Helm v3.x
 $ helm upgrade --install --set queryNode.replicas=2 my-release milvus/milvus
 ```
+
+### Breaking Changes
+> **IMPORTANT** Milvus helm chart 4.0.0 has breaking changes for milvus configuration. Previously, you can set segment size like this `--set dataCoordinator.segment.maxSize=1024`. Now we have remove all the shortcut config option. Instead, you can set using `extraConfigFiles` like this:
+```bash
+extraConfigFiles:
+  user.yaml: |+
+    dataCoord:
+      segment:
+        maxSize: 1024
+```
+
+So if you had deployed a cluster with helm chart version below 4.0.0 and also specified extra config, you need set the configs under `extraConfigFiles` when running `helm upgrade`.
 
 ## Uninstall the Chart
 
@@ -125,8 +139,6 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `metrics.enabled`                         | Export Prometheus monitoring metrics          | `true`                                                  |
 | `metrics.serviceMonitor.enabled`          | Create ServiceMonitor for Prometheus operator | `false`                                                 |
 | `metrics.serviceMonitor.additionalLabels` | Additional labels that can be used so ServiceMonitor will be discovered by Prometheus | `unset`         |
-| `metadata.rootPath`                       | Root of key prefix to etcd                    | `by-dev`                                                |
-| `authorization.enabled`                   | Enable milvus authorization                   | `false`                                                |
 | `log.level`                               | Logging level to be used. Valid levels are `debug`, `info`, `warn`, `error`, `fatal` | `info`          |
 | `log.file.maxSize`                        | The size limit of the log file (MB)           | `300`                                                   |
 | `log.file.maxAge`                         | The maximum number of days that the log is retained. (day) | `10`                                       |
@@ -140,38 +152,6 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `log.persistence.persistentVolumeClaim.accessModes` | The Milvus logs data Persistence access modes | `ReadWriteOnce`                               |
 | `log.persistence.persistentVolumeClaim.size` | The size of Milvus logs data Persistent Volume Storage Class | `5Gi`                                 |
 | `log.persistence.persistentVolumeClaim.subPath` | SubPath for Milvus logs data mount | `unset`                                                      |
-| `msgChannel.chanNamePrefix.cluster`                       | Pulsar topic name prefix                    | `by-dev`                                                |
-| `quotaAndLimits.enabled`                  | Enable milvus quota and limits                | `false`                                                |
-| `quotaAndLimits.quotaCenterCollectInterval`                  | Collect metrics interval                | `3`                                                |
-| `quotaAndLimits.ddl.eabled`               | Enable milvus ddl limit                       | `false`                                                |
-| `quotaAndLimits.ddl.collectionRate`       | Milvus ddl collection rate qps                | `unset`                                                |
-| `quotaAndLimits.ddl.partitionRate`        | Milvus ddl partition rate qps                 | `unset`                                                |
-| `quotaAndLimits.indexRate.eabled`         | Enable milvus index rate limit                | `false`                                                |
-| `quotaAndLimits.indexRate.max`            | Milvus max index rate qps                     | `unset`                                                |
-| `quotaAndLimits.flushRate.eabled`         | Enable milvus flush rate limit                | `false`                                                |
-| `quotaAndLimits.flushRate.max`            | Milvus max flush rate qps                     | `unset`                                                |
-| `quotaAndLimits.compactionRate.eabled`    | Enable milvus compaction rate limit           | `false`                                                |
-| `quotaAndLimits.compactionRate.max`       | Milvus max compaction rate qps                | `unset`                                                |
-| `quotaAndLimits.dml.eabled`               | Enable milvus dml limit                       | `false`                                                |
-| `quotaAndLimits.dml.insertRate.max`       | Milvus dml max insert rate MB/s               | `unset`                                                |
-| `quotaAndLimits.dml.deleteRate.max`       | Milvus dml max delete rate MB/s               | `unset`                                                |
-| `quotaAndLimits.dml.bulkLoadRate.max`     | Milvus dml max bulk load rate MB/s            | `unset`                                                |
-| `quotaAndLimits.dql.eabled`               | Enable milvus dql limit                       | `false`                                                |
-| `quotaAndLimits.dql.searchRate.max`       | Milvus dml max search vps                     | `unset`                                                |
-| `quotaAndLimits.dql.queryRate.max`        | Milvus dml max query qps                      | `unset`                                                |
-| `quotaAndLimits.limitWriting.forceDeny`   | Deny write requests if quota exceeded         | `false`                                                |
-| `quotaAndLimits.limitWriting.ttProtection.enabled`   | Enable milvus time tick protection         | `true`                                                |
-| `quotaAndLimits.limitWriting.ttProtection.maxTimeTickDelay`   | Max time tick delay in seconds        | `30`                                                |
-| `quotaAndLimits.limitWriting.memProtection.enabled`   | Enable milvus memory protection         | `true`                                                |
-| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryLowWaterLevel`     | Low water level for data node      | `0.85`                                                |
-| `quotaAndLimits.limitWriting.memProtection.dataNodeMemoryHighWaterLevel`    | High water level for data node     | `0.95`                                                |
-| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryLowWaterLevel`   | Low water level for query node     | `0.85`                                                |
-| `quotaAndLimits.limitWriting.memProtection.queryNodeMemoryHighWaterLevel`   | High water level for query node    | `0.95`                                                |
-| `quotaAndLimits.limitReading.forceDeny`   | Deny read requests if quota exceeded          | `false`                                                |
-| `quotaAndLimits.limitReading.queueProtection.enabled`   | Enable queue protection         | `false`                                                |
-| `quotaAndLimits.limitReading.queueProtection.nqInQueueThreshold`   | NQ in queue threshold         | `unset`                                                |
-| `quotaAndLimits.limitReading.queueProtection.queueLatencyThreshold`   | Queue latency threshold         | `unset`                                                |
-| `quotaAndLimits.limitReading.queueProtection.coolOffSpeed`   | Cooloff speed         | `0.9`                                                |
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
 | `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
 | `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
@@ -221,8 +201,6 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.profiling.enabled`            | Whether to enable live profiling                   | `false`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
 | `standalone.messageQueue`                     | Message queue for Milvus Standalone: rocksmq, pulsar, kafka | `rocksmq`                                     |
-| `standalone.rocksmq.retentionTimeInMinutes` | Set the retention time of rocksmq           | `10080`                                                 |
-| `standalone.rocksmq.retentionSizeInMB`    | Set the retention size of rocksmq             | `0`                                                     |
 | `standalone.persistence.enabled`          | Use persistent volume to store Milvus standalone data | `true`                                          |
 | `standalone.persistence.mountPath` | Milvus standalone data persistence volume mount path | `/var/lib/milvus`                                       |
 | `standalone.persistence.annotations`      | PersistentVolumeClaim annotations             | `{}`                                                    |
@@ -314,9 +292,6 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.disk.enabled`                  | Whether to enable disk for query                             | `true`                                          |
 | `queryNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
-| `queryNode.grouping.enabled`              | Enable grouping small nq search |               `true`                                     |
-| `queryNode.grouping.maxNQ`                | Grouping small nq search max threshold |               `1000`                                     |
-| `queryNode.scheduler.maxReadConcurrentRatio`                | Concurrency ratio of read tasks |               `2.0`                                     |
 
 ### Milvus Index Coordinator Deployment Configuration
 
@@ -341,7 +316,6 @@ The following table lists the configurable parameters of the Milvus Index Coordi
 | `indexCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                              |
 | `indexCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
 | `indexCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                        |
-| `indexCoordinator.gc.interval`                        | GC interval in seconds                 | `600`                                        |
 
 ### Milvus Index Node Deployment Configuration
 
@@ -359,7 +333,6 @@ The following table lists the configurable parameters of the Milvus Index Node c
 | `indexNode.disk.enabled`                  | Whether to enable disk for index node                             | `true`                                          |
 | `indexNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `indexNode.extraEnv`                      | Additional Milvus Index Node container environment variables | `[]`                                     |
-| `indexNode.scheduler.buildParallel`       | Index task build paralellism | `1`                                     |
 
 ### Milvus Data Coordinator Deployment Configuration
 
@@ -374,13 +347,6 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
 | `dataCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
 | `dataCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
-| `dataCoordinator.segment.maxSize`         | Maximum size of a segment in MB                   | `512`                                          |
-| `dataCoordinator.segment.diskSegmentMaxSize`         | Maximum size of a segment in MB for disk index collection                   | `2048`                                          |
-| `dataCoordinator.segment.sealProportion`         | Minimum proportion for a segment which can be sealed                   | `0.25`                                          |
-| `dataCoordinator.segment.maxLife`                | Maximum lifetime of a segment in seconds                   | `3600`                                          |
-| `dataCoordinator.segment.maxIdleTime`            | Maximum idle time for growing segment in seconds           | `300`                                          |
-| `dataCoordinator.segment.minSizeFromIdleToSealed`         | The minimum size in MB of segment which can be idle from sealed                   | `16`                                          |
-| `dataCoordinator.segment.smallProportion`         | The proportion for a sealed segment, which would not be compacted                   | `0.9`                                          |
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
