@@ -43,4 +43,4 @@ You can find more information at:
 
 ---
 
-![Milvus logo](https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png)
+![Milvus logo](https://raw.githubusercontent.com/milvus-io/docs/master/v1.0.0/assets/milvus_logo.png)
