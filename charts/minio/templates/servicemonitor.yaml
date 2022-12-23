@@ -21,7 +21,7 @@ metadata:
 spec:
   endpoints:
     - port: {{ $scheme }}
-      path: /minio/prometheus/metrics
+      path: /minio/v2/metrics/cluster
       {{- if .Values.metrics.serviceMonitor.interval }}
       interval: {{ .Values.metrics.serviceMonitor.interval }}
       {{- end }}
@@ -32,7 +32,7 @@ spec:
 {{ toYaml .Values.metrics.serviceMonitor.relabelConfigs | indent 6 }}
       {{- end }}
       bearerTokenSecret:
-        name: {{ template "minio.fullname" . }}-prometheus
+        name: {{ template "minio.fullname" . }}-servicemonitor-prometheus
         key: token
   namespaceSelector:
     matchNames:
