@@ -1,4 +1,4 @@
-{{- if .Values.serviceAccount.create -}}
+{{- if or .Values.metrics.serviceMonitor.enabled .Values.metrics.podMonitor.enabled }}
 {{- $fullName := include "minio.fullname" . -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -20,7 +20,12 @@ rules:
       - update
       - patch
     resourceNames:
-      - {{ $fullName }}-prometheus
+    {{- if .Values.metrics.serviceMonitor.enabled }}
+      - {{ $fullName }}-servicemonitor-prometheus
+    {{- end }}
+    {{- if .Values.metrics.podMonitor.enabled }}
+      - {{ $fullName }}-podmonitor-prometheus
+    {{- end}}
   - apiGroups:
       - ""
     resources:
@@ -30,7 +35,12 @@ rules:
   - apiGroups:
       - monitoring.coreos.com
     resources:
+    {{- if .Values.metrics.serviceMonitor.enabled }}
       - servicemonitors
+    {{- end}}
+    {{- if .Values.metrics.podMonitor.enabled }}
+      - podmonitors
+    {{- end}}
     verbs:
       - get
     resourceNames:

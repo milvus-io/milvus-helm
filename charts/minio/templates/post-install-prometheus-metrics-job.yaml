@@ -1,4 +1,4 @@
-{{- if .Values.metrics.serviceMonitor.enabled }}
+{{- if or .Values.metrics.serviceMonitor.enabled .Values.metrics.podMonitor.enabled }}
 {{- $fullName := include "minio.fullname" . -}}
 {{ $scheme := "http" }}
 {{- if .Values.tls.enabled }}
@@ -101,18 +101,35 @@ spec:
         - name: kubectl-create
           image: "{{ .Values.helmKubectlJqImage.repository }}:{{ .Values.helmKubectlJqImage.tag }}"
           imagePullPolicy: {{ .Values.helmKubectlJqImage.pullPolicy }}
-          command:
-            - /bin/sh
-            - "-c"
+          command: ["/bin/sh", "-c"]
+          args:
             # The following script does:
             # - get the servicemonitor that need this secret and copy some metadata and create the ownerreference for the secret file
             # - create the secret
             # - merge both json
-            - >
-              kubectl -n {{ .Release.Namespace }} get servicemonitor {{ $fullName }} -o json |
-                jq -c '{metadata: {name: "{{ $fullName }}-prometheus", namespace: .metadata.namespace, labels: {app: .metadata.labels.app, release: .metadata.labels.release}, ownerReferences: [{apiVersion: .apiVersion, kind: .kind, blockOwnerDeletion: true, controller: true, uid: .metadata.uid, name: .metadata.name}]}}' > /workdir/metadata.json &&
-              kubectl create secret generic {{ $fullName }}-prometheus --from-file=token=/workdir/token --dry-run -o json > /workdir/secret.json &&
-              cat /workdir/secret.json /workdir/metadata.json | jq -s add > /workdir/object.json
+            {{- if and .Values.metrics.serviceMonitor.enabled .Values.metrics.podMonitor.enabled }}
+            - |
+              mkdir -p /workdir/secrets && kubectl -n {{ .Release.Namespace }} get servicemonitor {{ $fullName }} -o json |
+                jq -c '{metadata: {name: "{{ $fullName }}-servicemonitor-prometheus", namespace: .metadata.namespace, labels: {app: .metadata.labels.app, release: .metadata.labels.release}, ownerReferences: [{apiVersion: .apiVersion, kind: .kind, blockOwnerDeletion: true, controller: true, uid: .metadata.uid, name: .metadata.name}]}}' > /workdir/servicemonitormetadata.json &&
+              kubectl create secret generic {{ $fullName }}-servicemonitor-prometheus --from-file=token=/workdir/token --dry-run -o json > /workdir/servicemonitorsecret.json &&
+              cat /workdir/servicemonitorsecret.json /workdir/servicemonitormetadata.json | jq -s add > /workdir/secrets/servicemonitorobject.json;
+              mkdir -p /workdir/secrets && kubectl -n {{ .Release.Namespace }} get podmonitor {{ $fullName }} -o json |
+                jq -c '{metadata: {name: "{{ $fullName }}-podmonitor-prometheus", namespace: .metadata.namespace, labels: {app: .metadata.labels.app, release: .metadata.labels.release}, ownerReferences: [{apiVersion: .apiVersion, kind: .kind, blockOwnerDeletion: true, controller: true, uid: .metadata.uid, name: .metadata.name}]}}' > /workdir/podmonitormetadata.json &&
+              kubectl create secret generic {{ $fullName }}-podmonitor-prometheus --from-file=token=/workdir/token --dry-run -o json > /workdir/podmonitorsecret.json &&
+              cat /workdir/podmonitorsecret.json /workdir/podmonitormetadata.json | jq -s add > /workdir/secrets/podmonitorobject.json
+            {{- else if .Values.metrics.podMonitor.enabled }}
+            - |
+              mkdir -p /workdir/secrets && kubectl -n {{ .Release.Namespace }} get podmonitor {{ $fullName }} -o json |
+                jq -c '{metadata: {name: "{{ $fullName }}-podmonitor-prometheus", namespace: .metadata.namespace, labels: {app: .metadata.labels.app, release: .metadata.labels.release}, ownerReferences: [{apiVersion: .apiVersion, kind: .kind, blockOwnerDeletion: true, controller: true, uid: .metadata.uid, name: .metadata.name}]}}' > /workdir/podmonitormetadata.json &&
+              kubectl create secret generic {{ $fullName }}-podmonitor-prometheus --from-file=token=/workdir/token --dry-run -o json > /workdir/podmonitorsecret.json &&
+              cat /workdir/podmonitorsecret.json /workdir/podmonitormetadata.json | jq -s add > /workdir/secrets/podmonitorobject.json
+            {{- else if .Values.metrics.serviceMonitor.enabled }}
+            - |
+              mkdir -p /workdir/secrets && kubectl -n {{ .Release.Namespace }} get servicemonitor {{ $fullName }} -o json |
+                jq -c '{metadata: {name: "{{ $fullName }}-servicemonitor-prometheus", namespace: .metadata.namespace, labels: {app: .metadata.labels.app, release: .metadata.labels.release}, ownerReferences: [{apiVersion: .apiVersion, kind: .kind, blockOwnerDeletion: true, controller: true, uid: .metadata.uid, name: .metadata.name}]}}' > /workdir/servicemonitormetadata.json &&
+              kubectl create secret generic {{ $fullName }}-servicemonitor-prometheus --from-file=token=/workdir/token --dry-run -o json > /workdir/servicemonitorsecret.json &&
+              cat /workdir/servicemonitorsecret.json /workdir/servicemonitormetadata.json | jq -s add > /workdir/secrets/servicemonitorobject.json
+            {{- end }}
           volumeMounts:
             - name: workdir
               mountPath: /workdir
@@ -126,7 +143,7 @@ spec:
             - kubectl
             - apply
             - "-f"
-            - /workdir/object.json
+            - /workdir/secrets
           volumeMounts:
             - name: workdir
               mountPath: /workdir
