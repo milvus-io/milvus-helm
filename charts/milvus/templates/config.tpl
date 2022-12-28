@@ -76,6 +76,7 @@ minio:
   bucketName: {{ .Values.externalS3.bucketName }}
   rootPath: {{ .Values.externalS3.rootPath }}
   useIAM: {{ .Values.externalS3.useIAM }}
+  cloudProvider: {{ .Values.externalS3.cloudProvider }}
   iamEndpoint: {{ .Values.externalS3.iamEndpoint }}
 {{- else }}
 {{- if contains .Values.minio.name .Release.Name }}
@@ -105,7 +106,7 @@ pulsar:
   address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
   maxMessageSize: {{ .Values.externalPulsar.maxMessageSize }}
-  tenant: {{ .Values.externalPulsar.tenant }}
+  tenant: "{{ .Values.externalPulsar.tenant }}"
   namespace: {{ .Values.externalPulsar.namespace }}
   authPlugin: {{ .Values.externalPulsar.authPlugin }}
   authParams: {{ .Values.externalPulsar.authParams }}

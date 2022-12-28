@@ -817,6 +817,7 @@ externalS3:
   bucketName: ""
   rootPath: ""
   useIAM: false
+  cloudProvider: "aws"
   iamEndpoint: ""
 
 ###################################
