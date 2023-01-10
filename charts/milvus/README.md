@@ -299,31 +299,6 @@ The following table lists the configurable parameters of the Milvus Query Node c
 | `queryNode.profiling.enabled`             | Whether to enable live profiling                   | `false`                                          |
 | `queryNode.extraEnv`                      | Additional Milvus Query Node container environment variables | `[]`                                     |
 
-### Milvus Index Coordinator Deployment Configuration
-
-The following table lists the configurable parameters of the Milvus Index Coordinator component and their default values.
-
-| Parameter                                 | Description                                   | Default                                                 |
-|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `indexCoordinator.enabled`                | Enable or disable Index Coordinator component | `true`                                                  |
-| `indexCoordinator.resources`              | Resource requests/limits for the Milvus Index Coordinator pods | `{}`                                   |
-| `indexCoordinator.nodeSelector`           | Node labels for Milvus Index Coordinator pods assignment | `{}`                                         |
-| `indexCoordinator.affinity`               | Affinity settings for Milvus Index Coordinator pods assignment | `{}`                                   |
-| `indexCoordinator.tolerations`            | Toleration labels for Milvus Index Coordinator pods assignment | `[]`                                   |
-| `indexCoordinator.heaptrack.enabled`      | Whether to enable heaptrack                             | `false`                                          |
-| `indexCoordinator.profiling.enabled`      | Whether to enable live profiling                   | `false`                                          |
-| `indexCoordinator.activeStandby.enabled`  | Whether to enable active-standby                   | `false`                                          |
-| `indexCoordinator.extraEnv`               | Additional Milvus Index Coordinator container environment variables | `[]`                              |
-| `indexCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
-| `indexCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
-| `indexCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                     |
-| `indexCoordinator.service.annotations`                | Service annotations                           | `{}`                                        |
-| `indexCoordinator.service.labels`                     | Service custom labels                         | `{}`                                        |
-| `indexCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                     |
-| `indexCoordinator.service.loadBalancerIP`             | IP address to assign to load balancer (if supported) | `unset`                              |
-| `indexCoordinator.service.loadBalancerSourceRanges`   | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
-| `indexCoordinator.service.externalIPs`                | Service external IP addresses                 | `[]`                                        |
-
 ### Milvus Index Node Deployment Configuration
 
 The following table lists the configurable parameters of the Milvus Index Node component and their default values.

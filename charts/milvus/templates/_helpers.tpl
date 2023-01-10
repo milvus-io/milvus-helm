@@ -65,14 +65,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified Index Coordinator name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "milvus.indexcoord.fullname" -}}
-{{ template "milvus.fullname" . }}-indexcoord
-{{- end -}}
-
-{{/*
 Create a default fully qualified Index Node name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}

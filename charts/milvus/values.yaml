@@ -288,21 +288,8 @@ queryNode:
   profiling:
     enabled: false  # Enable live profiling
 
-indexCoordinator:
-  enabled: true
-  # You can set the number of replicas greater than 1, only if enable active standby
-  replicas: 1   # Run Index Coordinator mode with replication disabled
-  resources: {}
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-  extraEnv: []
-  heaptrack:
-    enabled: false
-  profiling:
-    enabled: false  # Enable live profiling
-  activeStandby:
-    enabled: false  # Enable active-standby when you set multiple replicas for index coordinator
+# Won't deploy indexcoord cause indexcoord has been merged into datacoord
+# indexCoordinator
 
   service:
     port: 31000

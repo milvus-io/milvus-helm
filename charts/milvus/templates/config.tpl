@@ -188,15 +188,6 @@ queryNode:
   enableDisk: {{ .Values.standalone.disk.enabled }} # Enable querynode load disk index, and search on disk index
 {{- end }}
 
-indexCoord:
-{{- if .Values.cluster.enabled }}
-  address: {{ template "milvus.indexcoord.fullname" . }}
-{{- else }}
-  address: localhost
-{{- end }}
-  port: {{ .Values.indexCoordinator.service.port }}
-  enableActiveStandby: {{ .Values.indexCoordinator.activeStandby.enabled }}  # Enable active-standby
-
 indexNode:
   port: 21121
 
