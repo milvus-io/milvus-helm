@@ -1,3 +1,4 @@
+{{- if lt .Values.image.all.tag "v2.3" }}
 {{- if and .Values.indexCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
@@ -164,4 +165,5 @@ spec:
       {{- end }}
       - name: tools
         emptyDir: {}
+{{- end }}
 {{- end }}

@@ -282,6 +282,8 @@ queryNode:
   profiling:
     enabled: false  # Enable live profiling
 
+# Won't deploy indexcoord when milvus version > v2.3, cause indexcoord has been merged into datacoord
+# compared by helm func `lt`
 indexCoordinator:
   enabled: true
   replicas: 1   # Run Index Coordinator mode with replication disabled

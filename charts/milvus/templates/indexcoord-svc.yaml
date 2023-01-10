@@ -1,3 +1,4 @@
+{{- if lt .Values.image.all.tag "v2.3" }}
 {{- if and .Values.indexCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: v1
 kind: Service
@@ -32,4 +33,5 @@ spec:
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
     component: "indexcoord"
+{{- end }}
 {{- end }}
