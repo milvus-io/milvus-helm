@@ -158,6 +158,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `externalS3.enabled`                      | Enable or disable external S3                 | `false`                                                 |
 | `externalS3.host`                         | The host of the external S3                   | `unset`                                                 |
 | `externalS3.port`                         | The port of the external S3                   | `unset`                                                 |
+| `externalS3.rootPath`                     | The path prefix of the external S3            | `unset`                                                 |
 | `externalS3.accessKey`                    | The Access Key of the external S3             | `unset`                                                 |
 | `externalS3.secretKey`                    | The Secret Key of the external S3             | `unset`                                                 |
 | `externalS3.bucketName`                   | The Bucket Name of the external S3            | `unset`                                                 |

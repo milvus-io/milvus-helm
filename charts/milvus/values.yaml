@@ -725,6 +725,9 @@ kafka:
   maxMessageBytes: _10485760
   defaultReplicationFactor: 3
   offsetsTopicReplicationFactor: 3
+  ## Only enable time based log retention
+  logRetentionHours: 168
+  logRetentionBytes: _-1
   extraEnvVars:
   - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
     value: "5242880"
@@ -734,6 +737,8 @@ kafka:
     value: "10485760"
   - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
     value: "5242880"
+  - name: KAFKA_CFG_LOG_ROLL_HOURS
+    value: "24"
 
   persistence:
     enabled: true
