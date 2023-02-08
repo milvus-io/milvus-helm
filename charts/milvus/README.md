@@ -86,6 +86,17 @@ extraConfigFiles:
 
 So if you had deployed a cluster with helm chart version below 4.0.0 and also specified extra config, you need set the configs under `extraConfigFiles` when running `helm upgrade`.
 
+### Enable log to file
+
+By default, all the logs of milvus components will output stdout. If you wanna log to file, you'd install milvus with `--set log.persistence.enabled=true`. Note that you should have a storageclass with `ReadWriteMany` access modes.
+
+```bash
+# Install a milvus cluster with file log output
+helm install my-release milvus/milvus --set log.persistence.enabled=true --set log.persistence.persistentVolumeClaim.storageClass=<read-write-many-storageclass>
+```
+
+It will output log to `/milvus/logs/` directory.
+
 ## Uninstall the Chart
 
 ```bash
