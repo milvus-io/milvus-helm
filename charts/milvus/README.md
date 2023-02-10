@@ -65,6 +65,7 @@ $ helm upgrade --install my-release milvus/milvus --set pulsar.enabled=false --s
 ```
 
 ### Upgrade an existing Milvus cluster
+
 > **IMPORTANT** If you have installed a milvus cluster with version below v2.1.x, you need follow the instructions at here: https://github.com/milvus-io/milvus/blob/master/deployments/migrate-meta/README.md. After meta migration, you use `helm upgrade` to update your cluster again.
 
 E.g. to scale out query node from 1(default) to 2:
@@ -74,7 +75,15 @@ E.g. to scale out query node from 1(default) to 2:
 $ helm upgrade --install --set queryNode.replicas=2 my-release milvus/milvus
 ```
 
+### Milvus Coordinator Active Standby
+> **IMPORTANT** Milvus helm chart 4.0.7 (Milvus 2.2.3) support deploying multiple coordinators. For example, you run a Milvus cluster with two rootcoord pods:
+
+```bash
+helm upgrade --install my-release milvus/milvus --set rootCoordinator.activeStandby.enabled=true --set rootCoordinator.replicas=2
+```
+
 ### Breaking Changes
+
 > **IMPORTANT** Milvus helm chart 4.0.0 has breaking changes for milvus configuration. Previously, you can set segment size like this `--set dataCoordinator.segment.maxSize=1024`. Now we have remove all the shortcut config option. Instead, you can set using `extraConfigFiles` like this:
 ```bash
 extraConfigFiles:
@@ -113,7 +122,6 @@ The command removes all the Kubernetes components associated with the chart and 
 MILVUS_LABELS="app.kubernetes.io/instance=my-release"
 kubectl delete pvc $(kubectl get pvc -l "${MILVUS_LABELS}" -o jsonpath='{range.items[*]}{.metadata.name} ')
 ```
-
 
 ## Configuration
 
