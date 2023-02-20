@@ -19,11 +19,9 @@ pull_request_rules:
     conditions:
       - and:
         - or:
-          - files=charts/**
+          - files~=charts/**
           - files=ct.yaml
           - files=.github/workflows/lint-test.yml
-          - files!=**.md
-          - files!=**.txt
         - check-success!=lint-test
     actions:
       label:
@@ -33,7 +31,7 @@ pull_request_rules:
   - name: remove ci-pass when CI-2 not passed
     conditions:
       - and:
-        - files=**.md
+        - files~=**.md
         - check-success!=Broken Links
     actions:
       label:
