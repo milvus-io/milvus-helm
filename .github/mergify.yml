@@ -1,0 +1,31 @@
+pull_request_rules:
+  - name: add ci-passed when CI 'Broken Links' passed
+    conditions:
+      - or:
+        - check-success=lint-test
+        - check-success=Broken Links
+    actions:
+      label:
+        add:
+          - ci-passed
+
+  - name: remove ci-passed when CI 'lint-test' not success
+    conditions:
+      - check-success!=lint-test
+      - or:
+        - files~=^charts/(.*\.yaml|.*\.helmignore|.*\.tgz|.*\.tpl)
+        - files=.github/workflows/lint-test.yml
+        - files=ct.yaml 
+    actions:
+      label:
+        remove:
+          - ci-passed
+  
+  - name: remove ci-passed when CI 'Broken Links' not success
+    conditions:
+      - check-success!=Broken Links
+      - files~=.*\.md$
+    actions:
+      label:
+        remove:
+          - ci-passed
