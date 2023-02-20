@@ -1,9 +1,15 @@
 pull_request_rules:
   - name: add ci-pass when CI 'Broken Links' passed
     conditions:
-        - or:
-          - check-success=Broken Links
-          - check-success=lint-test
+      - check-success=Broken Links
+    actions:
+      label:
+        add:
+          - ci-passed
+
+  - name: add ci-pass when CI 'lint-test'  passed
+    conditions:
+      - check-success=lint-test
     actions:
       label:
         add:
@@ -11,20 +17,11 @@ pull_request_rules:
 
   - name: remove ci-pass when CI not passed
     conditions:
-        - files~=^charts/
-        - files=ct.yaml
-        - files=.github/workflows/lint-test.yml
-        - check-success!=lint-test
-    actions:
-      label:
-        remove:
-          - ci-passed
-  
-  - name: remove ci-pass when CI-2 not passed
-    conditions:
-      - and:
-        - files~=.*.md
-        - check-success!=Broken Links
+      - or:
+        - check-failure=lint-test
+        - check-timed-out=lint-test
+        - check-failure=Broken Links
+        - check-timed-out=Broken Links
     actions:
       label:
         remove:
