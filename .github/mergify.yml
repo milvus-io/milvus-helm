@@ -18,8 +18,22 @@ pull_request_rules:
   - name: remove ci-pass when CI not passed
     conditions:
       - or:
-        - check-success!=Broken Links
+        - files=charts/**
+        - files=ct.yaml
+        - files=.github/workflows/lint-test.yml
+        - files!=**.md
+        - files!=**.txt
         - check-success!=lint-test
+    actions:
+      label:
+        remove:
+          - ci-passed
+  
+  - name: remove ci-pass when CI-2 not passed
+    conditions:
+      - or:
+        - files=**.md
+        - check-success!=Broken Links
     actions:
       label:
         remove:
