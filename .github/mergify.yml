@@ -1,0 +1,26 @@
+pull_request_rules:
+  - name: add ci-pass when CI 'Broken Links' passed
+    conditions:
+        - check-success=Broken Links
+    actions:
+      label:
+        add:
+          - ci-passed
+
+  - name: add ci-pass when CI 'lint-test' passed
+    conditions:
+        - check-success=lint-test
+    actions:
+      label:
+        add:
+          - ci-passed
+
+  - name: remove ci-pass when CI not passed
+    conditions:
+      - or:
+        - check-success!=Broken Links
+        - check-success!=lint-test
+    actions:
+      label:
+        remove:
+          - ci-passed
