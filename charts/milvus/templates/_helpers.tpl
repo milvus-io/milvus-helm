@@ -97,6 +97,14 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
+Create a default fully qualified Mixture Coordinator name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "milvus.mixcoord.fullname" -}}
+{{ template "milvus.fullname" . }}-mixcoord
+{{- end -}}
+
+{{/*
 Create a default fully qualified pulsar name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
