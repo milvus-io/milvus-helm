@@ -370,6 +370,29 @@ dataNode:
   profiling:
     enabled: false  # Enable live profiling
 
+## mixCoordinator contains all coord
+## If you want to use mixcoord, enable this and disable all of other coords 
+mixCoordinator:
+  enabled: false
+  # You can set the number of replicas greater than 1, only if enable active standby
+  replicas: 1           # Run Mixture Coordinator mode with replication disabled
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  extraEnv: []
+  heaptrack:
+    enabled: false
+  profiling:
+    enabled: false  # Enable live profiling
+  activeStandby:
+    enabled: false  # Enable active-standby when you set multiple replicas for Mixture coordinator
+
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
 attu:
   enabled: false
   name: attu
