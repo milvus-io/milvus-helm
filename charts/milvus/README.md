@@ -64,6 +64,25 @@ By default, milvus cluster uses `pulsar` as message queue. You can also use `kaf
 $ helm upgrade --install my-release milvus/milvus --set pulsar.enabled=false --set kafka.enabled=true
 ```
 
+By default, milvus cluster uses several separate coordinators. You can also use mixCoordinator instead which contains all coordinators.
+
+```bash
+# Helm v3.x
+$ cat << EOF > values-custom.yaml
+mixCoordinator:
+  enabled: true
+rootCoordinator:
+  enabled: false
+indexCoordinator:
+  enabled: false
+queryCoordinator:
+  enabled: false
+dataCoordinator:
+  enabled: false
+EOF
+$ helm upgrade --install my-release milvus/milvus -f values-custom.yaml
+```
+
 ### Upgrade an existing Milvus cluster
 
 > **IMPORTANT** If you have installed a milvus cluster with version below v2.1.x, you need follow the instructions at here: https://github.com/milvus-io/milvus/blob/master/deployments/migrate-meta/README.md. After meta migration, you use `helm upgrade` to update your cluster again.
@@ -269,7 +288,6 @@ The following table lists the configurable parameters of the Milvus Root Coordin
 | `rootCoordinator.extraEnv`                | Additional Milvus Root Coordinator container environment variables | `[]`                               |
 | `rootCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                  |
 | `rootCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                      |
-| `rootCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                      |
 | `rootCoordinator.service.annotations`                | Service annotations                           | `{}`                                         |
 | `rootCoordinator.service.labels`                     | Service custom labels                         | `{}`                                         |
 | `rootCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                      |
@@ -294,7 +312,6 @@ The following table lists the configurable parameters of the Milvus Query Coordi
 | `queryCoordinator.extraEnv`               | Additional Milvus Query Coordinator container environment variables | `[]`                              |
 | `queryCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `queryCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
-| `queryCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                     |
 | `queryCoordinator.service.annotations`                | Service annotations                           | `{}`                                        |
 | `queryCoordinator.service.labels`                     | Service custom labels                         | `{}`                                        |
 | `queryCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                     |
@@ -336,7 +353,6 @@ The following table lists the configurable parameters of the Milvus Index Coordi
 | `indexCoordinator.extraEnv`               | Additional Milvus Index Coordinator container environment variables | `[]`                              |
 | `indexCoordinator.service.type`                       | Service type                                  | `ClusterIP`                                 |
 | `indexCoordinator.service.port`                       | Port where service is exposed                 | `19530`                                     |
-| `indexCoordinator.service.nodePort`                   | Service nodePort                              | `unset`                                     |
 | `indexCoordinator.service.annotations`                | Service annotations                           | `{}`                                        |
 | `indexCoordinator.service.labels`                     | Service custom labels                         | `{}`                                        |
 | `indexCoordinator.service.clusterIP`                  | Internal cluster service IP                   | `unset`                                     |
@@ -378,7 +394,6 @@ The following table lists the configurable parameters of the Milvus Data Coordin
 | `dataCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
 | `dataCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
 | `dataCoordinator.service.port`                        | Port where service is exposed                 | `19530`                                     |
-| `dataCoordinator.service.nodePort`                    | Service nodePort                              | `unset`                                     |
 | `dataCoordinator.service.annotations`                 | Service annotations                           | `{}`                                        |
 | `dataCoordinator.service.labels`                      | Service custom labels                         | `{}`                                        |
 | `dataCoordinator.service.clusterIP`                   | Internal cluster service IP                   | `unset`                                     |
@@ -401,6 +416,29 @@ The following table lists the configurable parameters of the Milvus Data Node co
 | `dataNode.heaptrack.enabled`              | Whether to enable heaptrack                             | `false`                                          |
 | `dataNode.profiling.enabled`              | Whether to enable live profiling                   | `false`                                          |
 | `dataNode.extraEnv`                       | Additional Milvus Data Node container environment variables | `[]`                                      |
+
+### Milvus Mixture Coordinator Deployment Configuration
+
+The following table lists the configurable parameters of the Milvus Mixture Coordinator component and their default values.
+
+| Parameter                                 | Description                                   | Default                                                 |
+|-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `mixCoordinator.enabled`                 | Enable or disable Data Coordinator component  | `true`                                                  |
+| `mixCoordinator.resources`               | Resource requests/limits for the Milvus Data Coordinator pods | `{}`                                    |
+| `mixCoordinator.nodeSelector`            | Node labels for Milvus Data Coordinator pods assignment | `{}`                                          |
+| `mixCoordinator.affinity`                | Affinity settings for Milvus Data Coordinator pods assignment  | `{}`                                   |
+| `mixCoordinator.tolerations`             | Toleration labels for Milvus Data Coordinator pods assignment | `[]`                                    |
+| `mixCoordinator.heaptrack.enabled`       | Whether to enable heaptrack                             | `false`                                          |
+| `mixCoordinator.profiling.enabled`       | Whether to enable live profiling                   | `false`                                          |
+| `mixCoordinator.activeStandby.enabled`   | Whether to enable active-standby                   | `false`                                          |
+| `mixCoordinator.extraEnv`                | Additional Milvus Data Coordinator container environment variables | `[]`                               |
+| `mixCoordinator.service.type`                        | Service type                                  | `ClusterIP`                                 |
+| `mixCoordinator.service.annotations`                 | Service annotations                           | `{}`                                        |
+| `mixCoordinator.service.labels`                      | Service custom labels                         | `{}`                                        |
+| `mixCoordinator.service.clusterIP`                   | Internal cluster service IP                   | `unset`                                     |
+| `mixCoordinator.service.loadBalancerIP`              | IP address to assign to load balancer (if supported) | `unset`                              |
+| `mixCoordinator.service.loadBalancerSourceRanges`    | List of IP CIDRs allowed access to lb (if supported) | `[]`                                 |
+| `mixCoordinator.service.externalIPs`                 | Service external IP addresses                 | `[]`                                        |
 
 ### Pulsar Configuration
 
