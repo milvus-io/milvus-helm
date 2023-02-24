@@ -32,14 +32,14 @@ spec:
       port: 
         number: {{ $servicePort }}
 {{- end }}
-{{- if .Values.ingress.hosts }}
+{{- if .Values.ingress.rules }}
   rules:
-  {{- range $host := .Values.ingress.hosts }}
-  - host: {{ $host }}
+  {{- range $rule := .Values.ingress.rules }}
+  - host: {{ $rule.host }}
     http:
       paths:
-        - path: /
-          pathType: Prefix
+        - path: {{ $rule.path }}
+          pathType: {{ $rule.pathType }}
           backend:
             service:
               name: {{ $serviceName }}
@@ -77,14 +77,14 @@ spec:
     serviceName: {{ $serviceName }}
     servicePort: {{ $servicePort }}
 {{- end }}
-{{- if .Values.ingress.hosts }}
+{{- if .Values.ingress.rules }}
   rules:
-  {{- range $host := .Values.ingress.hosts }}
-  - host: {{ $host }}
+  {{- range $rule := .Values.ingress.rules }}
+  - host: {{ $rule.host }}
     http:
       paths:
-        - path: /
-          pathType: Prefix
+        - path: {{ $rule.path }}
+          pathType: {{ $rule.pathType }}
           backend:
             serviceName: {{ $serviceName }}
             servicePort: {{ $servicePort }}
