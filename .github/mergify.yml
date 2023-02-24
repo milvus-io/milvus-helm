@@ -4,6 +4,9 @@ pull_request_rules:
       - or:
         - check-success=lint-test
         - check-success=Broken Links
+        - files=.github/mergify.yml
+        - files=.github/workflow/release.yml
+        - files=.github/workflow/checks.yml
     actions:
       label:
         add:
@@ -11,7 +14,7 @@ pull_request_rules:
 
   - name: remove ci-passed when CI 'lint-test' not success
     conditions:
-      - check-success!=lint-test
+      - check-failure=lint-test
       - or:
         - files~=^charts/(.*\.yaml|.*\.helmignore|.*\.tgz|.*\.tpl)
         - files=.github/workflows/lint-test.yml
@@ -23,7 +26,7 @@ pull_request_rules:
   
   - name: remove ci-passed when CI 'Broken Links' not success
     conditions:
-      - check-success!=Broken Links
+      - check-failure=Broken Links
       - files~=.*\.md$
     actions:
       label:
