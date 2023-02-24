@@ -152,7 +152,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `ingress.enabled`                         | If true, Ingress will be created              | `false`                                                 |
 | `ingress.annotations`                     | Ingress annotations                           | `{}`                                                    |
 | `ingress.labels`                          | Ingress labels                                | `{}`                                                    |
-| `ingress.hosts`                           | Ingress hostnames                             | `[]`                                                    |
+| `ingress.rules`                           | Ingress rules                                 | `[]`                                                    |
 | `ingress.tls`                             | Ingress TLS configuration                     | `[]`                                                    |
 | `serviceAccount.create`                   | Create a custom service account               | `false`                                                 |
 | `serviceAccount.name`                     | Service Account name                          | `milvus`                                                |
