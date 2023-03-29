@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: milvusdb/milvus
-    tag: v2.2.4
+    tag: v2.2.5
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -427,7 +427,7 @@ minio:
   name: minio
   mode: distributed
   image:
-    tag: "RELEASE.2022-03-17T06-34-49Z"
+    tag: "RELEASE.2023-03-20T20-16-18Z"
     pullPolicy: IfNotPresent
   accessKey: minioadmin
   secretKey: minioadmin
