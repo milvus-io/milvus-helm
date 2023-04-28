@@ -68,7 +68,7 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         {{- if .Values.queryCoordinator.heaptrack.enabled }}
-        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "/milvus/tools/run-helm.sh", "milvus", "run", "querycoord" ]
+        args: [ "/milvus/tools/run-helm.sh", "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "querycoord" ]
         {{- else }}
         args: [ "/milvus/tools/run-helm.sh", "milvus", "run", "querycoord" ]
         {{- end }}

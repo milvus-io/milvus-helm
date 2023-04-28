@@ -66,7 +66,7 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         {{- if .Values.indexNode.heaptrack.enabled }}
-        args: [ "/milvus/tools/heaptrack/bin/heaptrack", "/milvus/tools/run-helm.sh", "milvus", "run", "indexnode" ]
+        args: [ "/milvus/tools/run-helm.sh", "/milvus/tools/heaptrack/bin/heaptrack", "milvus", "run", "indexnode" ]
         {{- else }}
         args: [ "/milvus/tools/run-helm.sh", "milvus", "run", "indexnode" ]
         {{- end }}
