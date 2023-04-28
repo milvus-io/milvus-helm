@@ -63,7 +63,7 @@ $ helm install --set accessKey=myaccesskey,secretKey=mysecretkey --generate-name
 
 ### Updating MinIO configuration via Helm
 
-[ConfigMap](https://kubernetes.io/docs/user-guide/configmap/) allows injecting containers with configuration data even while a Helm release is deployed.
+[ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap) allows injecting containers with configuration data even while a Helm release is deployed.
 
 To update your MinIO server configuration while it is deployed in a release, you need to
 
@@ -290,7 +290,7 @@ NAS Gateway
 
 ### Prerequisites
 
-MinIO in NAS gateway mode can be used to create multiple MinIO instances backed by single PV in `ReadWriteMany` mode. Currently few [Kubernetes volume plugins](https://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes) support `ReadWriteMany` mode. To deploy MinIO NAS gateway with Helm chart you'll need to have a Persistent Volume running with one of the supported volume plugins. [This document](https://kubernetes.io/docs/user-guide/volumes/#nfs)
+MinIO in NAS gateway mode can be used to create multiple MinIO instances backed by single PV in `ReadWriteMany` mode. Currently few [Kubernetes volume plugins](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) support `ReadWriteMany` mode. To deploy MinIO NAS gateway with Helm chart you'll need to have a Persistent Volume running with one of the supported volume plugins. [This document](https://kubernetes.io/docs/concepts/storage/volumes/#nfs)
 outlines steps to create a NFS PV in Kubernetes cluster.
 
 ### Provision NAS Gateway MinIO instances
