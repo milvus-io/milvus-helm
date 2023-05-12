@@ -684,7 +684,7 @@ pulsar:
       defaultRetentionSizeInMB: "-1"
       backlogQuotaDefaultLimitGB: "8"
       ttlDurationDefaultInSeconds: "259200"
-      subscriptionExpirationTimeMinutes: "30"
+      subscriptionExpirationTimeMinutes: "3"
       backlogQuotaDefaultRetentionPolicy: producer_exception
     pdb:
       usePolicy: false
