@@ -155,9 +155,6 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `image.all.tag`                           | Image tag                                     | `v2.2.7`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
-| `image.tools.repository`                  | Config image repository                       | `milvusdb/milvus-config-tool`                                       |
-| `image.tools.tag`                         | Config image tag                              | `v0.1.1`                           |
-| `image.tools.pullPolicy`                  | Config image pull policy                      | `IfNotPresent`                                          |
 | `extraConfigFiles`                        | Extra config to override default milvus.yaml  | `user.yaml:`                                                     |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
 | `service.port`                            | Port where service is exposed                 | `19530`                                                 |

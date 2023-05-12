@@ -13,10 +13,6 @@ image:
     ##
     # pullSecrets:
     #   - myRegistryKeySecretName
-  tools:
-    repository: milvusdb/milvus-config-tool
-    tag: v0.1.1
-    pullPolicy: IfNotPresent
 
 # Global node selector
 # If set, this will apply to all milvus components

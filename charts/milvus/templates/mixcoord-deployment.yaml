@@ -40,8 +40,8 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      initContainers:
       {{- if .Values.mixCoordinator.heaptrack.enabled }}
+      initContainers:
       - name: heaptrack
         command:
         - /bin/bash
@@ -53,16 +53,6 @@ spec:
         - mountPath: /milvus/tools
           name: tools
       {{- end }}
-      - name: config
-        command:
-        - /cp
-        - /run-helm.sh,/merge
-        - /milvus/tools/run-helm.sh,/milvus/tools/merge
-        image: "{{ .Values.image.tools.repository }}:{{ .Values.image.tools.tag }}"
-        imagePullPolicy: {{ .Values.image.tools.pullPolicy}}
-        volumeMounts:
-        - mountPath: /milvus/tools
-          name: tools
       containers:
       - name: mixcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
@@ -70,7 +60,7 @@ spec:
         {{- if .Values.mixCoordinator.heaptrack.enabled }}
         args: [ "/milvus/tools/heaptrack/bin/heaptrack", "/milvus/tools/run-helm.sh", "milvus", "run", "mixture", "-rootcoord", "-querycoord", "-datacoord", "-indexcoord" ]
         {{- else }}
-        args: [ "/milvus/tools/run-helm.sh", "milvus", "run", "mixture", "-rootcoord", "-querycoord", "-datacoord", "-indexcoord" ]
+        args: [ "milvus", "run", "mixture", "-rootcoord", "-querycoord", "-datacoord", "-indexcoord" ]
         {{- end }}
         env:
         {{- if .Values.mixCoordinator.heaptrack.enabled }}
