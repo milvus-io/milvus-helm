@@ -138,7 +138,7 @@ spec:
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
         {{- if .Values.standalone.disk.enabled }}
-        - mountPath: /milvus/data
+        - mountPath: /var/lib/milvus/data
           name: disk
         {{- end }}
 

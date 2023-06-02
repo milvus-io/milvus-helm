@@ -133,7 +133,7 @@ spec:
         - mountPath: /milvus/tools
           name: tools
         {{- if .Values.indexNode.disk.enabled }}
-        - mountPath: /milvus/data
+        - mountPath: /var/lib/milvus/data
           name: disk
         {{- end }}
 
