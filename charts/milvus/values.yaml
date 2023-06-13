@@ -58,6 +58,7 @@ extraConfigFiles:
 service:
   type: ClusterIP
   port: 19530
+  portName: milvus
   nodePort: ""
   annotations: {}
   labels: {}
