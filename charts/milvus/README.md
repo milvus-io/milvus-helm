@@ -161,6 +161,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `extraConfigFiles`                        | Extra config to override default milvus.yaml  | `user.yaml:`                                                     |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
 | `service.port`                            | Port where service is exposed                 | `19530`                                                 |
+| `service.portName`                        | Useful for [Istio protocol selection](https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/)   | `milvus`                                                |
 | `service.nodePort`                        | Service nodePort                              | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
 | `service.labels`                          | Service custom labels                         | `{}`                                                    |
