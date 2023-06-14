@@ -156,7 +156,7 @@ log:
       ##   set, choosing the default provisioner.
       ## ReadWriteMany access mode required for milvus cluster.
       ##
-      storageClass:
+      storageClass: csi-disk
       accessModes: ReadWriteMany
       size: 10Gi
       subPath: ""
@@ -208,7 +208,7 @@ standalone:
       ## If undefined (the default) or set to null, no storageClassName spec is
       ##   set, choosing the default provisioner.
       ##
-      storageClass:
+      storageClass: csi-disk
       accessModes: ReadWriteOnce
       size: 50Gi
       subPath: ""
@@ -456,7 +456,7 @@ minio:
   persistence:
     enabled: true
     existingClaim: ""
-    storageClass:
+    storageClass: csi-disk
     accessMode: ReadWriteOnce
     size: 500Gi
 

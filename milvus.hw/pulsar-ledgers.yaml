@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-ledgers-milvus-pulsar-0
+spec:
+  capacity:
+    storage: 300Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/ledgers-milvus-pulsar-data0
+  claimRef:
+    name: echo-pulsar-bookie-ledgers-echo-pulsar-bookie-0
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.50
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-ledgers-milvus-pulsar-1
+spec:
+  capacity:
+    storage: 300Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/ledgers-milvus-pulsar-data1
+  claimRef:
+    name: echo-pulsar-bookie-ledgers-echo-pulsar-bookie-1
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.50
+
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-ledgers-milvus-pulsar-2
+spec:
+  capacity:
+    storage: 300Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/ledgers-milvus-pulsar-data2
+  claimRef:
+    name: echo-pulsar-bookie-ledgers-echo-pulsar-bookie-2
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.50

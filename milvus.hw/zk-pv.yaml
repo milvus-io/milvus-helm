@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-zk-0
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/zk-data0
+  claimRef:
+    name: echo-pulsar-zookeeper-data-echo-pulsar-zookeeper-0
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.181
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-zk-1
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/zk-data1
+  claimRef:
+    name: echo-pulsar-zookeeper-data-echo-pulsar-zookeeper-1
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.181
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-echo-zk-2
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /data/echo_data/milvus/milvus-live/zk-data2
+  claimRef:
+    name: echo-pulsar-zookeeper-data-echo-pulsar-zookeeper-2
+    namespace: milvus-live
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - 172.16.0.181
