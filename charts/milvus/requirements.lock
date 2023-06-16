@@ -1,7 +1,7 @@
 dependencies:
 - name: etcd
   repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
-  version: 6.3.3
+  version: 8.2.3
 - name: minio
   repository: https://milvus-io.github.io/milvus-helm
   version: 8.0.16
@@ -14,5 +14,5 @@ dependencies:
 - name: mysql
   repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
   version: 8.5.3
-digest: sha256:bdc216b6cb2ed44622299240f05b21ccdac28146b90dca78ceaf69c8bfe2dad0
-generated: "2023-04-28T23:32:14.013332+08:00"
+digest: sha256:0d570e4b27c88952b71d249a927cd742648243edadeea514d680cbc88ad90c19
+generated: "2023-06-16T15:10:22.477546191Z"
