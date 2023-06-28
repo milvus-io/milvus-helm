@@ -404,6 +404,7 @@ attu:
   service:
     type: ClusterIP
     port: 3000
+    # loadBalancerIP: ""
   resources: {}
   ingress:
     enabled: false
