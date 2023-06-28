@@ -15,7 +15,7 @@ spec:
 {{- else if eq .Values.attu.service.type "LoadBalancer" }}
   type: LoadBalancer
   {{- if .Values.attu.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.attu.service.loadBalancerIP }}
   {{- end }}
 {{- if .Values.attu.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
