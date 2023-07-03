@@ -402,6 +402,8 @@ attu:
     tag: v2.2.4
     pullPolicy: IfNotPresent
   service:
+    annotations: {}
+    labels: {}
     type: ClusterIP
     port: 3000
     # loadBalancerIP: ""
