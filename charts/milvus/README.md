@@ -152,7 +152,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
 | `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `true`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
-| `image.all.tag`                           | Image tag                                     | `v2.2.7`                           |
+| `image.all.tag`                           | Image tag                                     | `v2.2.11`                           |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
 | `image.all.pullSecrets`                   | Image pull secrets                            | `{}`                                                    |
 | `image.tools.repository`                  | Config image repository                       | `milvusdb/milvus-config-tool`                                       |
@@ -161,6 +161,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 | `extraConfigFiles`                        | Extra config to override default milvus.yaml  | `user.yaml:`                                                     |
 | `service.type`                            | Service type                                  | `ClusterIP`                                             |
 | `service.port`                            | Port where service is exposed                 | `19530`                                                 |
+| `service.portName`                        | Useful for [Istio protocol selection](https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/)   | `milvus`                                                |
 | `service.nodePort`                        | Service nodePort                              | `unset`                                                 |
 | `service.annotations`                     | Service annotations                           | `{}`                                                    |
 | `service.labels`                          | Service custom labels                         | `{}`                                                    |

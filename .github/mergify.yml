@@ -32,3 +32,4 @@ pull_request_rules:
       label:
         remove:
           - ci-passed
+          
