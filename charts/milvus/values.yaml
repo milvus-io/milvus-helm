@@ -923,3 +923,4 @@ externalMysql:
   dbName: milvus_meta
   maxOpenConns: 20
   maxIdleConns: 5
+
