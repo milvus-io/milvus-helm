@@ -137,12 +137,8 @@ spec:
           mountPath: {{ .Values.log.persistence.mountPath | quote }}
           subPath: {{ .Values.log.persistence.persistentVolumeClaim.subPath | default "" }}
         {{- end }}
-        {{- if .Values.standalone.heaptrack.enabled }}
-        - mountPath: /milvus/tools
-          name: heaptrack
-        {{- end }}
         {{- if .Values.standalone.disk.enabled }}
-        - mountPath: /milvus/data
+        - mountPath: /var/lib/milvus/data
           name: disk
         {{- end }}
 
