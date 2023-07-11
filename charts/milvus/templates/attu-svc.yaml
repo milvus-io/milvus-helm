@@ -5,7 +5,14 @@ metadata:
   name: {{ template "milvus.attu.fullname" . }}
   labels:
 {{ include "milvus.labels" . | indent 4 }}
+{{- if .Values.attu.service.labels }}
+{{ toYaml .Values.attu.service.labels | indent 4 }}
+{{- end }}
     component: "attu"
+{{- if .Values.attu.service.annotations }}
+  annotations:
+{{ toYaml .Values.attu.service.annotations | indent 4 }}
+{{- end }}
 spec:
 {{- if (or (eq .Values.attu.service.type "ClusterIP") (empty .Values.attu.service.type)) }}
   type: ClusterIP
@@ -15,7 +22,7 @@ spec:
 {{- else if eq .Values.attu.service.type "LoadBalancer" }}
   type: LoadBalancer
   {{- if .Values.attu.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.attu.service.loadBalancerIP }}
   {{- end }}
 {{- if .Values.attu.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
