@@ -123,7 +123,7 @@ The following table lists the configurable parameters of the Milvus chart and th
 | `storage.s3.port`                         | S3 service's port.                            | `unset`                                                 |
 | `storage.s3.access_key`                   | S3 service's access key.                      | `unset`                                                 |
 | `storage.s3.secret_key`                   | S3 service's secret key.                      | `unset`                                                 |
-| `storage.s3.bucket                        | S3 service's bucket name.                     | `unset`                                                 |
+| `storage.s3.bucket`                       | S3 service's bucket name.                     | `unset`                                                 |
 | `wal.enabled`                             | Enable write-ahead logging.                   | `true`                                                  |
 | `wal.recoveryErrorIgnore`                 | Whether to ignore logs with errors that happens during WAL | `true`                                     |
 | `wal.bufferSize`                          | Sum total of the read buffer and the write buffer. (MB) | `256MB`                                       |
