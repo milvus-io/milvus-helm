@@ -31,6 +31,17 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+ {{/*
+ Return the appropriate apiVersion for poddisruptionbudget.
+ */}}
+ {{- define "minio.pdb.apiVersion" -}}
+ {{- if semverCompare "<1.21-0" .Capabilities.KubeVersion.Version -}}
+ {{- print "policy/v1beta1" -}}
+ {{- else -}}
+ {{- print "policy/v1" -}}
+ {{- end -}}
+ {{- end -}}
+
 {{/*
 Return the appropriate apiVersion for networkpolicy.
 */}}
