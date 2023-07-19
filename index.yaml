@@ -8775,6 +8775,26 @@ entries:
   minio:
   - apiVersion: v1
     appVersion: master
+    created: "2023-07-19T10:47:17.704412491Z"
+    description: High Performance, Kubernetes Native Object Storage
+    digest: 4d2ddeb50a7ca07a403de7d6a9867851387594ca4756743ce1ab8fb0f8cd382f
+    home: https://min.io
+    icon: https://min.io/resources/img/logo/MINIO_wordmark.png
+    keywords:
+    - storage
+    - object-storage
+    - S3
+    maintainers:
+    - email: contact@milvus.io
+      name: contact
+    name: minio
+    sources:
+    - https://github.com/minio/minio
+    urls:
+    - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.17/minio-8.0.17.tgz
+    version: 8.0.17
+  - apiVersion: v1
+    appVersion: master
     created: "2023-04-28T15:17:05.7090938Z"
     description: High Performance, Kubernetes Native Object Storage
     digest: 515abfc1cdfcb3f5631b7a3c2f4c48a4f41a19a4a73b27db15e4a0c91cdb20cb
@@ -8913,4 +8933,4 @@ entries:
     urls:
     - https://github.com/milvus-io/milvus-helm/releases/download/minio-8.0.10/minio-8.0.10.tgz
     version: 8.0.10
-generated: "2023-07-04T10:27:24.448934615Z"
+generated: "2023-07-19T10:47:17.706345431Z"
