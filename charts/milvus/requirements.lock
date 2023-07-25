@@ -4,7 +4,7 @@ dependencies:
   version: 6.3.3
 - name: minio
   repository: https://milvus-io.github.io/milvus-helm
-  version: 8.0.16
+  version: 8.0.17
 - name: pulsar
   repository: https://pulsar.apache.org/charts
   version: 2.7.8
@@ -14,5 +14,5 @@ dependencies:
 - name: mysql
   repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
   version: 8.5.3
-digest: sha256:bdc216b6cb2ed44622299240f05b21ccdac28146b90dca78ceaf69c8bfe2dad0
-generated: "2023-04-28T23:32:14.013332+08:00"
+digest: sha256:e4fb9c460cd897d99811fecccde7af2c84fb37cb209f40e05ca816b924ed32be
+generated: "2023-07-25T10:51:48.487135+08:00"
