@@ -34,7 +34,7 @@ spec:
   ports:
     - name: attu
       protocol: TCP
-      port: 3000
+      port: {{ .Values.attu.service.port }}
       targetPort: 3000
   selector:
 {{ include "milvus.matchLabels" . | indent 4 }}
